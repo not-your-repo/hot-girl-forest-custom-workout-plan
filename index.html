@@ -448,6 +448,50 @@
       cursor: pointer; font-size: 18px; width: 32px; height: 32px;
     }
     .food-empty { padding: 12px 14px; color: var(--muted); font-size: 13px; }
+    .hist-tools {
+      display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+      margin: 0 0 12px;
+    }
+    .hist-tools input {
+      flex: 1 1 180px; min-width: 0; background: #fff; border: 1px solid var(--line);
+      color: var(--text); border-radius: 4px; padding: 10px 12px; font-size: 16px;
+    }
+    .hist-count { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+    .hist-day {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .hist-day-h {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      gap: 10px; text-align: left; appearance: none; border: 0; cursor: pointer;
+      padding: 12px 14px; background: #12322a; color: #fffbee; font-size: 14px;
+      border-radius: 6px;
+    }
+    .hist-day.open .hist-day-h { border-radius: 6px 6px 0 0; }
+    .hist-day-h b {
+      font-family: var(--display); letter-spacing: 0.04em; text-transform: uppercase;
+      font-weight: 400;
+    }
+    .hist-day-h .sub { color: #d9c89d; font-size: 12px; white-space: nowrap; }
+    .hist-day-b { display: none; }
+    .hist-day.open .hist-day-b { display: block; }
+    .hist-row {
+      display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center;
+      padding: 10px 14px; border-bottom: 1px solid var(--line);
+    }
+    .hist-row:last-child { border-bottom: 0; }
+    .hist-row .jump {
+      appearance: none; border: 0; background: transparent; padding: 0;
+      text-align: left; cursor: pointer; color: inherit; min-width: 0;
+    }
+    .hist-row .name { font-weight: 600; }
+    .hist-row .mac { color: var(--muted); font-size: 12px; }
+    .hist-row .cal { font-variant-numeric: tabular-nums; font-weight: 800; }
+    .hist-row .del {
+      appearance: none; border: 0; background: transparent; color: var(--coral);
+      cursor: pointer; font-size: 18px; width: 32px; height: 32px;
+    }
+    .hist-empty { padding: 14px; color: var(--muted); font-size: 13px; }
     .add-food { padding: 12px 14px; background: var(--bg-2); overflow: visible; }
     .add-food .log-row { margin-top: 8px; }
     .add-food input { min-width: 0; flex: 1 1 80px; }
@@ -546,6 +590,8 @@
       .remain, .macros { grid-template-columns: 1fr 1fr; }
       .remain .big { grid-column: 1 / -1; }
       .goal-in, .remain .goal-in { font-size: 16px; }
+      .hist-row { grid-template-columns: 1fr auto auto; }
+      .hist-row .name, .hist-row .mac { overflow-wrap: anywhere; }
 
       .topbar, .topbar > div, .sticky-tools, .ex-body, .note, .warn, .lede {
         min-width: 0; max-width: 100%;
@@ -626,7 +672,7 @@
         <button class="nav-btn day-nav" data-view="day5">Day 5 · Full-body kettlebell</button>
         <button class="nav-btn" data-view="library">Form library</button>
         <button class="nav-btn" data-view="nutrition">Nutrition</button>
-        <button class="nav-btn" data-view="diary">Diary</button>
+        <button class="nav-btn" data-view="diary">Food Diary</button>
         <button class="nav-btn" data-view="recovery">Recovery and red flags</button>
         <button class="nav-btn" data-view="progress">Progress</button>
         <button class="nav-btn" data-view="motivation">Motivation</button>
@@ -790,7 +836,7 @@
           </table>
         </div>
         <p class="lede" style="margin-top:12px">To land near 1,800 calories, keep the protein foods, drop the oats, and cut the potato to 150 g. To land near 2,400, add about 300 calories from extra potato, rice, oats, or oil. Do not cut the yogurt, chicken, whey, or cottage cheese first. Those are the point of a protein-emphasized diet.</p>
-        <div class="note" style="margin-top:16px">Weigh on Friday mornings, after using the bathroom, before food. Use the same scale and the same conditions. A weekly average drop of 0.5–1.0 lb is the green light. If weight drops faster than 1 lb, add 100–150 calories. If there is no change after two weeks, subtract 150–200 calories from carbohydrate, not from protein. Diary suggestions use the same USDA portions; packaged brands still vary, so check the label when you have one.</div>
+        <div class="note" style="margin-top:16px">Weigh on Friday mornings, after using the bathroom, before food. Use the same scale and the same conditions. A weekly average drop of 0.5–1.0 lb is the green light. If weight drops faster than 1 lb, add 100–150 calories. If there is no change after two weeks, subtract 150–200 calories from carbohydrate, not from protein. Food Diary suggestions use the same USDA portions; packaged brands still vary, so check the label when you have one.</div>
       </section>
 
       <section class="view" id="diary">
@@ -845,6 +891,14 @@
         <div class="water-actions" style="margin-top:12px">
           <button class="btn ghost" id="copyPrevDay" type="button">Copy previous day</button>
         </div>
+        <h3 class="sec">Food history</h3>
+        <p class="lede" style="margin-bottom:12px">Every food you have logged, in the order you added it. Days fold up as the list grows. Search to find an old item. Tap a food to open that day.</p>
+        <div class="hist-tools">
+          <input id="histSearch" type="search" placeholder="Search history" autocomplete="off" spellcheck="false" />
+          <button class="btn ghost" type="button" id="histOrder">Oldest first</button>
+        </div>
+        <p class="hist-count" id="histCount"></p>
+        <div id="histList"></div>
       </section>
 
       <section class="view" id="recovery">
@@ -1559,7 +1613,7 @@
       day5: ["Day 5", ""],
       library: ["Form library", "Photos of the working position, plus a YouTube form demo for each lift."],
       nutrition: ["Nutrition", "Protein stays high. Calories are honest about the April goal."],
-      diary: ["Diary", "Set your calorie and macro goals. Remaining and the bars follow what you log."],
+      diary: ["Food Diary", "Set your calorie and macro goals. Remaining and the bars follow what you log."],
       recovery: ["Recovery and red flags", "What to skip, when to walk, and when to call a physician."],
       progress: ["Progress", "Log water and weight, collect a mushroom for each finished day, and map today’s symptom score."],
       motivation: ["Motivation", "Electric Forest 2027 is the why. April 2027 is the checkpoint."]
@@ -1872,6 +1926,11 @@
     ];
     let diaryDate = todayISO();
     let addMealId = "";
+    let histQuery = "";
+    let histNewest = true;
+    const histOpen = new Set();
+    const histClosed = new Set();
+    const mealRank = { breakfast: 0, lunch: 1, dinner: 2, snacks: 3 };
 
     function isoShift(iso, days) {
       const [y, m, d] = iso.split("-").map(Number);
@@ -2343,6 +2402,107 @@
       }
       paintDiaryProgress();
     }
+    function itemTime(x, iso, mealId, idx) {
+      if (x && Number.isFinite(Number(x.at))) return Number(x.at);
+      const [y, m, d] = String(iso).split("-").map(Number);
+      const base = Number.isFinite(y) ? new Date(y, (m || 1) - 1, d || 1).getTime() : 0;
+      return base + (mealRank[mealId] || 0) * 10000 + idx;
+    }
+    function allFoodHistory() {
+      const store = foodStore();
+      const rows = [];
+      Object.keys(store).forEach(iso => {
+        if (iso === "_goal" || iso === "_goals") return;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+        const day = store[iso];
+        if (!day || typeof day !== "object") return;
+        MEALS.forEach(m => {
+          (day[m.id] || []).forEach((x, idx) => {
+            if (!x || !x.name) return;
+            rows.push({
+              id: x.id,
+              iso,
+              meal: m.id,
+              mealLabel: m.label,
+              name: x.name,
+              cal: Number(x.cal || 0),
+              p: Number(x.p || 0),
+              c: Number(x.c || 0),
+              f: Number(x.f || 0),
+              at: itemTime(x, iso, m.id, idx),
+              hasClock: Number.isFinite(Number(x.at))
+            });
+          });
+        });
+      });
+      rows.sort((a, b) => a.at - b.at || a.iso.localeCompare(b.iso));
+      return rows;
+    }
+    function histDayOpen(iso, newestIndex) {
+      if (histClosed.has(iso)) return false;
+      if (histOpen.has(iso)) return true;
+      if (String(histQuery || "").trim()) return true;
+      if (iso === todayISO()) return true;
+      return newestIndex < 2;
+    }
+    function formatClock(ms) {
+      return new Date(ms).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+    }
+    function paintHistory() {
+      const box = document.getElementById("histList");
+      const countEl = document.getElementById("histCount");
+      const orderBtn = document.getElementById("histOrder");
+      if (!box) return;
+      if (orderBtn) orderBtn.textContent = histNewest ? "Oldest first" : "Newest first";
+      const q = String(histQuery || "").trim().toLowerCase();
+      const all = allFoodHistory();
+      const rows = q
+        ? all.filter(x =>
+            String(x.name).toLowerCase().includes(q) ||
+            String(x.mealLabel).toLowerCase().includes(q)
+          )
+        : all;
+      if (countEl) {
+        const days = new Set(rows.map(x => x.iso)).size;
+        countEl.textContent = rows.length
+          ? `${rows.length} food${rows.length === 1 ? "" : "s"} across ${days} day${days === 1 ? "" : "s"}`
+          : "";
+      }
+      if (!rows.length) {
+        box.innerHTML = `<div class="card hist-empty">${q ? "No foods match that search." : "No foods logged yet. Add a food above and it will show up here."}</div>`;
+        return;
+      }
+      const byDay = new Map();
+      rows.forEach(x => {
+        if (!byDay.has(x.iso)) byDay.set(x.iso, []);
+        byDay.get(x.iso).push(x);
+      });
+      const days = [...byDay.keys()].sort();
+      if (histNewest) days.reverse();
+      box.innerHTML = days.map((iso, i) => {
+        const items = byDay.get(iso);
+        const cal = items.reduce((s, x) => s + x.cal, 0);
+        const open = histDayOpen(iso, i);
+        const body = items.map(x => {
+          const when = x.hasClock ? ` · ${formatClock(x.at)}` : "";
+          return `<div class="hist-row">
+            <button class="jump" type="button" data-hist-iso="${x.iso}">
+              <div class="name">${esc(x.name)}</div>
+              <div class="mac">${esc(x.mealLabel)}${when} · ${fmtAmt(x.p)}p · ${fmtAmt(x.c)}c · ${fmtAmt(x.f)}f</div>
+            </button>
+            <div class="cal">${Math.round(x.cal)}</div>
+            <button class="del" type="button" data-hist-del="${esc(x.meal)}" data-hist-iso="${x.iso}" data-id="${esc(x.id)}" aria-label="Remove">×</button>
+          </div>`;
+        }).join("");
+        return `<article class="hist-day ${open ? "open" : ""}" data-iso="${iso}">
+          <button class="hist-day-h" type="button" data-hist-toggle="${iso}" aria-expanded="${open}">
+            <b>${prettyDate(iso)}</b>
+            <span class="sub">${items.length} food${items.length === 1 ? "" : "s"} · ${Math.round(cal)} cal</span>
+          </button>
+          <div class="hist-day-b">${body}</div>
+        </article>`;
+      }).join("");
+    }
     function paintDiary() {
       hideSuggest();
       document.getElementById("diaryDateLabel").textContent = prettyDate(diaryDate);
@@ -2365,6 +2525,7 @@
         </article>`;
       }).join("");
       paintWater();
+      paintHistory();
       const focusName = document.querySelector("#diaryMeals [data-f='name']");
       if (focusName) {
         focusName.focus({ preventScroll: true });
@@ -2444,6 +2605,7 @@
         const data = dayFood(diaryDate);
         data[add.dataset.add].push({
           id: foodId(),
+          at: Date.now(),
           name,
           cal,
           p: Number(val("p") || 0),
@@ -2465,11 +2627,53 @@
       window.visualViewport.addEventListener("resize", placeSuggest);
       window.visualViewport.addEventListener("scroll", placeSuggest);
     }
+    document.getElementById("histSearch").addEventListener("input", e => {
+      histQuery = e.target.value;
+      paintHistory();
+    });
+    document.getElementById("histOrder").onclick = () => {
+      histNewest = !histNewest;
+      paintHistory();
+    };
+    document.getElementById("histList").addEventListener("click", e => {
+      const tog = e.target.closest("[data-hist-toggle]");
+      if (tog) {
+        const iso = tog.dataset.histToggle;
+        const day = tog.closest(".hist-day");
+        const open = !day.classList.contains("open");
+        if (open) { histOpen.add(iso); histClosed.delete(iso); }
+        else { histClosed.add(iso); histOpen.delete(iso); }
+        day.classList.toggle("open", open);
+        tog.setAttribute("aria-expanded", String(open));
+        return;
+      }
+      const del = e.target.closest("[data-hist-del]");
+      if (del) {
+        const iso = del.dataset.histIso;
+        const meal = del.dataset.histDel;
+        const id = del.dataset.id;
+        const data = dayFood(iso);
+        data[meal] = (data[meal] || []).filter(x => x.id !== id);
+        saveDayFood(iso, data);
+        if (iso === diaryDate) addMealId = "";
+        paintDiary();
+        return;
+      }
+      const jump = e.target.closest("[data-hist-iso]");
+      if (jump) {
+        diaryDate = jump.dataset.histIso;
+        addMealId = "";
+        histOpen.add(diaryDate);
+        paintDiary();
+        const bar = document.querySelector("#diary .diary-date");
+        if (bar) bar.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
     document.getElementById("copyPrevDay").onclick = () => {
       const prev = dayFood(isoShift(diaryDate, -1));
       const data = dayFood(diaryDate);
       MEALS.forEach(m => {
-        data[m.id] = (prev[m.id] || []).map(x => Object.assign({}, x, { id: foodId() }));
+        data[m.id] = (prev[m.id] || []).map((x, i) => Object.assign({}, x, { id: foodId(), at: Date.now() + i }));
       });
       saveDayFood(diaryDate, data);
       paintDiary();
