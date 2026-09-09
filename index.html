@@ -359,6 +359,8 @@
     .sym-bars .col { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; gap: 4px; }
     .sym-bars .barbit { border-radius: 2px 2px 0 0; min-height: 4px; background: #e6dcb8; }
     .sym-bars .d { font-size: 9px; color: var(--muted); text-align: center; letter-spacing: 0; }
+    #waterBars .col { cursor: pointer; }
+    #waterBars .col.on .d { color: var(--sage-2); font-weight: 800; }
     .sym-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: 12px; color: var(--muted); margin-top: 12px; }
     .sym-legend b { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
 
@@ -381,6 +383,11 @@
     .water-meter { height: 10px; background: #e6dcb8; border-radius: 99px; overflow: hidden; margin: 8px 0 4px; }
     .water-meter > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #1886b5, #3d7a88); }
     .water-meter.met > i { background: linear-gradient(90deg, #1886b5, var(--gold)); }
+    #water .stat { font-size: 42px; line-height: 1; }
+    #water .water-glass { width: 48px; height: 58px; }
+    #water .water-glass::after { left: 8px; right: 8px; bottom: 6px; }
+    #water .water-glass.on::after { height: 36px; }
+    #water .water-row { gap: 10px; }
 
     .diary-date {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -673,6 +680,7 @@
         <button class="nav-btn" data-view="library">Form library</button>
         <button class="nav-btn" data-view="nutrition">Nutrition</button>
         <button class="nav-btn" data-view="diary">Food Diary</button>
+        <button class="nav-btn" data-view="water">Water</button>
         <button class="nav-btn" data-view="recovery">Recovery and red flags</button>
         <button class="nav-btn" data-view="progress">Progress</button>
         <button class="nav-btn" data-view="motivation">Motivation</button>
@@ -873,21 +881,6 @@
           </div>
         </div>
         <div id="diaryMeals"></div>
-        <div class="card" style="margin-top:8px">
-          <div class="water-head">
-            <div>
-              <div class="label">Water</div>
-              <div class="stat" id="diaryWaterStat">0 <span>oz</span></div>
-            </div>
-            <div class="label" id="diaryWaterGoal" style="margin:0">0 / 80 oz</div>
-          </div>
-          <div class="water-meter" id="diaryWaterMeter"><i></i></div>
-          <div class="water-row" id="diaryWaterRow"></div>
-          <div class="water-actions">
-            <button class="btn" id="diaryWaterAdd" type="button">+ 8 oz</button>
-            <button class="btn ghost" id="diaryWaterSub" type="button">− 8 oz</button>
-          </div>
-        </div>
         <div class="water-actions" style="margin-top:12px">
           <button class="btn ghost" id="copyPrevDay" type="button">Copy previous day</button>
         </div>
@@ -899,6 +892,35 @@
         </div>
         <p class="hist-count" id="histCount"></p>
         <div id="histList"></div>
+      </section>
+
+      <section class="view" id="water">
+        <div class="diary-date">
+          <button type="button" id="waterPrev" aria-label="Previous day">‹</button>
+          <strong id="waterDateLabel">Today</strong>
+          <button type="button" id="waterNext" aria-label="Next day">›</button>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="water-head">
+            <div>
+              <div class="label">Water</div>
+              <div class="stat" id="waterStat">0 <span>oz</span></div>
+            </div>
+            <div class="label" id="waterGoalLabel" style="margin:0">0 / 80 oz</div>
+          </div>
+          <div class="water-meter" id="waterMeter"><i></i></div>
+          <p class="lede" id="waterNote" style="margin:0">Tap a cup for 8 ounces. Goal is 80 ounces.</p>
+          <div class="water-row" id="waterRow"></div>
+          <div class="water-actions">
+            <button class="btn" id="waterAdd" type="button">+ 8 oz</button>
+            <button class="btn ghost" id="waterSub" type="button">− 8 oz</button>
+            <button class="btn ghost" id="waterReset" type="button">Reset day</button>
+          </div>
+        </div>
+        <h3 class="sec">Last 14 days</h3>
+        <div class="card">
+          <div class="sym-bars" id="waterBars"></div>
+        </div>
       </section>
 
       <section class="view" id="recovery">
@@ -935,25 +957,6 @@
       </section>
 
       <section class="view" id="progress">
-        <div class="card" style="margin-bottom:16px">
-          <div class="water-head">
-            <div>
-              <div class="label">Daily water</div>
-              <div class="stat" id="waterStat">0 <span>oz</span></div>
-            </div>
-            <div class="label" id="waterGoalLabel" style="margin:0">Goal 80 oz · 10 glasses</div>
-          </div>
-          <div class="water-meter" id="waterMeter"><i></i></div>
-          <p class="lede" id="waterNote" style="margin:0">Tap a glass for 8 ounces. Resets at midnight.</p>
-          <div class="water-row" id="waterRow"></div>
-          <div class="water-actions">
-            <button class="btn" id="waterAdd" type="button">+ 8 oz</button>
-            <button class="btn ghost" id="waterSub" type="button">− 8 oz</button>
-            <button class="btn ghost" id="waterReset" type="button">Reset today</button>
-          </div>
-          <div class="label" style="margin-top:16px">Last 14 days</div>
-          <div class="sym-bars" id="waterBars"></div>
-        </div>
         <div class="grid g-2">
           <div class="card">
             <div class="label">Weekly weigh-in</div>
@@ -1614,8 +1617,9 @@
       library: ["Form library", "Photos of the working position, plus a YouTube form demo for each lift."],
       nutrition: ["Nutrition", "Protein stays high. Calories are honest about the April goal."],
       diary: ["Food Diary", "Set your calorie and macro goals. Remaining and the bars follow what you log."],
+      water: ["Water", "Tap a cup for 8 ounces. Goal is 80 ounces a day."],
       recovery: ["Recovery and red flags", "What to skip, when to walk, and when to call a physician."],
-      progress: ["Progress", "Log water and weight, collect a mushroom for each finished day, and map today’s symptom score."],
+      progress: ["Progress", "Log weight, collect a mushroom for each finished day, and map today’s symptom score."],
       motivation: ["Motivation", "Electric Forest 2027 is the why. April 2027 is the checkpoint."]
     };
 
@@ -1630,6 +1634,7 @@
       document.body.classList.toggle("workout-mode", onWorkout);
       pinWorkoutChrome();
       if (view === "diary") paintDiary();
+      if (view === "water") paintWater();
       if (view.startsWith("day")) {
         const d = currentDays()[view];
         document.getElementById("pageTitle").textContent = d.title;
@@ -1925,6 +1930,7 @@
       { id: "snacks", label: "Snacks" }
     ];
     let diaryDate = todayISO();
+    let waterDate = todayISO();
     let addMealId = "";
     let histQuery = "";
     let histNewest = true;
@@ -1991,14 +1997,12 @@
       if (row) row.innerHTML = glassHtml(oz);
     }
     function paintWater() {
+      const label = document.getElementById("waterDateLabel");
+      if (label) label.textContent = prettyDate(waterDate);
       paintWaterBox({
         stat: "waterStat", goal: "waterGoalLabel", note: "waterNote",
         meter: "waterMeter", row: "waterRow"
-      }, todayISO());
-      paintWaterBox({
-        stat: "diaryWaterStat", goal: "diaryWaterGoal", note: null,
-        meter: "diaryWaterMeter", row: "diaryWaterRow"
-      }, diaryDate);
+      }, waterDate);
       const log = waterLog();
       const bars = [];
       for (let i = 13; i >= 0; i--) {
@@ -2010,28 +2014,39 @@
         const val = log[key];
         const h = val == null ? 4 : Math.max(6, Math.round((Math.min(WATER_GOAL, Number(val)) / WATER_GOAL) * 56));
         const col = val == null ? "#e6dcb8" : Number(val) >= WATER_GOAL ? "#bd901b" : "#1886b5";
-        bars.push(`<div class="col"><div class="barbit" style="height:${h}px;background:${col}"></div><div class="d">${d.getDate()}</div></div>`);
+        const on = key === waterDate;
+        bars.push(`<div class="col${on ? " on" : ""}"><div class="barbit" style="height:${h}px;background:${col}"></div><div class="d">${d.getDate()}</div></div>`);
       }
       const barBox = document.getElementById("waterBars");
       if (barBox) barBox.innerHTML = bars.join("");
     }
-    function onGlassClick(iso) {
-      return e => {
-        const btn = e.target.closest("[data-glass]");
-        if (!btn) return;
-        const n = Number(btn.dataset.glass);
-        const current = waterFor(iso);
-        const at = n * WATER_STEP;
-        saveWater(current >= at ? (n - 1) * WATER_STEP : at, iso);
-      };
+    function onGlassClick(e) {
+      const btn = e.target.closest("[data-glass]");
+      if (!btn) return;
+      const n = Number(btn.dataset.glass);
+      const current = waterFor(waterDate);
+      const at = n * WATER_STEP;
+      saveWater(current >= at ? (n - 1) * WATER_STEP : at, waterDate);
     }
-    document.getElementById("waterRow").addEventListener("click", e => onGlassClick(todayISO())(e));
-    document.getElementById("diaryWaterRow").addEventListener("click", e => onGlassClick(diaryDate)(e));
-    document.getElementById("waterAdd").onclick = () => saveWater(waterFor(todayISO()) + WATER_STEP, todayISO());
-    document.getElementById("waterSub").onclick = () => saveWater(waterFor(todayISO()) - WATER_STEP, todayISO());
-    document.getElementById("waterReset").onclick = () => saveWater(0, todayISO());
-    document.getElementById("diaryWaterAdd").onclick = () => saveWater(waterFor(diaryDate) + WATER_STEP, diaryDate);
-    document.getElementById("diaryWaterSub").onclick = () => saveWater(waterFor(diaryDate) - WATER_STEP, diaryDate);
+    document.getElementById("waterRow").addEventListener("click", onGlassClick);
+    document.getElementById("waterAdd").onclick = () => saveWater(waterFor(waterDate) + WATER_STEP, waterDate);
+    document.getElementById("waterSub").onclick = () => saveWater(waterFor(waterDate) - WATER_STEP, waterDate);
+    document.getElementById("waterReset").onclick = () => saveWater(0, waterDate);
+    document.getElementById("waterPrev").onclick = () => { waterDate = isoShift(waterDate, -1); paintWater(); };
+    document.getElementById("waterNext").onclick = () => { waterDate = isoShift(waterDate, 1); paintWater(); };
+    document.getElementById("waterBars").addEventListener("click", e => {
+      const col = e.target.closest(".col");
+      if (!col) return;
+      const cols = [...document.querySelectorAll("#waterBars .col")];
+      const i = cols.indexOf(col);
+      if (i < 0) return;
+      const d = new Date();
+      d.setDate(d.getDate() - (13 - i));
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      waterDate = `${d.getFullYear()}-${m}-${day}`;
+      paintWater();
+    });
 
     function foodStore() {
       return JSON.parse(localStorage.getItem(foodKey) || "{}");
