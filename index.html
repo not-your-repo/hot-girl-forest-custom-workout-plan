@@ -356,21 +356,23 @@
     .sym-legend b { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
 
     @media (max-width: 1080px) {
-      html, body { overflow-x: hidden; }
+      :root { --mobile-bar-h: calc(52px + env(safe-area-inset-top, 0px)); }
+      html, body { overflow-x: clip; }
       body.nav-open { overflow: hidden; }
       .app { display: block; min-width: 0; }
+      .main { display: flex; flex-direction: column; }
       .g-4, .g-3, .rules, .week, .library, .g-2, .g-2eq, .cues, .ex, .quote-grid, .sym-wrap { grid-template-columns: 1fr; }
       .day-wins { grid-template-columns: repeat(5, 1fr); gap: 6px; }
       .portrait-float { display: none; }
       .ex-body { padding: 14px; }
-      .main { padding: 16px 16px 96px; min-width: 0; overflow-x: hidden; }
+      .main { padding: 16px 16px 96px; min-width: 0; }
       .card, .note, .warn, .ex, .lede, .cues, .cues div { min-width: 0; overflow-wrap: break-word; }
       .phase-btn::before { content: none; }
 
       .mobile-bar {
         display: flex; align-items: center; gap: 10px;
         position: sticky; top: 0; z-index: 60;
-        height: calc(52px + env(safe-area-inset-top, 0px));
+        height: var(--mobile-bar-h);
         padding: env(safe-area-inset-top, 0px) 12px 0;
         background: #12322a; border-bottom: 3px solid var(--gold); color: #fffbee;
       }
@@ -423,11 +425,24 @@
 
       .sticky-tools.pin {
         display: block !important;
-        top: calc(52px + env(safe-area-inset-top, 0px));
+        position: fixed;
+        top: var(--mobile-bar-h);
+        left: 0;
+        right: 0;
+        z-index: 55;
         box-sizing: border-box;
-        width: 100%;
-        max-width: 100%;
-        margin: 0 0 14px; padding: 8px 0;
+        width: auto;
+        max-width: none;
+        margin: 0;
+        padding: 8px 16px 10px;
+        background: rgba(255,251,238,0.96);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 8px 16px rgba(18,50,42,0.08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      body.workout-mode .main {
+        padding-top: calc(var(--tools-h, 108px) + 8px);
       }
       #phaseWrap {
         display: grid !important;
@@ -1351,6 +1366,8 @@
       document.getElementById("restTimer").hidden = !onWorkout;
       document.getElementById("stickyTools").hidden = !onWorkout;
       document.getElementById("stickyTools").classList.toggle("pin", onWorkout);
+      document.body.classList.toggle("workout-mode", onWorkout);
+      pinWorkoutChrome();
       if (view.startsWith("day")) {
         const d = currentDays()[view];
         document.getElementById("pageTitle").textContent = d.title;
@@ -1367,6 +1384,19 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
       setNav(false);
     }
+
+    function pinWorkoutChrome() {
+      const tools = document.getElementById("stickyTools");
+      const on = document.body.classList.contains("workout-mode") && !tools.hidden;
+      if (!on) {
+        document.documentElement.style.setProperty("--tools-h", "0px");
+        return;
+      }
+      requestAnimationFrame(() => {
+        document.documentElement.style.setProperty("--tools-h", `${tools.offsetHeight}px`);
+      });
+    }
+    window.addEventListener("resize", pinWorkoutChrome);
 
     const menuBtn = document.getElementById("menuBtn");
     const navScrim = document.getElementById("navScrim");
