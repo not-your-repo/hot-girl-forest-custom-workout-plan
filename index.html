@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hot Girl Forest Workout Plan · April 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Outfit:wght@400;600;800&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fffbee;
+      --bg-2: #faf4e6;
+      --panel: #fffaf4;
+      --panel-2: #f2e8c9;
+      --line: rgba(18, 50, 42, 0.16);
+      --sage: #5c7e51;
+      --sage-2: #12322a;
+      --sage-d: #12322a;
+      --sand: #bd901b;
+      --coral: #cf604f;
+      --gold: #bd901b;
+      --magenta: #3e2a56;
+      --text: #12322a;
+      --muted: #3e564c;
+      --shadow: 0 18px 40px rgba(18, 50, 42, 0.12);
+      --radius: 6px;
+      --sidebar: 268px;
+      --display: "Fjalla One", sans-serif;
+      --serif: Philosopher, Georgia, serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(180deg, rgba(255,251,238,0.88), rgba(255,251,238,0.94)),
+        url("assets/images/leaf-damask.jpg");
+      background-size: auto, 420px;
+      color: var(--text); font-family: Outfit, system-ui, sans-serif; font-weight: 400; letter-spacing: 0.01em;
+    }
+    body { min-height: 100vh; }
+    img { max-width: 100%; display: block; }
+    button, input, select { font-family: inherit; }
+    a { color: var(--sage); }
+
+    .app { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; padding: 28px 20px;
+      background:
+        linear-gradient(180deg, rgba(18,50,42,0.88), rgba(18,50,42,0.94)),
+        url("assets/images/leaf-damask.jpg");
+      background-size: auto, 320px;
+      border-right: 3px solid var(--gold); display: flex; flex-direction: column; gap: 22px;
+      color: #fffbee;
+    }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .brand > div:nth-child(2) { min-width: 0; flex: 1; }
+    .mark {
+      width: 42px; height: 42px; border-radius: 4px;
+      background: var(--gold);
+      display: grid; place-items: center; color: #12322a; font-family: var(--display); font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+    .brand h1 { font-family: var(--display); font-size: 18px; font-weight: 400; line-height: 1.15; text-transform: uppercase; color: #fffbee; }
+    .brand p { color: #d9c89d; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin-top: 3px; }
+    nav { display: flex; flex-direction: column; gap: 4px; }
+    .nav-btn {
+      appearance: none; border: 0; background: transparent; color: #faf4e6;
+      text-align: left; padding: 11px 12px; border-radius: 4px; cursor: pointer; font-size: 14px;
+    }
+    .nav-btn:hover, .nav-btn.active { background: rgba(255,251,238,0.1); color: #fffbee; }
+    .nav-btn.active { box-shadow: inset 3px 0 0 var(--gold); }
+    .mobile-bar, .nav-scrim, .drawer-close { display: none; }
+    .side-card {
+      margin-top: auto; background: rgba(255,251,238,0.08); border: 1px solid rgba(217,200,157,0.35);
+      border-radius: 4px; padding: 14px; font-size: 12px; color: #faf4e6;
+    }
+    .side-card strong { color: var(--gold); display: block; margin-bottom: 6px; font-weight: 800; font-family: Outfit, sans-serif; }
+
+    .main { padding: 28px 36px 80px; max-width: 1280px; }
+    .topbar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; }
+    .sticky-tools {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: flex-end;
+      margin-bottom: 22px;
+    }
+    .sticky-tools.pin {
+      position: sticky; top: 0; z-index: 40;
+      justify-content: space-between;
+      margin: 0 -12px 18px; padding: 10px 12px;
+      background:
+        linear-gradient(180deg, rgba(255,251,238,0.98) 72%, rgba(255,251,238,0.88));
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .kicker { color: var(--sage); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 800; }
+    h2.page { font-family: var(--display); font-size: 42px; font-weight: 400; margin: 6px 0 8px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--sage-2); line-height: 1.1; overflow-wrap: break-word; }
+    .lede { color: var(--muted); max-width: 62ch; line-height: 1.55; overflow-wrap: break-word; }
+    .phase-wrap { display: flex; gap: 8px; background: var(--panel); padding: 6px; border-radius: 4px; border: 1px solid var(--line); }
+    .phase-wrap[hidden], .sticky-tools[hidden], .timer[hidden] { display: none !important; }
+    .phase-btn {
+      border: 0; background: transparent; color: var(--muted); padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .phase-btn::before { content: "Phase "; }
+    .phase-btn.active { background: var(--sage-d); color: #fffbee; }
+    .arc-card { cursor: pointer; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+    .arc-card.on { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+
+    .view { display: none; }
+    .view.active { display: block; animation: in 0.35s ease; }
+    @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .hero {
+      position: relative; border-radius: 24px; overflow: hidden; min-height: 280px;
+      background: #12322a; margin-bottom: 22px; box-shadow: var(--shadow);
+    }
+    .hero img.bg { width: 100%; height: 320px; object-fit: cover; filter: saturate(1.05) brightness(0.78); }
+    .hero-copy {
+      position: absolute; inset: 0; padding: 32px; display: flex; flex-direction: column; justify-content: flex-end;
+      background: linear-gradient(90deg, rgba(18,50,42,0.88) 0%, rgba(18,50,42,0.4) 55%, rgba(18,50,42,0.08) 100%);
+      color: #fffbee;
+    }
+    .hero-copy .kicker { color: var(--gold); }
+    .hero-copy h3 { font-family: var(--display); font-size: 36px; max-width: 16ch; text-transform: uppercase; letter-spacing: 0.03em; color: #fffbee; }
+    .portrait-float {
+      position: absolute; right: 28px; bottom: -8px; height: 300px; width: auto;
+      filter: drop-shadow(0 16px 30px rgba(0,0,0,0.45));
+    }
+
+    .grid { display: grid; gap: 16px; }
+    .g-4 { grid-template-columns: repeat(4, 1fr); }
+    .g-3 { grid-template-columns: repeat(3, 1fr); }
+    .g-2 { grid-template-columns: 1.2fr 0.8fr; }
+    .g-2eq { grid-template-columns: 1fr 1fr; }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 18px; box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset;
+    }
+    .stat { font-family: var(--display); font-size: 28px; font-weight: 400; }
+    .stat span { font-size: 14px; color: var(--muted); font-family: Outfit, sans-serif; font-weight: 420; }
+    .label { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .bar { height: 8px; background: #e6dcb8; border-radius: 99px; overflow: hidden; margin-top: 10px; }
+    .bar > i { display: block; height: 100%; width: 18.2%; background: linear-gradient(90deg, var(--sage), var(--gold)); }
+
+    h3.sec { font-family: var(--display); font-size: 22px; margin: 28px 0 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .rule { background: var(--panel); border-radius: 16px; padding: 16px; border: 1px solid var(--line); }
+    .rule b { display: block; color: var(--gold); margin-bottom: 6px; font-family: var(--display); text-transform: uppercase; letter-spacing: 0.04em; }
+    .rule p { color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+
+    .warn {
+      background: rgba(207, 96, 79, 0.1); border: 1px solid rgba(207, 96, 79, 0.35);
+      color: #8a3a2e; border-radius: 4px; padding: 16px 18px; line-height: 1.55; font-size: 14px;
+    }
+    .note {
+      background: rgba(92, 126, 81, 0.1); border: 1px solid rgba(92, 126, 81, 0.28);
+      border-radius: 4px; padding: 16px 18px; color: var(--sage-2); line-height: 1.55; font-size: 14px;
+    }
+
+    .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+    .day-chip {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 12px; cursor: pointer;
+      min-height: 118px; text-align: left; color: inherit;
+    }
+    .day-chip:hover { border-color: var(--gold); }
+    .day-chip .d { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .day-chip h4 { font-size: 14px; margin: 8px 0 6px; font-family: var(--display); text-transform: uppercase; }
+    .day-chip p { font-size: 12px; color: var(--muted); }
+    .day-chip.rest { opacity: 0.72; }
+    .tag { display: inline-block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; background: var(--sage-d); color: #fffbee; }
+
+    .ex {
+      display: grid; grid-template-columns: 220px 1fr; gap: 18px; background: var(--panel);
+      border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-bottom: 14px;
+    }
+    .ex-media { position: relative; background: #12322a; min-height: 280px; }
+    .ex-media img { width: 100%; height: 100%; object-fit: cover; min-height: 280px; }
+    .media-toggle {
+      position: absolute; left: 10px; bottom: 10px; display: flex; gap: 6px;
+    }
+    .media-toggle button {
+      border: 0; background: rgba(18,50,42,0.78); color: #fffbee; padding: 6px 10px;
+      border-radius: 4px; cursor: pointer; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .media-toggle button.on { background: var(--gold); color: #12322a; }
+    .ex-body { padding: 18px 18px 16px 0; }
+    .ex-body h4 { font-size: 20px; font-family: var(--display); text-transform: uppercase; }
+    .meta { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 12px; }
+    .pill { font-size: 12px; padding: 4px 9px; border-radius: 99px; background: var(--panel-2); color: var(--sage-2); }
+    .cues { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .cues div { background: var(--bg-2); border-radius: 12px; padding: 10px 12px; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+    .cues b { color: var(--gold); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .row-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+    .btn {
+      border: 0; background: var(--gold); color: #12322a; padding: 9px 14px; border-radius: 4px;
+      cursor: pointer; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--sage-2); }
+    .check { display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 13px; }
+    .check input { accent-color: var(--sage); width: 16px; height: 16px; }
+
+    .compare { position: relative; height: 320px; overflow: hidden; background: #12322a; }
+    .compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .compare .top { clip-path: inset(0 50% 0 0); }
+    .compare input[type=range] {
+      position: absolute; left: 0; right: 0; bottom: 12px; width: calc(100% - 24px); margin: 0 12px; z-index: 2;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-weight: 550; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .food { width: 100%; height: 220px; object-fit: cover; border-radius: 14px; margin-bottom: 12px; }
+
+    .library { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .lib {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    }
+    .lib img { width: 100%; height: 210px; object-fit: cover; }
+    .lib .pad { padding: 12px 14px 16px; }
+    .lib h4 { font-size: 16px; margin-bottom: 4px; font-family: var(--display); text-transform: uppercase; }
+    .lib p { color: var(--muted); font-size: 13px; }
+    a.yt {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
+      color: var(--sage-2); font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+      text-transform: uppercase; text-decoration: none; border: 1px solid var(--line);
+      padding: 7px 10px; border-radius: 4px; width: fit-content; background: var(--bg-2);
+    }
+    a.yt:hover { border-color: var(--gold); background: #fff; color: var(--sage-2); }
+    a.yt svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .row-actions a.yt { margin-top: 0; }
+
+    .timer {
+      display: flex; gap: 10px; align-items: center; background: var(--panel); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px 12px; box-shadow: var(--shadow); flex-shrink: 0;
+    }
+    .timer-meta { display: flex; align-items: center; gap: 10px; }
+    .timer b {
+      font-family: var(--display); font-size: 22px; font-variant-numeric: tabular-nums;
+      min-width: 56px; text-align: center; letter-spacing: 0.02em;
+    }
+    .timer.run { border-color: var(--gold); }
+    .timer.run b { color: var(--coral); }
+    .timer .label { margin: 0; }
+
+    .set-track {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px;
+    }
+    .set-track .label { margin: 0 4px 0 0; }
+    .set-track .count { color: var(--muted); font-size: 12px; margin-right: 4px; }
+    .set-box {
+      display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+      padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px;
+      background: var(--bg-2); font-size: 12px; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--sage-2);
+    }
+    .set-box input { accent-color: var(--sage); width: 14px; height: 14px; }
+    .set-box:has(input:checked) {
+      background: var(--sage-d); color: #fffbee; border-color: var(--sage-d);
+    }
+    .set-skip { color: var(--muted); font-size: 13px; margin-top: 12px; }
+    .set-pair {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 6px 4px 10px; border: 1px solid var(--line); border-radius: 4px;
+      background: var(--panel-2);
+    }
+    .set-pair .n {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted); margin-right: 2px;
+    }
+
+    .log-row { display: flex; gap: 8px; margin-top: 10px; }
+    .log-row input, .log-row select {
+      background: #fff; border: 1px solid var(--line); color: var(--text); border-radius: 4px; padding: 8px 10px;
+    }
+    #weightChart { width: 100%; height: 180px; }
+
+    ul.clean { padding-left: 18px; color: var(--muted); line-height: 1.6; }
+    ul.clean li { margin: 4px 0; }
+
+    .quote-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; }
+    .quote-hero { position: relative; min-height: 280px; border-radius: 20px; overflow: hidden; }
+    .quote-hero img { width: 100%; height: 100%; object-fit: cover; min-height: 280px; }
+    .quote-hero blockquote {
+      position: absolute; inset: auto 0 0 0; margin: 0; padding: 24px;
+      background: linear-gradient(transparent, rgba(18,50,42,0.92));
+      font-family: var(--serif); font-size: 26px; line-height: 1.25; color: #fffbee;
+    }
+    .quote-hero cite { display: block; margin-top: 10px; font-family: Outfit, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-style: normal; }
+    .quote-stack { display: grid; gap: 12px; }
+    .quote-card {
+      position: relative; border-radius: 16px; overflow: hidden; min-height: 160px;
+      border: 1px solid var(--line);
+    }
+    .quote-card img { width: 100%; height: 160px; object-fit: cover; filter: brightness(0.55); }
+    .quote-card p {
+      position: absolute; inset: 0; padding: 16px; display: flex; align-items: flex-end;
+      font-family: var(--serif); font-size: 18px; line-height: 1.3; margin: 0; color: #fffbee;
+    }
+
+    .forest-win {
+      display: none;
+      align-items: center;
+      gap: 18px;
+      margin: 16px 0;
+      padding: 18px 20px;
+      background: #12322a;
+      color: #fffbee;
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+    }
+    .forest-win.show { display: flex; animation: pop 0.45s ease; }
+    .forest-win svg { flex: 0 0 64px; width: 64px; height: 64px; }
+    .forest-win h3 { font-family: var(--display); font-size: 22px; text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 6px; color: var(--gold); }
+    .forest-win p { margin: 0; color: #faf4e6; line-height: 1.5; }
+    @keyframes pop { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+    .day-wins { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .day-win-chip {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+      padding: 12px 8px 14px; text-align: center; color: var(--muted);
+    }
+    .day-win-chip svg { width: 44px; height: 44px; margin: 0 auto 8px; opacity: 0.22; filter: grayscale(1); }
+    .day-win-chip .d { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .day-win-chip .n { font-size: 12px; margin-top: 4px; }
+    .day-win-chip.got {
+      background: #12322a; border-color: var(--gold); color: #fffbee;
+    }
+    .day-win-chip.got svg { opacity: 1; filter: none; }
+    .day-win-chip.got .n { color: var(--gold); }
+    .day-chip .chip-shroom {
+      display: none; width: 28px; height: 28px; margin-top: 8px;
+    }
+    .day-chip .chip-shroom svg { width: 100%; height: 100%; }
+    .day-chip.got .chip-shroom { display: block; }
+    .day-chip.got { border-color: var(--gold); }
+
+    .sym-wrap { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: start; }
+    .sym-figure { background: var(--bg-2); border-radius: 6px; padding: 12px 8px 8px; text-align: center; }
+    .sym-figure svg { width: 100%; max-width: 160px; height: auto; margin: 0 auto; }
+    .sym-figure .cap { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+    .sym-zone { fill: #d9e0d4; stroke: #12322a; stroke-width: 1.2; transition: fill 0.25s ease; }
+    .sym-zone.on { stroke: #12322a; }
+    .sym-body { fill: #e7efe4; stroke: #12322a; stroke-width: 1.4; }
+    .sym-scoreline { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+    .sym-scoreline b { font-family: var(--display); font-size: 48px; line-height: 1; color: var(--sage-2); }
+    .sym-scoreline span { color: var(--muted); font-size: 16px; }
+    .sym-meter { display: grid; grid-template-columns: repeat(11, 1fr); gap: 4px; margin: 8px 0 16px; }
+    .sym-meter i { display: block; height: 10px; border-radius: 2px; background: #e6dcb8; }
+    .sym-meter i.on { background: var(--tick, var(--sage)); }
+    .sym-title { font-family: var(--display); text-transform: uppercase; letter-spacing: 0.04em; font-size: 20px; margin: 0 0 6px; }
+    .sym-guide { color: var(--muted); line-height: 1.5; margin: 0 0 16px; }
+    .sym-bars { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; align-items: end; height: 72px; }
+    .sym-bars .col { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; gap: 4px; }
+    .sym-bars .barbit { border-radius: 2px 2px 0 0; min-height: 4px; background: #e6dcb8; }
+    .sym-bars .d { font-size: 9px; color: var(--muted); text-align: center; letter-spacing: 0; }
+    .sym-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: 12px; color: var(--muted); margin-top: 12px; }
+    .sym-legend b { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+    @media (max-width: 1080px) {
+      html, body { overflow-x: hidden; }
+      body.nav-open { overflow: hidden; }
+      .app { display: block; min-width: 0; }
+      .g-4, .g-3, .rules, .week, .library, .g-2, .g-2eq, .cues, .ex, .quote-grid, .sym-wrap { grid-template-columns: 1fr; }
+      .day-wins { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+      .portrait-float { display: none; }
+      .ex-body { padding: 14px; }
+      .main { padding: 16px 16px 96px; min-width: 0; overflow-x: hidden; }
+      .card, .note, .warn, .ex, .lede, .cues, .cues div { min-width: 0; overflow-wrap: break-word; }
+      .phase-btn::before { content: none; }
+
+      .mobile-bar {
+        display: flex; align-items: center; gap: 10px;
+        position: sticky; top: 0; z-index: 60;
+        height: calc(52px + env(safe-area-inset-top, 0px));
+        padding: env(safe-area-inset-top, 0px) 12px 0;
+        background: #12322a; border-bottom: 3px solid var(--gold); color: #fffbee;
+      }
+      .mobile-bar .mark { width: 34px; height: 34px; font-size: 14px; flex: 0 0 auto; }
+      .mobile-bar .name { font-family: var(--display); font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.15; }
+      .menu-btn {
+        appearance: none; border: 0; background: transparent; color: #fffbee;
+        width: 44px; height: 44px; display: grid; place-content: center; gap: 5px; cursor: pointer; flex: 0 0 auto;
+      }
+      .menu-btn span { display: block; width: 18px; height: 2px; background: #fffbee; border-radius: 2px; }
+      .nav-scrim {
+        display: none; position: fixed; inset: 0; z-index: 65;
+        background: rgba(18, 50, 42, 0.5); border: 0; padding: 0; cursor: pointer;
+      }
+      body.nav-open .nav-scrim { display: block; }
+      .sidebar {
+        position: fixed; top: 0; left: 0; z-index: 70;
+        width: min(320px, 88vw); height: 100dvh;
+        transform: translateX(-105%); transition: transform 0.22s ease;
+        overflow-y: auto; padding: max(20px, env(safe-area-inset-top, 0px)) 18px 24px;
+        border-right: 3px solid var(--gold);
+      }
+      body.nav-open .sidebar { transform: translateX(0); }
+      .drawer-close {
+        display: grid; place-items: center; margin-left: auto;
+        appearance: none; border: 0; background: rgba(255,251,238,0.1); color: #fffbee;
+        width: 36px; height: 36px; border-radius: 4px; cursor: pointer; font-size: 22px; line-height: 1;
+      }
+      .nav-btn { min-height: 44px; }
+
+      h2.page { font-size: 28px; }
+      .hero { min-height: 180px; border-radius: 14px; }
+      .hero img.bg { height: 200px; }
+      .hero-copy { padding: 16px; }
+      .hero-copy h3 { font-size: 24px; }
+      .ex-media, .ex-media img { min-height: 200px; max-height: 220px; object-fit: cover; }
+      .compare { height: 220px; }
+      .quote-hero { min-height: 200px; }
+      .quote-hero blockquote { font-size: 20px; padding: 16px; }
+      .forest-win { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .log-row { flex-wrap: wrap; }
+      .log-row input { min-width: 0; flex: 1 1 120px; }
+
+      .topbar, .topbar > div, .sticky-tools, .ex-body, .note, .warn, .lede {
+        min-width: 0; max-width: 100%;
+      }
+      .topbar { width: 100%; overflow: hidden; }
+      .topbar > div { width: 100%; overflow: hidden; }
+      .lede, .note, .cues div, h2.page { overflow-wrap: anywhere; word-break: break-word; }
+
+      .sticky-tools.pin {
+        display: block !important;
+        top: calc(52px + env(safe-area-inset-top, 0px));
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 0 14px; padding: 8px 0;
+      }
+      #phaseWrap {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        width: 100% !important; max-width: 100% !important;
+        flex: none; min-width: 0; gap: 4px; margin-bottom: 8px;
+      }
+      #phaseWrap[hidden] { display: none !important; }
+      .phase-btn {
+        width: 100%; min-width: 0; padding: 8px 0; font-size: 13px; letter-spacing: 0;
+        background: var(--bg-2); color: var(--sage-2);
+      }
+      .phase-btn.active { background: var(--sage-d); color: #fffbee; }
+      .timer:not([hidden]) {
+        width: 100%; flex: 1 1 100%; min-width: 0; box-shadow: none;
+        display: flex !important; flex-wrap: wrap; gap: 8px;
+      }
+      .timer-meta { width: 100%; justify-content: flex-start; gap: 12px; }
+      .timer b { min-width: 48px; font-size: 20px; }
+      .timer .btn { flex: 1 1 calc(50% - 8px); min-width: 0; padding: 8px 10px; font-size: 11px; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <header class="mobile-bar" id="mobileBar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mark">HF</div>
+    <div class="name">Hot Girl Forest</div>
+  </header>
+  <button class="nav-scrim" id="navScrim" type="button" hidden aria-label="Close menu"></button>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="mark">HF</div>
+        <div>
+          <h1>Hot Girl Forest Workout Plan</h1>
+          <p>Electric Forest 2027 prep</p>
+        </div>
+        <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">&times;</button>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-view="overview">Overview</button>
+        <button class="nav-btn" data-view="week">Weekly map</button>
+        <button class="nav-btn day-nav" data-view="day1">Day 1 · Goblet squat and glute</button>
+        <button class="nav-btn day-nav" data-view="day2">Day 2 · Press, row, and brace</button>
+        <button class="nav-btn day-nav" data-view="day3">Day 3 · Deadlift and carry</button>
+        <button class="nav-btn day-nav" data-view="day4">Day 4 · One-arm kettlebell</button>
+        <button class="nav-btn day-nav" data-view="day5">Day 5 · Full-body kettlebell</button>
+        <button class="nav-btn" data-view="library">Form library</button>
+        <button class="nav-btn" data-view="nutrition">Nutrition</button>
+        <button class="nav-btn" data-view="recovery">Recovery and red flags</button>
+        <button class="nav-btn" data-view="progress">Progress</button>
+        <button class="nav-btn" data-view="motivation">Motivation</button>
+      </nav>
+      <div class="side-card">
+        <strong>Session rule</strong>
+        Muscle work of 0–3 out of 10 is acceptable. Nerve pain that travels farther down the leg is a stop. Swap the drill. Do not push through it.
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <div class="kicker">April 2027 · Forest prep</div>
+          <h2 class="page" id="pageTitle">Overview</h2>
+          <p class="lede" id="pageLede">Train Monday through Friday. Rest Saturday and Sunday. Arrive in April 2027 ready for Electric Forest.</p>
+        </div>
+      </div>
+      <div class="sticky-tools" id="stickyTools" hidden>
+        <div class="phase-wrap" id="phaseWrap" hidden title="Change sets, reps, and load">
+          <button class="phase-btn active" data-phase="1">1</button>
+          <button class="phase-btn" data-phase="2">2</button>
+          <button class="phase-btn" data-phase="3">3</button>
+        </div>
+        <div class="timer" id="restTimer" hidden>
+          <div class="timer-meta">
+            <span class="label">Rest</span>
+            <b id="clock">1:30</b>
+          </div>
+          <button class="btn" id="startRest">Start 90s</button>
+          <button class="btn ghost" id="resetRest">Reset</button>
+        </div>
+      </div>
+
+      <section class="view active" id="overview">
+        <div class="hero">
+          <img class="bg" src="assets/images/forest-path.jpg" alt="Lantern-lit pine path with magenta and teal light, in the spirit of Electric Forest" />
+          <div class="hero-copy">
+            <div class="kicker">Hot Girl Forest</div>
+            <h3>Train for the Forest. Hit 135 pounds by April 2027.</h3>
+          </div>
+        </div>
+
+        <div class="grid g-4">
+          <div class="card"><div class="label">Now</div><div class="stat">165 <span>lb</span></div></div>
+          <div class="card"><div class="label">Target · April 1, 2027</div><div class="stat">135 <span>lb</span></div></div>
+          <div class="card"><div class="label">Time</div><div class="stat">29 <span>weeks</span></div></div>
+          <div class="card">
+            <div class="label">Required pace</div>
+            <div class="stat">1.0 <span>lb / week</span></div>
+            <div class="bar"><i></i></div>
+          </div>
+        </div>
+
+        <h3 class="sec">Plan summary</h3>
+        <div class="grid g-2">
+          <div class="card">
+            <p class="lede" style="max-width:none">This week is built for Electric Forest 2027. Lift Monday through Friday. Rest Saturday and Sunday. The two sessions that stay every week are <b style="color:var(--sand)">goblet squat and glute</b> on Monday and <b style="color:var(--sand)">full-body kettlebell</b> on Friday. Tuesday, Wednesday, and Thursday fill the gaps with bracing, hinging, and one-arm work.</p>
+            <p class="lede" style="max-width:none;margin-top:12px">Every lifting day uses a kettlebell. Walking is the cardio. No running, jumping, or swings. The aim is a quieter nerve, stronger hips, and 135 pounds by April 2027 — so June in Rothbury feels easy.</p>
+          </div>
+          <div class="card">
+            <div class="label">Estimated energy</div>
+            <p style="margin:8px 0 12px;color:var(--muted);font-size:14px;line-height:1.5">Female, 29 years, 5'1", 165 lb. Resting burn is about <b style="color:var(--sand)">1,411 calories</b>. With five days of lifting plus easy walking, total daily burn is likely <b style="color:var(--sand)">1,940–2,190 calories</b>.</p>
+            <div class="warn">
+              Two thousand four hundred calories a day is probably at or above maintenance at this size and activity level. That intake will fuel training. On its own, it is unlikely to produce 30 pounds of fat loss. If 135 lb by April is the priority, keep protein at 150–165 g and bring the rest of the plate to about 1,750–1,850 calories. Weigh in for two weeks and let the trend decide. Details are on the Nutrition tab.
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sec" id="phaseHeading">This phase</h3>
+        <div id="phaseNow"></div>
+
+        <h3 class="sec">Six non-negotiables</h3>
+        <div class="rules">
+          <div class="rule"><b>1. Neutral spine under load</b><p>The low back does not round or arch to lift a weight. Hips and shoulders move. The lumbar spine stays quiet.</p></div>
+          <div class="rule"><b>2. Hips do the bending</b><p>Pick things up with a hip hinge, not a toe-touch. If the dowel leaves your head, mid-back, or tailbone, the hinge is lost.</p></div>
+          <div class="rule"><b>3. Core resists motion</b><p>Bird dog, dead bug, McGill curl-up, Pallof press, and side plank. No sit-ups. No Russian twists.</p></div>
+          <div class="rule"><b>4. Walking is the cardio</b><p>Easy treadmill or outdoor walking after lifting. No running, jumping, or high-impact intervals while the nerve is irritable.</p></div>
+          <div class="rule"><b>5. Centralize, do not chase</b><p>Symptoms should stay put or move up the leg. If they spread farther down, that drill is done for the day.</p></div>
+          <div class="rule"><b>6. Range is pain-free</b><p>Cut the squat, hinge, or walk short of the flare. Depth is not a virtue here. Clean reps are.</p></div>
+        </div>
+
+        <h3 class="sec">The 29-week arc</h3>
+        <p class="lede" style="margin-bottom:12px">Click a block, or use the Phase 1 / 2 / 3 tabs at the top. The prescription below the hero follows the tab you pick.</p>
+        <div class="grid g-3" id="arcGrid"></div>
+      </section>
+
+      <section class="view" id="week">
+        <div class="week" id="weekGrid"></div>
+        <h3 class="sec">Every session, in this order</h3>
+        <div class="grid g-2eq">
+          <div class="card">
+            <div class="label">Warm-up · 8–10 minutes</div>
+            <ul class="clean">
+              <li>Easy walk, 5 minutes. You can speak in full sentences.</li>
+              <li>90/90 breathing, 5 slow breaths. Ribs stacked over the pelvis.</li>
+              <li>Pelvic tilts, 8. Find the middle. That middle is your training posture.</li>
+              <li>Glute squeezes, 10 holds of 3 seconds. Then a dowel hip hinge, 8 reps.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="label">Finish · 15–30 minutes</div>
+            <ul class="clean">
+              <li>Main lifts, 35–45 minutes. Rest 60–90 seconds between sets.</li>
+              <li>Easy walk as written for that day. No incline that recreates leg pain.</li>
+              <li>Cool-down: 5 minutes of slower walking, then a supine figure-four if the hip allows it.</li>
+              <li>If sitting flares your symptoms, stand or lie between sets. Do not sit in a slump.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note" style="margin-top:16px">Saturday and Sunday are rest. Optional easy walking is fine. Five quality days will beat seven sloppy ones.</div>
+      </section>
+
+      <section class="view" id="day1"></section>
+      <section class="view" id="day2"></section>
+      <section class="view" id="day3"></section>
+      <section class="view" id="day4"></section>
+      <section class="view" id="day5"></section>
+
+      <section class="view" id="library">
+        <p class="lede" style="margin-bottom:16px">Each card shows the working position plus a YouTube form demo for that lift. Open the video in a new tab. Stay with the plan’s sciatica-safe version: no swings, snatches, or windmills.</p>
+        <div class="library" id="libraryGrid"></div>
+      </section>
+
+      <section class="view" id="nutrition">
+        <img class="food" src="assets/images/nutrition.jpg" alt="High-protein spread: chicken thighs, chicken breast, Greek yogurt, eggs, cottage cheese, beans, quinoa, broccoli, avocado, and berries" />
+        <div class="grid g-2">
+          <div class="card">
+            <div class="label">Trainer note on 2,400 calories</div>
+            <p style="line-height:1.55;color:var(--muted);margin-top:8px">The plan includes a 2,400-calorie, protein-emphasized template. At 5 feet 1 inch and 165 lb, estimated daily burn with this training is roughly 1,940–2,190 calories. Eating 2,400 calories is likely a small surplus. A surplus will not produce a 30-pound fat-loss phase.</p>
+            <p style="line-height:1.55;color:var(--muted);margin-top:10px">Hold protein at <b style="color:var(--sand)">150–165 grams</b> either way. That is about 0.9–1.0 gram per pound of current body weight, and it is the amount that protects muscle. If the scale has not moved after 14 days at 2,400, drop toward 1,750–1,850 without touching the protein.</p>
+          </div>
+          <div class="card">
+            <div class="label">Two working targets</div>
+            <table>
+              <thead><tr><th></th><th>Fueling · 2,400</th><th>Fat-loss · 1,800</th></tr></thead>
+              <tbody>
+                <tr><td>Protein</td><td>160 g</td><td>160 g</td></tr>
+                <tr><td>Carbohydrate</td><td>270 g</td><td>155 g</td></tr>
+                <tr><td>Fat</td><td>75 g</td><td>60 g</td></tr>
+                <tr><td>Calories</td><td>2,395</td><td>1,800</td></tr>
+                <tr><td>Use when</td><td>Weight is falling or energy is crashing</td><td>April 135 lb is the priority</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 class="sec">Protein-emphasized day at 2,400 calories</h3>
+        <div class="card" style="overflow:auto">
+          <table>
+            <thead><tr><th>Meal</th><th>Plate</th><th>Protein</th></tr></thead>
+            <tbody>
+              <tr><td>Breakfast</td><td>2 eggs, 170 g plain Greek yogurt, 40 g dry oats, berries, coffee</td><td>38 g</td></tr>
+              <tr><td>Lunch</td><td>150 g cooked chicken breast, 1 cup cooked quinoa, large salad, 2 tsp olive oil</td><td>46 g</td></tr>
+              <tr><td>Pre-training</td><td>1 scoop whey, 1 banana, 2 rice cakes</td><td>26 g</td></tr>
+              <tr><td>Dinner</td><td>150 g chicken thighs, 300 g potato, broccoli, 1 tsp olive oil</td><td>38 g</td></tr>
+              <tr><td>Evening</td><td>150 g low-fat cottage cheese</td><td>18 g</td></tr>
+              <tr><td><b>Day total</b></td><td>Protein at every meal. Vegetables at lunch and dinner. Walk after training, not on an empty tank.</td><td><b>166 g</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="lede" style="margin-top:12px">To convert this day to about 1,800 calories, keep the protein foods, drop the oats, use 1/2 cup quinoa, and cut the potato to 150 g. Do not cut the yogurt, chicken, whey, or cottage cheese first. Those are the point of a protein-emphasized diet.</p>
+        <div class="note" style="margin-top:16px">Weigh on Friday mornings, after using the bathroom, before food. Use the same scale and the same conditions. A weekly average drop of 0.5–1.0 lb is the green light. If weight drops faster than that, add 100–150 calories. If there is no change after two weeks, subtract 150–200 calories from carbohydrate, not from protein.</div>
+      </section>
+
+      <section class="view" id="recovery">
+        <div class="warn">
+          <b style="display:block;margin-bottom:6px">Stop and seek urgent care</b>
+          New bowel or bladder changes, numbness in the saddle area (inner thighs, genitals, anus), or rapidly worsening leg weakness are not training problems. They are medical emergencies. Fever with back pain also needs a physician, not another set of bridges.
+        </div>
+        <h3 class="sec">Leave these out for now</h3>
+        <div class="grid g-2eq">
+          <div class="card">
+            <ul class="clean">
+              <li>Sit-ups, crunches, V-ups, and Russian twists</li>
+              <li>Toe touches, standing forward folds, and aggressive hamstring stretches that recreate leg pain</li>
+              <li>Bent-over rows and heavy conventional deadlifts from the floor</li>
+              <li>Running, jumping, burpees, and box jumps</li>
+              <li>Kettlebell swings, snatches, cleans, and windmills</li>
+              <li>Double-leg lifts and hanging leg raises</li>
+            </ul>
+          </div>
+          <div class="card">
+            <ul class="clean">
+              <li>Deep yoga flexion if it sends symptoms down the leg</li>
+              <li>Long sits between sets, in the car, and on the sofa</li>
+              <li>Pushing a walk, squat, or hinge into the flare “to work through it”</li>
+              <li>Loading a lift whose form you cannot control for every rep</li>
+              <li>Stretching a nerve that is already angry. Glide it. Do not yank it.</li>
+            </ul>
+          </div>
+        </div>
+        <h3 class="sec">Recovery days</h3>
+        <div class="card">
+          <p style="color:var(--muted);line-height:1.55">Saturday and Sunday are rest days. Optional 20–40 minutes of easy walking is fine if symptoms are stable, then the nerve glide if it does not flare your symptoms. Sleep 7–9 hours. Heat may ease muscle guarding; ice is optional. If a session spikes leg symptoms for more than 24 hours, the next session is a walk and the McGill trio only.</p>
+        </div>
+      </section>
+
+      <section class="view" id="progress">
+        <div class="grid g-2">
+          <div class="card">
+            <div class="label">Weekly weigh-in</div>
+            <div class="log-row">
+              <input type="date" id="wDate" />
+              <input type="number" id="wVal" step="0.1" min="100" max="200" placeholder="lb" />
+              <button class="btn" id="wAdd">Log</button>
+            </div>
+            <canvas id="weightChart" width="640" height="180"></canvas>
+            <p class="lede" style="margin-top:8px">Start at 165. Aim for 135. The line is a weekly average, not a daily verdict.</p>
+          </div>
+          <div class="card">
+            <div class="label">Daily mushrooms this week</div>
+            <div class="day-wins" id="weekChecks"></div>
+            <div class="label" style="margin-top:16px">Symptom score today (0–10)</div>
+            <input type="range" id="symptom" min="0" max="10" value="3" style="width:100%" />
+            <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:12px"><span>Quiet</span><span id="symOut">3</span><span>Flare</span></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <div class="label">Sciatica map · live from today’s score</div>
+          <div class="sym-wrap">
+            <div class="sym-figure">
+              <svg viewBox="0 0 200 400" role="img" aria-label="Back-view body map of the sciatic path">
+                <ellipse class="sym-body" cx="100" cy="28" rx="20" ry="22"/>
+                <rect class="sym-body" x="90" y="46" width="20" height="16" rx="4"/>
+                <path class="sym-body" d="M68 62h64l16 78H52z"/>
+                <path id="z-lumbar" class="sym-zone" d="M78 128h44l6 28H72z"/>
+                <ellipse id="z-glute-l" class="sym-zone" cx="82" cy="172" rx="20" ry="18"/>
+                <ellipse id="z-glute-r" class="sym-zone" cx="118" cy="172" rx="20" ry="18"/>
+                <rect id="z-thigh-l" class="sym-zone" x="64" y="186" width="26" height="78" rx="12"/>
+                <rect id="z-thigh-r" class="sym-zone" x="110" y="186" width="26" height="78" rx="12"/>
+                <rect id="z-calf-l" class="sym-zone" x="68" y="262" width="20" height="68" rx="10"/>
+                <rect id="z-calf-r" class="sym-zone" x="112" y="262" width="20" height="68" rx="10"/>
+                <ellipse id="z-foot-l" class="sym-zone" cx="79" cy="342" rx="16" ry="9"/>
+                <ellipse id="z-foot-r" class="sym-zone" cx="121" cy="342" rx="16" ry="9"/>
+                <text x="8" y="148" font-size="9" fill="#3e564c">Low back</text>
+                <text x="8" y="176" font-size="9" fill="#3e564c">Glute</text>
+                <text x="8" y="230" font-size="9" fill="#3e564c">Thigh</text>
+                <text x="8" y="300" font-size="9" fill="#3e564c">Calf</text>
+                <text x="8" y="348" font-size="9" fill="#3e564c">Foot</text>
+              </svg>
+              <div class="cap">Usual sciatic path</div>
+            </div>
+            <div>
+              <div class="sym-scoreline"><b id="symBig">3</b><span>out of 10</span></div>
+              <div class="sym-meter" id="symMeter"></div>
+              <h3 class="sym-title" id="symTitle">Local</h3>
+              <p class="sym-guide" id="symGuide"></p>
+              <div class="label">Last 14 days</div>
+              <div class="sym-bars" id="symBars"></div>
+              <div class="sym-legend">
+                <span><b style="background:#5c7e51"></b>0–2 Quiet</span>
+                <span><b style="background:#bd901b"></b>3–4 Local</span>
+                <span><b style="background:#f4633a"></b>5–6 Spreading</span>
+                <span><b style="background:#cf604f"></b>7–8 High</span>
+                <span><b style="background:#c62828"></b>9–10 Flare</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="motivation">
+        <div class="quote-grid">
+          <div class="quote-hero">
+            <img src="assets/images/forest-path.jpg" alt="Lantern-lit pine boardwalk with magenta and teal light" />
+            <blockquote>
+              The Forest is the finish line. These five days are how you get there.
+              <cite>Hot Girl Forest · April 2027</cite>
+            </blockquote>
+          </div>
+          <div class="quote-stack">
+            <article class="quote-card">
+              <img src="assets/images/forest-canopy.jpg" alt="Pink and teal lanterns strung through pine canopy under stars" />
+              <p>Happy Forest starts in the gym, on a quiet hinge, on a walk you can actually finish.</p>
+            </article>
+            <article class="quote-card">
+              <img src="assets/images/forest-lanterns.jpg" alt="Honeycomb lanterns and violet lasers in a pine grove" />
+              <p>Show up for Friday’s full-body session so June in Rothbury feels easy.</p>
+            </article>
+          </div>
+        </div>
+        <div class="grid g-3" style="margin-top:16px">
+          <article class="quote-card">
+            <img src="assets/images/forest-dance.jpg" alt="Silhouettes dancing among pines under purple lasers and lanterns" />
+            <p>You don’t have to sprint. You have to last four days in the trees.</p>
+          </article>
+          <article class="quote-card">
+            <img src="assets/images/forest-path.jpg" alt="Boardwalk through a lit forest" />
+            <p>Strong hips, calm back, lights through the pines.</p>
+          </article>
+          <article class="quote-card">
+            <img src="assets/images/forest-canopy.jpg" alt="Lanterns in the pines" />
+            <p>135 pounds by April. Then the Forest. Same girl. Brighter lights.</p>
+          </article>
+        </div>
+        <div class="note" style="margin-top:16px">Electric Forest 2027 is the why. April 2027 is the checkpoint. Lift Monday through Friday. Rest the weekend. Keep the nerve quiet so you can actually dance.</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const PHASES = {
+      1: {
+        name: "Phase 1 · Foundation",
+        dates: "7 Sep – 1 Nov 2026",
+        weeks: "8 weeks",
+        bell: "18 lb",
+        lighter: "13–18 lb for rows and floor press",
+        walk: "12–18 minutes after lifting",
+        focus: "Learn the goblet squat, the hinge, and a quiet suitcase carry. Slow reps. A calm nerve beats a heavy bell.",
+        doNow: "High box. Deadlift from a yoga block if the floor feels low. Two-leg kettlebell bridges only.",
+        notYet: "No 26 lb. No single-leg bridge. No swings."
+      },
+      2: {
+        name: "Phase 2 · Build",
+        dates: "2 Nov 2026 – 17 Jan 2027",
+        weeks: "11 weeks",
+        bell: "26 lb",
+        lighter: "18 lb is still fine for one-arm work if 26 lb makes you twist",
+        walk: "15–22 minutes after lifting",
+        focus: "Move the main bell to 26 lb only when every 18 lb rep is quiet. Walks get longer. Range stays pain-free.",
+        doNow: "Lower the box if the back stays calm. Optional 2 × 6 / side single-leg bridge if the pelvis stays level.",
+        notYet: "No 35 lb until Phase 3. No swings. Cut depth before you chase load."
+      },
+      3: {
+        name: "Phase 3 · Peak",
+        dates: "18 Jan – 1 Apr 2027",
+        weeks: "11 weeks",
+        bell: "35 lb",
+        lighter: "26 lb is still the carry and press bell if 35 lb flares your symptoms",
+        walk: "20–30 minutes, still conversational",
+        focus: "Peak load only if the back stays quiet. Arrive in April strong, not fried.",
+        doNow: "3 × 8 / side single-leg bridge if the pelvis stays level. Longest walks of the plan.",
+        notYet: "No swings, snatches, or windmills. The suitcase carry can stay a step lighter than the deadlift bell."
+      }
+    };
+
+    const EX = {
+      walk: {
+        name: "Easy walk",
+        image: "assets/images/walk.jpg",
+        sets: { 1: "12–18 min", 2: "15–22 min", 3: "20–30 min" },
+        cues: "Stand tall. Soft heel, then roll to the toe. Arms swing. Do not hike the hip of the painful side.",
+        faults: "Overstriding, holding the treadmill rails, or pushing into a breathless pace.",
+        sciatica: "This is the primary cardio. Stop if symptoms spread down the leg. Shorten the session before you speed it up.",
+        do: "Conversational pace, flat ground or a low treadmill incline that does not flare you.",
+        youtube: "https://www.youtube.com/watch?v=FjhWf3zAvec"
+      },
+      bridge: {
+        name: "Glute bridge",
+        image: "assets/images/glute-bridge.jpg",
+        sets: { 1: "3 × 10, 2-second squeeze", 2: "3 × 12, optional 3-second squeeze", 3: "3 × 10, or single-leg if pelvis stays level" },
+        cues: "Feet hip-width apart, heels down. Ribs down. Squeeze the glutes to lift until knees, hips, and shoulders make a line. Lower with control.",
+        faults: "Flaring the ribs, overextending the low back, or pushing through the toes.",
+        sciatica: "Hips do the work. Do not chase height. A shorter, quieter bridge is the correct bridge.",
+        do: "Drive through the heels. Pause at the top without a rib flare."
+      },
+      slBridge: {
+        name: "Single-leg glute bridge",
+        image: "assets/images/single-leg-bridge.jpg",
+        sets: { 1: "Skip. Use two-leg bridge.", 2: "Optional 2 × 6 / side", 3: "3 × 8 / side if pelvis stays level" },
+        cues: "One foot planted. Other knee stays bent. Hips lift without dropping the unsupported side.",
+        faults: "Twisting the pelvis or cranking the lumbar spine.",
+        sciatica: "Phase 3 only. If the pelvis cannot stay level, return to two-leg bridges.",
+        do: "Keep the hips level, or the rep does not count."
+      },
+      clam: {
+        name: "Banded clamshell",
+        image: "assets/images/clamshell.jpg",
+        sets: { 1: "3 × 12 / side", 2: "3 × 15 / side", 3: "3 × 12 / side, heavier band" },
+        cues: "Lie on your side, hips stacked, knees bent about 45 degrees, feet together. Open the top knee. Keep the feet together. Lower slowly.",
+        faults: "Rolling the pelvis backward, or letting the top foot lift.",
+        sciatica: "This is gluteus medius work. It should be felt in the side of the hip, not down the leg.",
+        do: "Hips stacked as if you are lying between two panes of glass."
+      },
+      abd: {
+        name: "Side-lying hip abduction",
+        image: "assets/images/hip-abduction.jpg",
+        sets: { 1: "2 × 12 / side", 2: "3 × 12 / side", 3: "3 × 12 / side, light ankle weight if quiet" },
+        cues: "Hips stacked. Lift the top leg a short distance, lead with the heel, toes slightly down. Lower without dropping the pelvis.",
+        faults: "Swinging the leg forward, or rolling onto the back.",
+        sciatica: "Small range. Stop before the low back joins the lift.",
+        do: "Short, strict, side-of-hip burn."
+      },
+      box: {
+        name: "Kettlebell goblet box squat",
+        image: "assets/images/kb-goblet.jpg",
+        sets: { 1: "3 × 8, 18 lb, high box", 2: "3 × 8, 26 lb, pain-free box height", 3: "3 × 6–8, 35 lb if the back stays quiet" },
+        cues: "Hold the kettlebell at the chest by the horns. Sit back to the box. Lightly touch the box. Stand by driving the floor away. Spine stays tall.",
+        faults: "Diving the chest, collapsing the knees inward, or dropping onto the box.",
+        sciatica: "Use a high box in Phase 1. Depth is not the goal. A quiet back is the goal. If squatting flares your symptoms, swap to sit-to-stand from a chair.",
+        do: "Touch the box. Do not collapse onto it.",
+        youtube: "https://www.youtube.com/watch?v=LTtBcIJG-_U"
+      },
+      kbDeadlift: {
+        name: "Kettlebell deadlift",
+        image: "assets/images/kb-deadlift.jpg",
+        sets: { 1: "3 × 8, 18 lb, from a yoga block or low step if needed", 2: "3 × 8, 26 lb", 3: "3 × 6–8, 35 lb if the hinge stays clean" },
+        cues: "Place the bell between the feet. Soft knees. Push the hips back, grab the handle, then stand tall by squeezing the glutes. Lower the same way you lifted.",
+        faults: "Rounding the low back, squatting the bell up, or yanking with the arms.",
+        sciatica: "This is a slow hip hinge, not a swing. If the floor feels too low, raise the bell on a block. Never bounce the bell.",
+        do: "Hips back, then stand tall. Slow on the way down. Slow on the way up.",
+        youtube: "https://www.youtube.com/watch?v=sDbMsk3d6F4"
+      },
+      suitcase: {
+        name: "Kettlebell suitcase carry",
+        image: "assets/images/kb-suitcase.jpg",
+        sets: { 1: "2 × 20–30 m / side, 18 lb", 2: "3 × 30–40 m / side, 18–26 lb", 3: "3 × 40 m / side, 26 lb" },
+        cues: "Hold the bell at your side as if it were a suitcase. Ribs stacked. Walk without leaning away from the weight. Switch hands and repeat.",
+        faults: "Hiking one shoulder, leaning, or rushing.",
+        sciatica: "This trains you not to lean sideways. If walking with load flares your symptoms, shorten the distance or hold the bell in a goblet position instead.",
+        do: "Walk tall. Do not let the bell pull you sideways.",
+        youtube: "https://www.youtube.com/watch?v=yVYy3nRaHjA",
+        sides: true
+      },
+      kbRow: {
+        name: "Supported kettlebell row",
+        image: "assets/images/kb-row.jpg",
+        sets: { 1: "3 × 10 / side, 18 lb", 2: "3 × 10 / side, 26 lb", 3: "3 × 8–10 / side, 26–35 lb" },
+        cues: "Hand on a bench. Back flat. Pull the kettlebell toward the hip. Pause. Lower without twisting.",
+        faults: "Rotating the torso, shrugging the shoulder, or rounding the low back.",
+        sciatica: "The bench takes load off the spine. If a standing bent-over row bothers you, stay with this version.",
+        do: "Elbow toward the hip. Hips stay square.",
+        youtube: "https://www.youtube.com/watch?v=l_cgMGUbFfc"
+      },
+      kbFloor: {
+        name: "Kettlebell floor press",
+        image: "assets/images/kb-floor-press.jpg",
+        sets: { 1: "3 × 8 / side, 18 lb", 2: "3 × 8–10 / side, 18–26 lb", 3: "3 × 8 / side, 26 lb" },
+        cues: "Lie on your back, knees bent. Press the bell over the chest. Lower until the upper arm meets the floor. The back stays on the mat.",
+        faults: "Flaring the ribs, or writhing to get the bell into position. Roll onto your side to pick it up and to set it down.",
+        sciatica: "The floor limits how far the elbow can travel, so the shoulder and chest work without extra back extension. Use one bell at a time.",
+        do: "Back stays on the mat. Press, then lower to the floor.",
+        youtube: "https://www.youtube.com/watch?v=4ULa6AJcjr8"
+      },
+      kbBridge: {
+        name: "Kettlebell glute bridge",
+        image: "assets/images/kb-bridge.jpg",
+        sets: { 1: "3 × 10, 18 lb on the hips", 2: "3 × 12, 18–26 lb", 3: "3 × 10, 26–35 lb if the pelvis stays level" },
+        cues: "Lie on your back, feet flat. Rest the kettlebell on the hips and hold the horns so it stays put. Squeeze the glutes and lift until knees, hips, and shoulders make a line. Lower with control.",
+        faults: "Flaring the ribs, overextending the low back, or letting the bell roll.",
+        sciatica: "A shorter, quieter bridge is the correct bridge. The bell is only extra load for the glutes, not a reason to arch.",
+        do: "Drive through the heels. Pause at the top without a rib flare.",
+        youtube: "https://www.youtube.com/watch?v=Yao9ShODVZA"
+      },
+      kbPress: {
+        name: "Seated kettlebell press",
+        image: "assets/images/kb-press.jpg",
+        sets: { 1: "3 × 8 / side, 18 lb", 2: "3 × 8 / side, 18–26 lb", 3: "3 × 6–8 / side, 26 lb" },
+        cues: "Sit tall, preferably with your back against a wall or bench. Press the kettlebell overhead without shrugging. Lower to the shoulder. Switch sides.",
+        faults: "Leaning back, flaring the ribs, or twisting as the bell goes up.",
+        sciatica: "If sitting on the floor bothers you, sit on a bench with back support. Keep the ribs down so the low back does not take over the press.",
+        do: "Tall sit. Ribs down. Smooth lockout.",
+        youtube: "https://www.youtube.com/watch?v=isPDfuKRkao"
+      },
+      gobletHold: {
+        name: "Kettlebell goblet hold",
+        image: "assets/images/kb-goblet-hold.jpg",
+        sets: { 1: "3 × 20–30 seconds, 18 lb", 2: "3 × 30–40 seconds, 26 lb", 3: "3 × 40 seconds, 26–35 lb" },
+        cues: "Hold the kettlebell at the chest by the horns. Stand tall. Breathe. Do not sink into your low back.",
+        faults: "Flaring the ribs, sinking into the lower back, or holding the breath.",
+        sciatica: "This is a quiet standing brace. If standing still flares your symptoms, walk slowly with the same goblet hold instead.",
+        do: "Stand tall and breathe. The bell stays against the chest.",
+        youtube: "https://www.youtube.com/watch?v=dVzqrXcR6jk"
+      },
+      hinge: {
+        name: "Dowel hip hinge",
+        image: "assets/images/hip-hinge-start.jpg",
+        start: "assets/images/hip-hinge-start.jpg", end: "assets/images/hip-hinge-end.jpg",
+        sets: { 1: "2–3 × 8, dowel only or light dumbbells", 2: "3 × 8, light dumbbells or kettlebell from blocks", 3: "3 × 6–8, add load, still from blocks if needed" },
+        cues: "Dowel touches head, mid-back, and tailbone. Soft knees. Push the hips back. Torso tilts as a unit. Stand by squeezing the glutes.",
+        faults: "Squatting instead of hinging, rounding the low back, or losing the dowel at the head or tailbone.",
+        sciatica: "This is the most important pattern in the plan. Cut the range before the nerve complains. Never pull a heavy bar from the floor with a round back.",
+        do: "Three points of contact on the dowel, or the rep does not count."
+      },
+      bird: {
+        name: "Bird dog",
+        image: "assets/images/bird-dog-start.jpg",
+        start: "assets/images/bird-dog-start.jpg", end: "assets/images/bird-dog-end.jpg",
+        sets: { 1: "3 × 6 / side, 6-second holds", 2: "3 × 6 / side, 8-second holds", 3: "3 × 5 / side, 8–10-second holds" },
+        cues: "Hands under shoulders, knees under hips. Brace. Reach opposite arm and opposite leg until they are long and level. Hold. Return without rocking.",
+        faults: "Hiking the hip, sagging the low back, or reaching the leg higher than the hip.",
+        sciatica: "A McGill Big 3 drill. Motion lives in the hip and shoulder. The lumbar spine does not wiggle. Imagine a glass of water on your low back.",
+        do: "Long and still. Not high and shaky.",
+        youtube: "https://www.youtube.com/watch?v=LB3e4JBpNrw"
+      },
+      bug: {
+        name: "Dead bug, heel-tap regression",
+        image: "assets/images/dead-bug-heel-tap.jpg",
+        sets: { 1: "3 × 6 / side, heel taps", 2: "3 × 8 / side, or opposite arm and leg if the back stays quiet", 3: "3 × 8 / side, full opposite reach if earned" },
+        cues: "On your back. Low back gently pressed toward the mat. Arms up. Tap one heel toward the floor. Return. The ribs do not pop up.",
+        faults: "Arching the low back, or rushing. That is a sit-up in disguise.",
+        sciatica: "This is anti-extension, not a crunch. If the full dead bug makes your back arch, stay on heel taps. Never train a V-sit.",
+        do: "Back stays on the mat. If it peels up, shorten the tap.",
+        youtube: "https://www.youtube.com/watch?v=pFyZmJJJ1Mg"
+      },
+      pallof: {
+        name: "Pallof press",
+        image: "assets/images/pallof-start.jpg",
+        start: "assets/images/pallof-start.jpg", end: "assets/images/pallof-end.jpg",
+        sets: { 1: "3 × 8 / side", 2: "3 × 10 / side", 3: "3 × 8 / side, thicker band" },
+        cues: "Stand with your side facing the band. Hands at the sternum. Press straight forward. The torso does not rotate. Return.",
+        faults: "Twisting toward or away from the anchor, or leaning. The whole point is to refuse the twist.",
+        sciatica: "Anti-rotation core. Safer than any twisting ab drill. Keep the band at chest height.",
+        do: "Press. Do not rotate. Breathe.",
+        youtube: "https://www.youtube.com/watch?v=5_8d8vHgZvU"
+      },
+      row: {
+        name: "Chest-supported dumbbell row",
+        image: "assets/images/row-start.jpg",
+        start: "assets/images/row-start.jpg", end: "assets/images/row-end.jpg",
+        sets: { 1: "3 × 10", 2: "3 × 10–12", 3: "3 × 8–10, add load" },
+        cues: "Chest on an incline bench. Dumbbells hang. Pull the elbows toward the hips. Pause. Lower without shrugging.",
+        faults: "Yanking with the neck, flaring the elbows to 90 degrees, or peeling the chest off the pad.",
+        sciatica: "This replaces bent-over rows. The bench supports the spine. If you only have cables, use a seated row with a tall chest and a brace.",
+        do: "Elbows toward pockets. Chest stays on the pad."
+      },
+      press: {
+        name: "Seated dumbbell press",
+        image: "assets/images/seated-press.jpg",
+        sets: { 1: "3 × 8", 2: "3 × 8–10", 3: "3 × 6–8" },
+        cues: "Sit tall, back supported if possible. Brace. Press the dumbbells up without shrugging. Lower to about ear level.",
+        faults: "Flaring the ribs, overextending the low back, or banging the bells together at the top.",
+        sciatica: "A bench with back support is the first choice. If sitting without support flares your symptoms, switch to a floor press with the back on the mat.",
+        do: "Ribs down. Head quiet. Smooth lockout."
+      },
+      nerve: {
+        name: "Seated sciatic nerve glide",
+        image: "assets/images/nerve-glide.jpg",
+        sets: { 1: "2 × 8 / side, slow", 2: "2 × 10 / side", 3: "2 × 8 / side, only if it stays calm" },
+        cues: "Sit tall on a bench. Straighten the affected knee as you look slightly up and pull the toes toward you. Then bend the knee as you point the foot. Slow, small, and pain-free.",
+        faults: "Turning it into a hamstring stretch, slumping hard, or chasing a strong nerve zing.",
+        sciatica: "This is a glide, not a stretch. Mild tension of 1–2 out of 10 is the ceiling. If symptoms worsen, stop. This is the one drill where a little slump is part of some versions; keep your version small.",
+        do: "Gentle floss. Never yank.",
+        youtube: "https://www.youtube.com/watch?v=A42tSJ_7-CM"
+      },
+      mcgill: {
+        name: "McGill curl-up",
+        image: "assets/images/mcgill-curl-up.jpg",
+        sets: { 1: "2 × 6 / side, 8-second holds", 2: "3 × 6 / side, 8–10-second holds", 3: "3 × 5 / side, 10-second holds" },
+        cues: "One knee bent, one leg long. Hands under the low back to lock the posture. Lift only the head and shoulders a few inches. Hold. The low back does not flex.",
+        faults: "Turning it into a sit-up, pulling on the neck, or flattening the lumbar spine into the floor.",
+        sciatica: "This replaces crunches. It builds endurance in the anterior core with the spine held still. Hands go under the low back. Lift only the head and shoulders a few inches.",
+        do: "A small lift. A long hold. No sit-up.",
+        youtube: "https://www.youtube.com/watch?v=uzMYRO05kJw"
+      }
+    };
+
+    const DAYS = {
+      day1: {
+        title: "Day 1 · Goblet squat and glute",
+        blurb: "Monday. Goblet box squat, kettlebell bridge, goblet hold, suitcase carry, then an easy walk.",
+        items: ["box", "kbBridge", "gobletHold", "suitcase", "walk"],
+        extras: "Warm up with 6 easy goblet squats to a high box before the work sets. This session repeats every Monday for 29 weeks."
+      },
+      day2: {
+        title: "Day 2 · Press, row, and brace",
+        blurb: "Tuesday. Upper body with a supported spine, then the McGill curl-up and a dead-bug heel tap. No sit-ups.",
+        items: ["kbFloor", "kbPress", "kbRow", "mcgill", "bug", "walk"],
+        extras: "Roll onto your side to pick the bell up and to set it down. Do not sit up with the kettlebell in your hands."
+      },
+      day3: {
+        title: "Day 3 · Deadlift and carry",
+        blurb: "Wednesday. Slow kettlebell deadlifts, suitcase carries, bird dog, and a gentle nerve glide. This is a hinge day, not a swing day.",
+        items: ["kbDeadlift", "suitcase", "bird", "nerve", "walk"],
+        extras: "If the floor feels too low, park the kettlebell on a yoga block or a low step. Keep every deadlift slow. Dowel hip hinge, 8 easy reps, before the first work set."
+      },
+      day4: {
+        title: "Day 4 · One-arm kettlebell",
+        blurb: "Thursday. One-arm press, one-arm row, floor press, and a Pallof press. No squat today, so Friday’s full-body session stays fresh.",
+        items: ["kbPress", "kbRow", "kbFloor", "pallof", "walk"],
+        extras: "Do the left side, then the right, then rest. If one side of the back is irritable, use the lighter bell on that side."
+      },
+      day5: {
+        title: "Day 5 · Full-body kettlebell",
+        blurb: "Friday. The full-body session. One kettlebell covers squat, hinge, row, press, and carry, then the week's longest walk. Saturday and Sunday are rest.",
+        items: ["box", "kbDeadlift", "kbRow", "kbFloor", "suitcase", "walk"],
+        extras: "Keep every rep slow. Skip swings. If you only have one bell, use it for the whole session. This session repeats every Friday for 29 weeks."
+      }
+    };
+
+    const WEEK = [
+      { day: "Mon", title: "Goblet squat and glute", view: "day1", note: "Day 1 · ~60 min" },
+      { day: "Tue", title: "Press, row, and brace", view: "day2", note: "Day 2 · ~60 min" },
+      { day: "Wed", title: "Deadlift and carry", view: "day3", note: "Day 3 · ~60 min" },
+      { day: "Thu", title: "One-arm kettlebell", view: "day4", note: "Day 4 · ~55 min" },
+      { day: "Fri", title: "Full-body kettlebell", view: "day5", note: "Day 5 · ~70 min" },
+      { day: "Sat", title: "Rest", view: "recovery", note: "Optional easy walk", rest: true },
+      { day: "Sun", title: "Rest", view: "recovery", note: "Sleep and food", rest: true }
+    ];
+
+    let phase = 1;
+    let plan = "nss";
+    const doneKey = "nss-done";
+    const weightKey = "nss-weight";
+
+    function el(html) {
+      const t = document.createElement("template");
+      t.innerHTML = html.trim();
+      return t.content.firstElementChild;
+    }
+
+    function ytBtn(ex) {
+      if (!ex.youtube) return "";
+      return `<a class="yt" href="${ex.youtube}" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
+        Watch form
+      </a>`;
+    }
+
+    function mediaBlock(ex) {
+      const hasPair = ex.start && ex.end;
+      return `
+        <div class="ex-media" data-ex="${ex.id}">
+          <img class="shot" src="${ex.image}" alt="${ex.name} demonstration" />
+          ${hasPair ? `<div class="media-toggle">
+            <button class="on" data-m="photo">Photo</button>
+            <button data-m="compare">Start / finish</button>
+          </div>` : ""}
+        </div>`;
+    }
+
+    function parseSets(setsStr) {
+      if (/^skip\b/i.test(setsStr)) return { count: 0, skip: true };
+      const range = setsStr.match(/(\d+)\s*[–-]\s*(\d+)\s*[×x]/i);
+      if (range) return { count: Number(range[2]), skip: false };
+      const n = setsStr.match(/(\d+)\s*[×x]/i);
+      if (n) return { count: Number(n[1]), skip: false };
+      return { count: 1, skip: false };
+    }
+
+    function setKey(checkId, i) {
+      return `${checkId}-p${phase}-s${i}`;
+    }
+
+    function setChecked(saved, checkId, slots, slotId) {
+      const hasPhaseState = slots.some(s => saved[setKey(checkId, s.id)] != null);
+      if (hasPhaseState) return !!saved[setKey(checkId, slotId)];
+      return !!saved[checkId];
+    }
+
+    function trackSlots(ex, setsStr) {
+      const parsed = parseSets(setsStr);
+      if (parsed.skip) return { skip: true, slots: [], count: 0 };
+      const sides = ex.sides ? ["L", "R"] : null;
+      const slots = [];
+      for (let i = 0; i < parsed.count; i++) {
+        if (sides) {
+          sides.forEach(side => slots.push({ id: `${i}${side}`, set: i, side, label: side }));
+        } else {
+          slots.push({
+            id: String(i),
+            set: i,
+            side: null,
+            label: parsed.count === 1 ? "Complete" : `Set ${i + 1}`
+          });
+        }
+      }
+      return { skip: false, slots, count: parsed.count, sides };
+    }
+
+    function setTrackHtml(checkId, setsStr, saved, ex) {
+      const track = trackSlots(ex, setsStr);
+      if (track.skip) {
+        return `<p class="set-skip">Skip this phase. No work sets.</p>`;
+      }
+      const doneN = track.slots.filter(s => setChecked(saved, checkId, track.slots, s.id)).length;
+      const box = (s) => {
+        const on = setChecked(saved, checkId, track.slots, s.id);
+        return `<label class="set-box"><input type="checkbox" data-check="${checkId}" data-set="${s.id}" ${on ? "checked" : ""} /> ${s.label}</label>`;
+      };
+      const boxes = track.sides
+        ? Array.from({ length: track.count }, (_, i) =>
+            `<div class="set-pair"><span class="n">Set ${i + 1}</span>${track.slots.filter(s => s.set === i).map(box).join("")}</div>`
+          ).join("")
+        : track.slots.map(box).join("");
+      return `<div class="set-track">
+        <span class="label">Sets</span>
+        <span class="count">${doneN}/${track.slots.length}</span>
+        ${boxes}
+      </div>`;
+    }
+
+    function exerciseCard(id, dayId) {
+      const ex = Object.assign({ id }, EX[id]);
+      const sets = ex.sets[phase];
+      const checkId = `${plan}-${dayId}-${id}`;
+      const saved = JSON.parse(localStorage.getItem(doneKey) || "{}");
+      return `
+        <article class="ex" data-id="${id}">
+          ${mediaBlock(ex)}
+          <div class="ex-body">
+            <h4>${ex.name}</h4>
+            <div class="meta">
+              <span class="pill">${sets}</span>
+              <span class="pill">Rest 60–90s</span>
+            </div>
+            <div class="cues">
+              <div><b>Do this</b>${ex.do}</div>
+              <div><b>Cues</b>${ex.cues}</div>
+              <div><b>Common faults</b>${ex.faults}</div>
+              <div><b>Sciatica note</b>${ex.sciatica}</div>
+            </div>
+            ${setTrackHtml(checkId, sets, saved, ex)}
+            ${ytBtn(ex) ? `<div class="row-actions">${ytBtn(ex)}</div>` : ""}
+          </div>
+        </article>`;
+    }
+
+    function currentDays() { return DAYS; }
+    function currentWeek() { return WEEK; }
+
+    function mushroomSvg() {
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="56" rx="14" ry="4" fill="#0d241e"/>
+        <rect x="26" y="32" width="12" height="22" rx="6" fill="#faf4e6"/>
+        <ellipse cx="30" cy="40" rx="2" ry="3" fill="#d9c89d"/>
+        <ellipse cx="36" cy="44" rx="1.6" ry="2.4" fill="#d9c89d"/>
+        <path d="M10 34c0-14 10-26 22-26s22 12 22 26c0 4-4 6-10 6H20c-6 0-10-2-10-6z" fill="#c62828"/>
+        <path d="M14 32c2-10 9-20 18-20 4 0 8 2 11 6-4-1-8-1-12 1-5 3-10 8-17 13z" fill="#e53935"/>
+        <circle cx="20" cy="24" r="3.1" fill="#fffbee"/>
+        <circle cx="32" cy="16" r="2.6" fill="#fffbee"/>
+        <circle cx="44" cy="22" r="3" fill="#fffbee"/>
+        <circle cx="28" cy="26" r="2.2" fill="#fffbee"/>
+        <circle cx="38" cy="28" r="2.4" fill="#fffbee"/>
+        <circle cx="16" cy="30" r="1.8" fill="#fffbee"/>
+        <circle cx="48" cy="30" r="1.9" fill="#fffbee"/>
+      </svg>`;
+    }
+
+    function renderDay(key) {
+      const d = currentDays()[key];
+      const root = document.getElementById(key);
+      root.innerHTML = `
+        <div class="note" style="margin-bottom:16px">${d.blurb} Current block: <b>${PHASES[phase].name}</b> · ${PHASES[phase].dates}. Warm up for 8–10 minutes before the first lift.</div>
+        ${d.items.map(id => exerciseCard(id, key)).join("")}
+        <div class="forest-win" id="win-${key}">
+          ${mushroomSvg()}
+          <div>
+            <h3>Day complete</h3>
+            <p>Every lift for this session is done. The Forest noticed.</p>
+          </div>
+        </div>
+        <div class="card"><div class="label">Session extras</div><p style="color:var(--muted);line-height:1.55;margin-top:8px">${d.extras}</p></div>
+      `;
+    }
+
+    function renderWeekGrid() {
+      document.getElementById("weekGrid").innerHTML = currentWeek().map(d => `
+        <button class="day-chip ${d.rest ? "rest" : ""}" data-view="${d.view}" data-day="${d.rest ? "" : d.view}">
+          <div class="d">${d.day}</div>
+          <h4>${d.title}</h4>
+          <p>${d.note}</p>
+          ${d.rest ? "" : `<span class="tag">Kettlebell</span><span class="chip-shroom">${mushroomSvg()}</span>`}
+        </button>
+      `).join("");
+    }
+
+    function phaseLiftRows() {
+      const keys = ["box", "kbBridge", "kbDeadlift", "suitcase", "kbRow", "kbFloor", "kbPress", "gobletHold", "mcgill", "bug", "bird", "pallof", "walk"];
+      return keys.map(k => {
+        const ex = EX[k];
+        return `<tr><td>${ex.name}</td><td>${ex.sets[phase]}</td></tr>`;
+      }).join("");
+    }
+
+    function renderPhase() {
+      const p = PHASES[phase];
+      document.getElementById("phaseHeading").textContent = p.name;
+      document.getElementById("phaseNow").innerHTML = `
+        <div class="grid g-4" style="margin-bottom:16px">
+          <div class="card"><div class="label">Dates</div><div class="stat" style="font-size:22px">${p.dates}</div><p style="color:var(--muted);margin-top:8px">${p.weeks}</p></div>
+          <div class="card"><div class="label">Main kettlebell</div><div class="stat">${p.bell}</div><p style="color:var(--muted);margin-top:8px">${p.lighter}</p></div>
+          <div class="card"><div class="label">Walks</div><div class="stat" style="font-size:22px">${p.walk}</div></div>
+          <div class="card"><div class="label">Hold the line</div><p style="color:var(--muted);line-height:1.5;margin-top:4px">${p.notYet}</p></div>
+        </div>
+        <div class="grid g-2">
+          <div class="card">
+            <div class="label">What this block is for</div>
+            <p style="color:var(--muted);line-height:1.55;margin-top:8px">${p.focus}</p>
+            <div class="note" style="margin-top:12px"><b>Do now.</b> ${p.doNow}</div>
+          </div>
+          <div class="card" style="overflow:auto">
+            <div class="label">Prescription this phase</div>
+            <table style="margin-top:8px">
+              <thead><tr><th>Lift</th><th>Sets / load</th></tr></thead>
+              <tbody>${phaseLiftRows()}</tbody>
+            </table>
+          </div>
+        </div>`;
+      document.getElementById("arcGrid").innerHTML = [1, 2, 3].map(n => {
+        const x = PHASES[n];
+        return `<button class="card arc-card ${n === phase ? "on" : ""}" data-phase="${n}" type="button">
+          <div class="label">Phase ${n} · ${x.weeks}</div>
+          <b>${x.dates}</b>
+          <p style="color:var(--muted);margin-top:8px;line-height:1.5">${x.focus}</p>
+          <p style="color:var(--sand);margin-top:10px;font-size:13px">${x.bell} · ${x.walk}</p>
+        </button>`;
+      }).join("");
+      const overview = document.getElementById("overview");
+      if (overview.classList.contains("active")) {
+        document.getElementById("pageLede").textContent = `${p.name}. ${p.dates}. Main bell ${p.bell}. ${p.walk}.`;
+      }
+    }
+
+    function applyPlan() {
+      Object.keys(DAYS).forEach(renderDay);
+      renderWeekGrid();
+      renderWeekChecks();
+      renderPhase();
+      const active = document.querySelector(".view.active");
+      if (active) show(active.id);
+    }
+
+    function setMedia(wrap, mode) {
+      const id = wrap.dataset.ex;
+      const ex = Object.assign({ id }, EX[id]);
+      wrap.querySelectorAll(".media-toggle button").forEach(b => b.classList.toggle("on", b.dataset.m === mode));
+      if (mode === "compare" && ex.start && ex.end) {
+        wrap.querySelector(".shot")?.remove();
+        wrap.querySelector(".compare")?.remove();
+        wrap.insertAdjacentHTML("afterbegin", `
+          <div class="compare">
+            <img src="${ex.end}" alt="${ex.name} finish position" />
+            <img class="top" src="${ex.start}" alt="${ex.name} start position" />
+            <input type="range" min="0" max="100" value="50" />
+          </div>`);
+        const range = wrap.querySelector("input[type=range]");
+        const top = wrap.querySelector(".top");
+        range.addEventListener("input", () => { top.style.clipPath = `inset(0 ${100 - range.value}% 0 0)`; });
+      } else {
+        wrap.querySelector(".compare")?.remove();
+        wrap.querySelector(".shot")?.replaceWith(el(`<img class="shot" src="${ex.image}" alt="${ex.name} demonstration" />`));
+      }
+    }
+
+    function renderLibrary() {
+      const keys = ["box", "kbBridge", "kbDeadlift", "suitcase", "kbRow", "kbFloor", "kbPress", "gobletHold", "mcgill", "bug", "bird", "pallof", "nerve", "walk"];
+      document.getElementById("libraryGrid").innerHTML = keys.map(k => {
+        const ex = EX[k];
+        return `<article class="lib">
+          <img src="${ex.image}" alt="${ex.name}" />
+          <div class="pad"><h4>${ex.name}</h4><p>${ex.do}</p>${ytBtn(ex)}</div>
+        </article>`;
+      }).join("");
+    }
+
+    const titles = {
+      overview: ["Overview", "Train Monday through Friday. Rest Saturday and Sunday. Arrive in April 2027 ready for Electric Forest."],
+      week: ["Weekly map", "Five training days, then rest on Saturday and Sunday. Open a day to run the session."],
+      day1: ["Day 1", ""],
+      day2: ["Day 2", ""],
+      day3: ["Day 3", ""],
+      day4: ["Day 4", ""],
+      day5: ["Day 5", ""],
+      library: ["Form library", "Photos of the working position, plus a YouTube form demo for each lift."],
+      nutrition: ["Nutrition", "Protein stays high. Calories are honest about the April goal."],
+      recovery: ["Recovery and red flags", "What to skip, when to walk, and when to call a physician."],
+      progress: ["Progress", "Log weight, collect a mushroom for each finished day, and map today’s symptom score."],
+      motivation: ["Motivation", "Electric Forest 2027 is the why. April 2027 is the checkpoint."]
+    };
+
+    function show(view) {
+      document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === view));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.view === view));
+      const onWorkout = view.startsWith("day");
+      document.getElementById("phaseWrap").hidden = !onWorkout;
+      document.getElementById("restTimer").hidden = !onWorkout;
+      document.getElementById("stickyTools").hidden = !onWorkout;
+      document.getElementById("stickyTools").classList.toggle("pin", onWorkout);
+      if (view.startsWith("day")) {
+        const d = currentDays()[view];
+        document.getElementById("pageTitle").textContent = d.title;
+        document.getElementById("pageLede").textContent = d.blurb;
+      } else if (view === "overview") {
+        const p = PHASES[phase];
+        document.getElementById("pageTitle").textContent = p.name;
+        document.getElementById("pageLede").textContent = `${p.dates}. Main bell ${p.bell}. Walks ${p.walk}.`;
+      } else {
+        const t = titles[view] || titles.overview;
+        document.getElementById("pageTitle").textContent = t[0];
+        document.getElementById("pageLede").textContent = t[1];
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setNav(false);
+    }
+
+    const menuBtn = document.getElementById("menuBtn");
+    const navScrim = document.getElementById("navScrim");
+    function setNav(open) {
+      document.body.classList.toggle("nav-open", open);
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      navScrim.hidden = !open;
+    }
+    menuBtn.addEventListener("click", () => setNav(!document.body.classList.contains("nav-open")));
+    navScrim.addEventListener("click", () => setNav(false));
+    document.getElementById("drawerClose").addEventListener("click", () => setNav(false));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setNav(false);
+    });
+
+    document.body.addEventListener("click", (e) => {
+      const viewBtn = e.target.closest("[data-view]");
+      if (viewBtn && (viewBtn.classList.contains("nav-btn") || viewBtn.classList.contains("day-chip"))) {
+        show(viewBtn.dataset.view);
+      }
+    });
+
+    function setPhase(n) {
+      phase = Number(n);
+      document.querySelectorAll(".phase-btn").forEach(x => x.classList.toggle("active", Number(x.dataset.phase) === phase));
+      Object.keys(DAYS).forEach(renderDay);
+      renderPhase();
+      paintDayWins(JSON.parse(localStorage.getItem(doneKey) || "{}"));
+    }
+    document.querySelectorAll(".phase-btn").forEach(b => {
+      b.addEventListener("click", () => setPhase(b.dataset.phase));
+    });
+    document.body.addEventListener("click", (e) => {
+      const arc = e.target.closest(".arc-card");
+      if (arc) setPhase(arc.dataset.phase);
+    });
+
+    document.body.addEventListener("click", (e) => {
+      const m = e.target.closest("[data-m]");
+      if (m) {
+        const wrap = m.closest(".ex-media");
+        if (wrap) setMedia(wrap, m.dataset.m);
+      }
+    });
+
+    document.body.addEventListener("change", (e) => {
+      if (e.target.matches("[data-check]")) {
+        const saved = JSON.parse(localStorage.getItem(doneKey) || "{}");
+        const checkId = e.target.dataset.check;
+        if (e.target.dataset.set != null) {
+          const boxes = [...document.querySelectorAll(`input[data-check="${checkId}"][data-set]`)];
+          boxes.forEach(b => { saved[setKey(checkId, b.dataset.set)] = b.checked; });
+          saved[checkId] = boxes.length > 0 && boxes.every(b => b.checked);
+          const track = e.target.closest(".set-track");
+          const countEl = track && track.querySelector(".count");
+          if (countEl) countEl.textContent = `${boxes.filter(b => b.checked).length}/${boxes.length}`;
+        } else {
+          saved[checkId] = e.target.checked;
+        }
+        localStorage.setItem(doneKey, JSON.stringify(saved));
+        renderWeekChecks();
+      }
+    });
+
+    let rest = 90, tHandle = null;
+    const clock = document.getElementById("clock");
+    const restTimer = document.getElementById("restTimer");
+    function paintClock() {
+      const m = String(Math.floor(Math.max(rest, 0) / 60));
+      const s = String(Math.max(rest, 0) % 60).padStart(2, "0");
+      clock.textContent = `${m}:${s}`;
+    }
+    function stopRest(reset) {
+      clearInterval(tHandle);
+      tHandle = null;
+      restTimer.classList.remove("run");
+      if (reset) {
+        rest = 90;
+        paintClock();
+      }
+    }
+    document.getElementById("startRest").onclick = () => {
+      stopRest(true);
+      restTimer.classList.add("run");
+      tHandle = setInterval(() => {
+        rest -= 1;
+        paintClock();
+        if (rest <= 0) {
+          stopRest(false);
+          clock.textContent = "0:00";
+        }
+      }, 1000);
+    };
+    document.getElementById("resetRest").onclick = () => stopRest(true);
+
+    function dayIsComplete(saved, key) {
+      const items = currentDays()[key].items;
+      return items.length > 0 && items.every(id => saved[`${plan}-${key}-${id}`]);
+    }
+
+    function paintDayWins(saved) {
+      const days = currentDays();
+      Object.keys(days).forEach(k => {
+        const done = dayIsComplete(saved, k);
+        const win = document.getElementById(`win-${k}`);
+        if (win) win.classList.toggle("show", done);
+        document.querySelectorAll(`.day-chip[data-day="${k}"]`).forEach(chip => {
+          chip.classList.toggle("got", done);
+        });
+      });
+    }
+
+    function renderWeekChecks() {
+      const saved = JSON.parse(localStorage.getItem(doneKey) || "{}");
+      const box = document.getElementById("weekChecks");
+      const days = currentDays();
+      const labels = { day1: "Mon", day2: "Tue", day3: "Wed", day4: "Thu", day5: "Fri" };
+      box.innerHTML = Object.keys(days).map(k => {
+        const d = days[k];
+        const n = d.items.filter(id => saved[`${plan}-${k}-${id}`]).length;
+        const done = dayIsComplete(saved, k);
+        return `<div class="day-win-chip ${done ? "got" : ""}">
+          ${mushroomSvg()}
+          <div class="d">${labels[k] || k}</div>
+          <div class="n">${done ? "Day done" : `${n}/${d.items.length} lifts`}</div>
+        </div>`;
+      }).join("");
+      paintDayWins(saved);
+    }
+
+    const wDate = document.getElementById("wDate");
+    wDate.valueAsDate = new Date();
+    document.getElementById("wAdd").onclick = () => {
+      const logs = JSON.parse(localStorage.getItem(weightKey) || "[]");
+      const val = Number(document.getElementById("wVal").value);
+      if (!val) return;
+      logs.push({ d: wDate.value, v: val });
+      localStorage.setItem(weightKey, JSON.stringify(logs));
+      drawChart();
+    };
+
+    function drawChart() {
+      const c = document.getElementById("weightChart");
+      const ctx = c.getContext("2d");
+      const logs = JSON.parse(localStorage.getItem(weightKey) || "[]");
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.strokeStyle = "rgba(18,50,42,0.18)";
+      ctx.beginPath(); ctx.moveTo(30, 20); ctx.lineTo(30, 160); ctx.lineTo(630, 160); ctx.stroke();
+      ctx.fillStyle = "#3e564c"; ctx.font = "12px Outfit, sans-serif";
+      ctx.fillText("165", 4, 28); ctx.fillText("135", 4, 150);
+      const pts = [{ d: "start", v: 165 }, ...logs];
+      if (pts.length < 2 && logs.length === 0) {
+        ctx.strokeStyle = "#bd901b";
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(40, 24); ctx.lineTo(620, 148); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillText("Target line · 165 to 135", 420, 40);
+        return;
+      }
+      const min = 130, max = 170;
+      const y = v => 20 + (max - v) / (max - min) * 140;
+      ctx.strokeStyle = "#5c7e51"; ctx.lineWidth = 2; ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = 40 + i * Math.min(80, 560 / Math.max(pts.length - 1, 1));
+        const yy = y(p.v);
+        if (i === 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+      });
+      ctx.stroke();
+    }
+
+    const symptomKey = "nss-symptom-log";
+    const SYMPTOM_BANDS = [
+      { max: 2, title: "Quiet", color: "#5c7e51", zones: ["z-lumbar"], guide: "Symptoms are calm. Train as written. Keep range pain-free and stop if anything travels farther down the leg." },
+      { max: 4, title: "Local", color: "#bd901b", zones: ["z-lumbar", "z-glute-l", "z-glute-r"], guide: "Symptoms stay in the low back or glute. Train as written, but cut depth and load before they spread. This is still a green-light day if the path is not moving down." },
+      { max: 6, title: "Spreading", color: "#f4633a", zones: ["z-lumbar", "z-glute-l", "z-glute-r", "z-thigh-l", "z-thigh-r"], guide: "Symptoms have moved into the thigh. Shorten the walk, skip extra load, and stay with pain-free range. If the next session is worse, drop to the McGill trio and a short walk." },
+      { max: 8, title: "High", color: "#cf604f", zones: ["z-lumbar", "z-glute-l", "z-glute-r", "z-thigh-l", "z-thigh-r", "z-calf-l", "z-calf-r"], guide: "Symptoms have passed the knee. Skip loaded lifting today. Easy walk and the McGill trio only if they do not make the score rise." },
+      { max: 10, title: "Flare", color: "#c62828", zones: ["z-lumbar", "z-glute-l", "z-glute-r", "z-thigh-l", "z-thigh-r", "z-calf-l", "z-calf-r", "z-foot-l", "z-foot-r"], guide: "This is a flare. Rest. Do not push through. If you also have saddle numbness, bowel or bladder changes, or rapidly worsening weakness, seek urgent care." }
+    ];
+
+    function todayISO() {
+      const d = new Date();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${d.getFullYear()}-${m}-${day}`;
+    }
+
+    function symptomBand(n) {
+      return SYMPTOM_BANDS.find(b => n <= b.max);
+    }
+
+    function saveSymptom(n) {
+      const log = JSON.parse(localStorage.getItem(symptomKey) || "{}");
+      log[todayISO()] = n;
+      localStorage.setItem(symptomKey, JSON.stringify(log));
+    }
+
+    function paintSymptom(n) {
+      n = Math.max(0, Math.min(10, Number(n)));
+      const band = symptomBand(n);
+      document.getElementById("symOut").textContent = String(n);
+      document.getElementById("symBig").textContent = String(n);
+      document.getElementById("symBig").style.color = band.color;
+      document.getElementById("symTitle").textContent = band.title;
+      document.getElementById("symTitle").style.color = band.color;
+      document.getElementById("symGuide").textContent = band.guide;
+      document.querySelectorAll(".sym-zone").forEach(el => {
+        const on = n > 0 && band.zones.includes(el.id);
+        el.classList.toggle("on", on);
+        el.style.fill = on ? band.color : "#d9e0d4";
+      });
+      const meter = document.getElementById("symMeter");
+      meter.innerHTML = Array.from({ length: 11 }, (_, i) => {
+        const tickBand = symptomBand(i);
+        const on = i <= n;
+        return `<i class="${on ? "on" : ""}" style="--tick:${tickBand.color}"></i>`;
+      }).join("");
+      const log = JSON.parse(localStorage.getItem(symptomKey) || "{}");
+      const bars = [];
+      for (let i = 13; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        const key = `${d.getFullYear()}-${m}-${day}`;
+        const val = log[key];
+        const h = val == null ? 4 : Math.max(6, Math.round((Number(val) / 10) * 56));
+        const col = val == null ? "#e6dcb8" : symptomBand(Number(val)).color;
+        bars.push(`<div class="col"><div class="barbit" style="height:${h}px;background:${col}"></div><div class="d">${d.getDate()}</div></div>`);
+      }
+      document.getElementById("symBars").innerHTML = bars.join("");
+    }
+
+    const symptomEl = document.getElementById("symptom");
+    const savedLog = JSON.parse(localStorage.getItem(symptomKey) || "{}");
+    if (savedLog[todayISO()] != null) symptomEl.value = savedLog[todayISO()];
+    paintSymptom(symptomEl.value);
+    symptomEl.addEventListener("input", e => {
+      const n = Number(e.target.value);
+      saveSymptom(n);
+      paintSymptom(n);
+    });
+
+    renderLibrary();
+    applyPlan();
+    drawChart();
+    const bootView = new URLSearchParams(location.search).get("view");
+    if (bootView) show(bootView);
+  </script>
+</body>
+</html>
