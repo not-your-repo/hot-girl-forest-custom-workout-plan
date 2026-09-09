@@ -153,6 +153,44 @@
     .rule { background: var(--panel); border-radius: 16px; padding: 16px; border: 1px solid var(--line); }
     .rule b { display: block; color: var(--gold); margin-bottom: 6px; font-family: var(--display); text-transform: uppercase; letter-spacing: 0.04em; }
     .rule p { color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+    .stretch {
+      display: grid; grid-template-columns: 150px 1fr; gap: 0;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+    }
+    .stretch img { width: 100%; height: 100%; min-height: 140px; object-fit: cover; background: #12322a; }
+    .stretch .pad { padding: 14px 16px; }
+    .stretch h4 { font-family: var(--display); text-transform: uppercase; letter-spacing: 0.04em; font-size: 18px; margin: 4px 0 8px; }
+    .stretch p { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0; }
+    .tips { margin-top: 4px; }
+    .tips-frame {
+      position: relative; background: #12322a; color: #fffbee;
+      border-radius: 6px; overflow: hidden; min-height: 210px;
+      border: 1px solid var(--line);
+    }
+    .tips-slide { display: none; padding: 32px 64px; min-height: 210px; box-sizing: border-box; }
+    .tips-slide.on { display: block; animation: in 0.35s ease; }
+    .tips-slide .kicker { color: var(--gold); margin-bottom: 10px; }
+    .tips-slide p {
+      font-family: var(--serif); font-size: 22px; line-height: 1.35; margin: 0; color: #fffbee;
+    }
+    .tips-nav {
+      appearance: none; border: 0; background: rgba(255,251,238,0.12); color: #fffbee;
+      width: 40px; height: 40px; border-radius: 4px; cursor: pointer; font-size: 18px;
+      position: absolute; top: 50%; margin-top: -20px; z-index: 2;
+    }
+    .tips-nav.prev { left: 10px; }
+    .tips-nav.next { right: 10px; }
+    .tips-dots {
+      display: flex; justify-content: center; align-items: center; gap: 4px; margin-top: 12px;
+    }
+    .tips-dots button {
+      appearance: none; border: 0; background: transparent; cursor: pointer;
+      width: 28px; height: 28px; padding: 0; display: grid; place-items: center;
+    }
+    .tips-dots button i {
+      display: block; width: 8px; height: 8px; border-radius: 99px; background: #cfc6a4;
+    }
+    .tips-dots button.on i { background: var(--gold); width: 10px; height: 10px; }
 
     .warn {
       background: rgba(207, 96, 79, 0.1); border: 1px solid rgba(207, 96, 79, 0.35);
@@ -540,7 +578,7 @@
       body.nav-open { overflow: hidden; }
       .app { display: block; min-width: 0; }
       .main { display: flex; flex-direction: column; }
-      .g-4, .g-3, .rules, .week, .library, .g-2, .g-2eq, .cues, .ex, .quote-grid, .sym-wrap { grid-template-columns: 1fr; }
+      .g-4, .g-3, .rules, .week, .library, .g-2, .g-2eq, .cues, .ex, .quote-grid, .sym-wrap, .stretch { grid-template-columns: 1fr; }
       .day-wins { grid-template-columns: repeat(5, 1fr); gap: 6px; }
       .portrait-float { display: none; }
       .ex-body { padding: 14px; }
@@ -599,6 +637,9 @@
       .goal-in, .remain .goal-in { font-size: 16px; }
       .hist-row { grid-template-columns: 1fr auto auto; }
       .hist-row .name, .hist-row .mac { overflow-wrap: anywhere; }
+      .stretch img { min-height: 160px; height: 160px; }
+      .tips-slide { padding: 24px 52px; min-height: 190px; }
+      .tips-slide p { font-size: 18px; }
 
       .topbar, .topbar > div, .sticky-tools, .ex-body, .note, .warn, .lede {
         min-width: 0; max-width: 100%;
@@ -672,6 +713,7 @@
       <nav>
         <button class="nav-btn active" data-view="overview">Overview</button>
         <button class="nav-btn" data-view="week">Weekly map</button>
+        <button class="nav-btn" data-view="stretches">Stretches</button>
         <button class="nav-btn day-nav" data-view="day1">Day 1 · Goblet squat and glute</button>
         <button class="nav-btn day-nav" data-view="day2">Day 2 · Press, row, and brace</button>
         <button class="nav-btn day-nav" data-view="day3">Day 3 · Deadlift and carry</button>
@@ -792,6 +834,131 @@
           </div>
         </div>
         <div class="note" style="margin-top:16px">Saturday and Sunday are rest. Optional easy walking is fine. Five quality days will beat seven sloppy ones.</div>
+      </section>
+
+      <section class="view" id="stretches">
+        <p class="lede" style="margin-bottom:16px">Same sequence every lifting day. These are glides, braces, and easy range — not a yoga flow and not a hamstring yank.</p>
+
+        <h3 class="sec">Before you lift · 8–10 minutes</h3>
+        <div class="grid g-2" style="margin-bottom:16px">
+          <article class="stretch">
+            <img src="assets/images/walk.jpg" alt="Easy walk as the start of the warm-up" />
+            <div class="pad">
+              <div class="label">1 · Easy walk</div>
+              <h4>5 minutes</h4>
+              <p>Treadmill or outside. You can speak in full sentences. This is blood flow, not cardio. Stop if symptoms travel farther down the leg.</p>
+            </div>
+          </article>
+          <article class="stretch">
+            <img src="assets/images/dead-bug.jpg" alt="Supine position with ribs stacked for breathing" />
+            <div class="pad">
+              <div class="label">2 · 90/90 breathing</div>
+              <h4>5 slow breaths</h4>
+              <p>Ribs stacked over the pelvis. Inhale through the nose, long exhale. The low back does not arch to make room for air.</p>
+            </div>
+          </article>
+          <article class="stretch">
+            <img src="assets/images/glute-bridge.jpg" alt="Pelvis in a quiet middle position on the floor" />
+            <div class="pad">
+              <div class="label">3 · Pelvic tilts</div>
+              <h4>8 reps</h4>
+              <p>Rock the pelvis from a small arch to a small tuck. Stop in the middle. That middle is your training posture for every lift today.</p>
+            </div>
+          </article>
+          <article class="stretch">
+            <img src="assets/images/hip-hinge-end.jpg" alt="Hip hinge with a quiet spine" />
+            <div class="pad">
+              <div class="label">4 · Glutes, then hinge</div>
+              <h4>10 squeezes + 8 hinges</h4>
+              <p>Ten glute squeezes, 3 seconds each. Then a dowel hip hinge, 8 reps. Dowel stays on head, mid-back, and tailbone. Cut the range before the nerve complains.</p>
+            </div>
+          </article>
+        </div>
+
+        <h3 class="sec">Glide the nerve · do not stretch it</h3>
+        <div class="grid g-2" style="margin-bottom:16px">
+          <article class="stretch">
+            <img src="assets/images/nerve-glide.jpg" alt="Seated sciatic nerve glide" />
+            <div class="pad">
+              <div class="label">Seated sciatic nerve glide</div>
+              <h4>2 × 8 / side, slow</h4>
+              <p>Sit tall. Straighten the affected knee as you look slightly up and pull the toes toward you. Then bend the knee as you point the foot. Mild tension of 1–2 out of 10 is the ceiling. If it feels like a hamstring stretch or a zing, you went too far.</p>
+            </div>
+          </article>
+          <article class="stretch">
+            <img src="assets/images/mcgill-curl-up.jpg" alt="McGill curl-up with a still spine" />
+            <div class="pad">
+              <div class="label">McGill trio, not sit-ups</div>
+              <h4>Curl-up · bird dog · side plank</h4>
+              <p>The core resists motion. Hands under the low back for the curl-up. Imagine a glass of water on your low back for bird dog. No crunches, no Russian twists, no toe-touches.</p>
+            </div>
+          </article>
+        </div>
+
+        <h3 class="sec">After you lift</h3>
+        <div class="grid g-2eq" style="margin-bottom:16px">
+          <div class="card">
+            <div class="label">Cool-down · 5–8 minutes</div>
+            <ul class="clean">
+              <li>Slower walking, 5 minutes. Same rule: conversational, no flare.</li>
+              <li>Supine figure-four if the hip allows it. Ankle on the opposite knee, gentle. Skip it on a flare day.</li>
+              <li>If sitting flares you, stand or lie. Do not finish the session in a slump.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="label">Rest days</div>
+            <ul class="clean">
+              <li>Saturday and Sunday are rest. Optional 20–40 minutes of easy walking if symptoms are stable.</li>
+              <li>Then the nerve glide only if it does not flare you.</li>
+              <li>If a session spikes leg symptoms for more than 24 hours, the next session is a walk and the McGill trio only.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note" style="margin-bottom:16px">Leave these out: toe touches, standing forward folds, aggressive hamstring stretches, and any drill that recreates leg pain. Stretching an angry nerve makes it angrier. Glide it. Do not yank it.</div>
+
+        <h3 class="sec">Tips and tricks</h3>
+        <div class="tips" id="tips">
+          <div class="tips-frame" id="tipsFrame">
+            <button class="tips-nav prev" type="button" id="tipPrev" aria-label="Previous tip">‹</button>
+            <div id="tipsTrack">
+              <article class="tips-slide on">
+                <div class="kicker">Tip 1 of 8</div>
+                <p>This is a glide, not a stretch. Mild tension of 1–2 out of 10 is the ceiling. If it feels like a hamstring yank or a nerve zing, stop.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 2 of 8</div>
+                <p>Symptoms should stay put or move up the leg. If they spread farther down, that drill is done for the day.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 3 of 8</div>
+                <p>Cut the squat, hinge, or walk short of the flare. Depth is not a virtue here. Clean, quiet range is.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 4 of 8</div>
+                <p>The warm-up walk is easy enough to speak in full sentences. If you cannot talk, you went too hard too soon.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 5 of 8</div>
+                <p>Pelvic tilts find the middle. That middle is your training posture. Do not lift from a hard arch or a hard tuck.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 6 of 8</div>
+                <p>Hands under the low back for the McGill curl-up. Lift only the head and shoulders a few inches. It is not a sit-up.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 7 of 8</div>
+                <p>Bird dog: imagine a glass of water on your low back. The lumbar spine does not wiggle. Long and still, not high and shaky.</p>
+              </article>
+              <article class="tips-slide">
+                <div class="kicker">Tip 8 of 8</div>
+                <p>Figure-four after lifting only if the hip allows it. Skip it on a flare day. Between sets, stand or lie. Do not sit in a slump.</p>
+              </article>
+            </div>
+            <button class="tips-nav next" type="button" id="tipNext" aria-label="Next tip">›</button>
+          </div>
+          <div class="tips-dots" id="tipsDots" role="tablist" aria-label="Tip position"></div>
+        </div>
       </section>
 
       <section class="view" id="day1"></section>
@@ -1609,6 +1776,7 @@
     const titles = {
       overview: ["Overview", "Train Monday through Friday. Rest Saturday and Sunday. Arrive in April 2027 ready for Electric Forest."],
       week: ["Weekly map", "Five training days, then rest on Saturday and Sunday. Open a day to run the session."],
+      stretches: ["Stretches", "Do this before Day 1 through Day 5. Glide the nerve. Do not yank it."],
       day1: ["Day 1", ""],
       day2: ["Day 2", ""],
       day3: ["Day 3", ""],
@@ -1635,6 +1803,8 @@
       pinWorkoutChrome();
       if (view === "diary") paintDiary();
       if (view === "water") paintWater();
+      if (view === "stretches") startTips();
+      else stopTips();
       if (view.startsWith("day")) {
         const d = currentDays()[view];
         document.getElementById("pageTitle").textContent = d.title;
@@ -1651,6 +1821,76 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
       setNav(false);
     }
+
+    let tipI = 0;
+    let tipTimer = null;
+    let tipTouchX = null;
+    function tipSlides() {
+      return [...document.querySelectorAll(".tips-slide")];
+    }
+    function paintTips() {
+      const slides = tipSlides();
+      const dots = [...document.querySelectorAll("#tipsDots button")];
+      slides.forEach((el, i) => el.classList.toggle("on", i === tipI));
+      dots.forEach((el, i) => {
+        el.classList.toggle("on", i === tipI);
+        el.setAttribute("aria-current", i === tipI ? "true" : "false");
+      });
+    }
+    function setTip(i) {
+      const n = tipSlides().length;
+      if (!n) return;
+      tipI = (i + n) % n;
+      paintTips();
+    }
+    function stopTips() {
+      if (tipTimer) { clearInterval(tipTimer); tipTimer = null; }
+    }
+    function startTips() {
+      stopTips();
+      paintTips();
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      tipTimer = setInterval(() => setTip(tipI + 1), 6500);
+    }
+    function buildTipDots() {
+      const box = document.getElementById("tipsDots");
+      const slides = tipSlides();
+      if (!box || !slides.length) return;
+      box.innerHTML = slides.map((_, i) =>
+        `<button type="button" class="${i === 0 ? "on" : ""}" aria-label="Show tip ${i + 1} of ${slides.length}"><i></i></button>`
+      ).join("");
+    }
+    buildTipDots();
+    document.getElementById("tipPrev").onclick = () => { setTip(tipI - 1); startTips(); };
+    document.getElementById("tipNext").onclick = () => { setTip(tipI + 1); startTips(); };
+    document.getElementById("tipsDots").addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const i = [...document.getElementById("tipsDots").children].indexOf(btn);
+      if (i < 0) return;
+      setTip(i);
+      startTips();
+    });
+    const tipsFrame = document.getElementById("tipsFrame");
+    tipsFrame.addEventListener("pointerenter", stopTips);
+    tipsFrame.addEventListener("pointerleave", () => {
+      if (document.querySelector("#stretches.view.active")) startTips();
+    });
+    tipsFrame.addEventListener("touchstart", e => {
+      tipTouchX = e.changedTouches[0].clientX;
+      stopTips();
+    }, { passive: true });
+    tipsFrame.addEventListener("touchend", e => {
+      if (tipTouchX == null) return;
+      const dx = e.changedTouches[0].clientX - tipTouchX;
+      tipTouchX = null;
+      if (Math.abs(dx) > 40) setTip(tipI + (dx < 0 ? 1 : -1));
+      if (document.querySelector("#stretches.view.active")) startTips();
+    }, { passive: true });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopTips();
+      else if (document.querySelector("#stretches.view.active")) startTips();
+    });
 
     function pinWorkoutChrome() {
       const tools = document.getElementById("stickyTools");
