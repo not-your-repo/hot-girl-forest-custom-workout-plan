@@ -429,6 +429,22 @@
     .add-food .log-row { margin-top: 0; }
     .add-food input { min-width: 0; flex: 1 1 80px; }
     .add-food input.name { flex: 2 1 160px; }
+    .name-wrap { position: relative; flex: 2 1 180px; min-width: 0; }
+    .name-wrap input { width: 100%; }
+    .suggest {
+      position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 30;
+      background: #fff; border: 1px solid var(--line); border-radius: 4px;
+      box-shadow: var(--shadow); max-height: 260px; overflow: auto;
+    }
+    .suggest[hidden] { display: none !important; }
+    .suggest button {
+      display: block; width: 100%; text-align: left; appearance: none; border: 0;
+      background: #fff; padding: 9px 12px; cursor: pointer; border-bottom: 1px solid var(--line);
+    }
+    .suggest button:last-child { border-bottom: 0; }
+    .suggest button:hover, .suggest button.on { background: var(--bg-2); }
+    .suggest .nm { font-weight: 600; display: block; }
+    .suggest .mac { color: var(--muted); font-size: 12px; margin-top: 2px; }
     .goal-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
     .goal-toggle button { flex: 1; }
 
@@ -1940,10 +1956,142 @@
         return { cal: a.cal + s.cal, p: a.p + s.p, c: a.c + s.c, f: a.f + s.f };
       }, { cal: 0, p: 0, c: 0, f: 0 });
     }
+    const FOOD_DB = [
+      { name: "Egg, large (1)", cal: 72, p: 6.3, c: 0.4, f: 4.8 },
+      { name: "Eggs, large (2)", cal: 144, p: 12.6, c: 0.8, f: 9.6 },
+      { name: "Egg whites (3)", cal: 51, p: 11, c: 0.7, f: 0.2 },
+      { name: "Greek yogurt, plain nonfat (170 g)", cal: 100, p: 18, c: 6, f: 0 },
+      { name: "Greek yogurt, plain 2% (170 g)", cal: 146, p: 20, c: 8, f: 4 },
+      { name: "Cottage cheese, low-fat (150 g)", cal: 122, p: 18, c: 5, f: 2.5 },
+      { name: "Cottage cheese, low-fat (1 cup)", cal: 163, p: 28, c: 6, f: 2.3 },
+      { name: "Whey protein (1 scoop)", cal: 120, p: 24, c: 3, f: 1.5 },
+      { name: "Chicken breast, cooked (150 g)", cal: 248, p: 46, c: 0, f: 5 },
+      { name: "Chicken breast, cooked (100 g)", cal: 165, p: 31, c: 0, f: 3.6 },
+      { name: "Chicken thighs, cooked (150 g)", cal: 315, p: 37, c: 0, f: 18 },
+      { name: "Chicken thighs, cooked (100 g)", cal: 209, p: 26, c: 0, f: 11 },
+      { name: "Ground turkey, 93% (4 oz cooked)", cal: 170, p: 29, c: 0, f: 6 },
+      { name: "Turkey breast, sliced (100 g)", cal: 135, p: 30, c: 0, f: 1 },
+      { name: "Lean ground beef, 93% (4 oz cooked)", cal: 170, p: 24, c: 0, f: 8 },
+      { name: "Sirloin steak, cooked (4 oz)", cal: 207, p: 31, c: 0, f: 9 },
+      { name: "Pork tenderloin, cooked (4 oz)", cal: 163, p: 28, c: 0, f: 5 },
+      { name: "Oats, dry (40 g)", cal: 152, p: 5, c: 27, f: 3 },
+      { name: "Oatmeal, cooked (1 cup)", cal: 166, p: 6, c: 28, f: 4 },
+      { name: "Quinoa, cooked (1 cup)", cal: 222, p: 8, c: 39, f: 4 },
+      { name: "Quinoa, cooked (1/2 cup)", cal: 111, p: 4, c: 20, f: 2 },
+      { name: "Brown rice, cooked (1 cup)", cal: 218, p: 5, c: 45, f: 2 },
+      { name: "White rice, cooked (1 cup)", cal: 205, p: 4, c: 45, f: 0.4 },
+      { name: "Rice cakes (2)", cal: 70, p: 1.5, c: 15, f: 0.5 },
+      { name: "Rice cake (1)", cal: 35, p: 0.7, c: 7, f: 0.3 },
+      { name: "Potato, baked (300 g)", cal: 279, p: 7, c: 63, f: 0.3 },
+      { name: "Potato, baked (150 g)", cal: 140, p: 4, c: 32, f: 0.2 },
+      { name: "Sweet potato, baked (150 g)", cal: 135, p: 2, c: 31, f: 0.1 },
+      { name: "Whole wheat bread (1 slice)", cal: 81, p: 4, c: 14, f: 1 },
+      { name: "Whole wheat toast (2 slices)", cal: 162, p: 8, c: 28, f: 2 },
+      { name: "Tortilla, flour (1 medium)", cal: 140, p: 4, c: 22, f: 4 },
+      { name: "Pasta, cooked (1 cup)", cal: 220, p: 8, c: 43, f: 1 },
+      { name: "Banana, medium", cal: 105, p: 1, c: 27, f: 0.4 },
+      { name: "Apple, medium", cal: 95, p: 0.5, c: 25, f: 0.3 },
+      { name: "Orange, medium", cal: 62, p: 1, c: 15, f: 0.2 },
+      { name: "Mixed berries (1 cup)", cal: 70, p: 1, c: 17, f: 0.5 },
+      { name: "Strawberries (1 cup)", cal: 49, p: 1, c: 12, f: 0.5 },
+      { name: "Blueberries (1 cup)", cal: 84, p: 1, c: 21, f: 0.5 },
+      { name: "Grapes (1 cup)", cal: 104, p: 1, c: 27, f: 0.2 },
+      { name: "Avocado (1/2)", cal: 120, p: 1.5, c: 6, f: 11 },
+      { name: "Broccoli, cooked (1 cup)", cal: 55, p: 4, c: 11, f: 0.6 },
+      { name: "Spinach, raw (2 cups)", cal: 14, p: 2, c: 2, f: 0.2 },
+      { name: "Mixed salad (2 cups)", cal: 20, p: 1.5, c: 4, f: 0.2 },
+      { name: "Cucumber (1 cup)", cal: 16, p: 1, c: 4, f: 0.1 },
+      { name: "Tomato, medium", cal: 22, p: 1, c: 5, f: 0.2 },
+      { name: "Bell pepper (1 cup)", cal: 30, p: 1, c: 7, f: 0.2 },
+      { name: "Carrots (1 cup)", cal: 50, p: 1, c: 12, f: 0.3 },
+      { name: "Green beans (1 cup)", cal: 44, p: 2, c: 10, f: 0.3 },
+      { name: "Black beans, cooked (1/2 cup)", cal: 114, p: 8, c: 20, f: 0.5 },
+      { name: "Chickpeas, cooked (1/2 cup)", cal: 135, p: 7, c: 22, f: 2 },
+      { name: "Lentils, cooked (1/2 cup)", cal: 115, p: 9, c: 20, f: 0.4 },
+      { name: "Olive oil (1 tsp)", cal: 40, p: 0, c: 0, f: 4.5 },
+      { name: "Olive oil (2 tsp)", cal: 80, p: 0, c: 0, f: 9 },
+      { name: "Olive oil (1 tbsp)", cal: 119, p: 0, c: 0, f: 14 },
+      { name: "Butter (1 tbsp)", cal: 102, p: 0.1, c: 0, f: 12 },
+      { name: "Peanut butter (2 tbsp)", cal: 188, p: 8, c: 6, f: 16 },
+      { name: "Almond butter (2 tbsp)", cal: 196, p: 7, c: 6, f: 18 },
+      { name: "Almonds (1 oz)", cal: 164, p: 6, c: 6, f: 14 },
+      { name: "Walnuts (1 oz)", cal: 185, p: 4, c: 4, f: 18 },
+      { name: "Hummus (2 tbsp)", cal: 70, p: 2, c: 6, f: 5 },
+      { name: "Cheddar cheese (1 oz)", cal: 114, p: 7, c: 0.4, f: 9 },
+      { name: "Mozzarella, part-skim (1 oz)", cal: 72, p: 7, c: 1, f: 5 },
+      { name: "Milk, 2% (1 cup)", cal: 122, p: 8, c: 12, f: 5 },
+      { name: "Almond milk, unsweetened (1 cup)", cal: 30, p: 1, c: 1, f: 2.5 },
+      { name: "Coffee, black", cal: 2, p: 0.3, c: 0, f: 0 },
+      { name: "Coffee with 2% milk (8 oz)", cal: 30, p: 2, c: 3, f: 1 },
+      { name: "Honey (1 tbsp)", cal: 64, p: 0, c: 17, f: 0 },
+      { name: "Granola (1/2 cup)", cal: 200, p: 5, c: 32, f: 6 },
+      { name: "Protein bar", cal: 200, p: 20, c: 22, f: 6 },
+      { name: "Rice cakes with peanut butter (2 cakes + 1 tbsp)", cal: 164, p: 5, c: 18, f: 8 },
+      { name: "Salad with 2 tsp olive oil", cal: 100, p: 2, c: 4, f: 9 }
+    ];
+
+    function recentFoods() {
+      const store = foodStore();
+      const seen = new Map();
+      Object.keys(store).forEach(k => {
+        if (k === "_goal") return;
+        const day = store[k];
+        if (!day || typeof day !== "object") return;
+        MEALS.forEach(m => {
+          (day[m.id] || []).forEach(x => {
+            const key = String(x.name || "").toLowerCase();
+            if (!key || seen.has(key)) return;
+            seen.set(key, { name: x.name, cal: x.cal, p: x.p, c: x.c, f: x.f });
+          });
+        });
+      });
+      return [...seen.values()];
+    }
+    function suggestFoods(q) {
+      q = String(q || "").trim().toLowerCase();
+      if (q.length < 1) return [];
+      const pool = recentFoods().concat(FOOD_DB);
+      const used = new Set();
+      const hits = [];
+      pool.forEach(f => {
+        const n = String(f.name || "").toLowerCase();
+        if (!n || used.has(n)) return;
+        const words = n.split(/[^a-z0-9%]+/);
+        const match = n.includes(q) || words.some(w => w.startsWith(q));
+        if (!match) return;
+        used.add(n);
+        const score = n.startsWith(q) ? 0 : words.some(w => w.startsWith(q)) ? 1 : 2;
+        hits.push({ f, score });
+      });
+      return hits.sort((a, b) => a.score - b.score || a.f.name.localeCompare(b.f.name)).slice(0, 8).map(x => x.f);
+    }
+    function hideSuggest() {
+      document.querySelectorAll(".suggest").forEach(el => { el.hidden = true; el.innerHTML = ""; });
+    }
+    function fillFoodFields(wrap, food) {
+      wrap.querySelector('[data-f="name"]').value = food.name;
+      wrap.querySelector('[data-f="cal"]').value = food.cal;
+      wrap.querySelector('[data-f="p"]').value = food.p;
+      wrap.querySelector('[data-f="c"]').value = food.c;
+      wrap.querySelector('[data-f="f"]').value = food.f;
+      hideSuggest();
+    }
+    function renderSuggest(box, foods) {
+      if (!foods.length) { box.hidden = true; box.innerHTML = ""; return; }
+      box.hidden = false;
+      box.innerHTML = foods.map((f, i) => `<button type="button" data-pick="${i}" class="${i === 0 ? "on" : ""}">
+        <span class="nm">${esc(f.name)}</span>
+        <span class="mac">${Math.round(Number(f.cal))} cal · ${Number(f.p)}p · ${Number(f.c)}c · ${Number(f.f)}f</span>
+      </button>`).join("");
+      box._hits = foods;
+    }
     function addFormHtml(meal) {
       return `<div class="add-food">
         <div class="log-row">
-          <input class="name" data-f="name" placeholder="Food name" />
+          <div class="name-wrap">
+            <input class="name" data-f="name" placeholder="Start typing a food" autocomplete="off" />
+            <div class="suggest" hidden></div>
+          </div>
           <input data-f="cal" type="number" min="0" step="1" placeholder="Cal" />
           <input data-f="p" type="number" min="0" step="0.1" placeholder="P" />
           <input data-f="c" type="number" min="0" step="0.1" placeholder="C" />
@@ -2001,7 +2149,46 @@
     document.getElementById("goal2400").onclick = () => {
       const data = dayFood(diaryDate); data.goal = 2400; saveDayFood(diaryDate, data); paintDiary();
     };
+    document.getElementById("diaryMeals").addEventListener("input", e => {
+      const name = e.target.closest('[data-f="name"]');
+      if (!name) return;
+      const box = name.parentElement.querySelector(".suggest");
+      if (box) renderSuggest(box, suggestFoods(name.value));
+    });
+    document.getElementById("diaryMeals").addEventListener("keydown", e => {
+      const name = e.target.closest('[data-f="name"]');
+      if (!name) return;
+      const box = name.parentElement.querySelector(".suggest");
+      if (!box || box.hidden) {
+        if (e.key === "Enter") e.preventDefault();
+        return;
+      }
+      const buttons = [...box.querySelectorAll("button")];
+      const on = buttons.findIndex(b => b.classList.contains("on"));
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        const next = e.key === "ArrowDown"
+          ? (on + 1) % buttons.length
+          : (on - 1 + buttons.length) % buttons.length;
+        buttons.forEach((b, i) => b.classList.toggle("on", i === next));
+        buttons[next].scrollIntoView({ block: "nearest" });
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const pick = buttons[on] || buttons[0];
+        const food = box._hits && box._hits[Number(pick.dataset.pick)];
+        if (food) fillFoodFields(name.closest(".add-food"), food);
+      } else if (e.key === "Escape") {
+        hideSuggest();
+      }
+    });
     document.getElementById("diaryMeals").addEventListener("click", e => {
+      const pick = e.target.closest("[data-pick]");
+      if (pick) {
+        const box = pick.closest(".suggest");
+        const food = box._hits && box._hits[Number(pick.dataset.pick)];
+        if (food) fillFoodFields(pick.closest(".add-food"), food);
+        return;
+      }
       const open = e.target.closest("[data-open]");
       const add = e.target.closest("[data-add]");
       const del = e.target.closest("[data-del]");
@@ -2032,6 +2219,9 @@
         addMealId = "";
         paintDiary();
       }
+    });
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".name-wrap")) hideSuggest();
     });
     document.getElementById("copyPrevDay").onclick = () => {
       const prev = dayFood(isoShift(diaryDate, -1));
