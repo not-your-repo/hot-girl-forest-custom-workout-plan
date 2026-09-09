@@ -365,22 +365,72 @@
     .water-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
     .water-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 10px; }
     .water-glass {
-      appearance: none; border: 2px solid var(--line); background: var(--bg-2); color: var(--sage-2);
-      width: 44px; height: 52px; border-radius: 6px 6px 12px 12px; cursor: pointer;
+      appearance: none; border: 2px solid #b9d4dc; background: #fff; color: var(--sage-2);
+      width: 36px; height: 44px; border-radius: 4px 4px 10px 10px; cursor: pointer;
       position: relative; padding: 0;
     }
     .water-glass::after {
-      content: ""; position: absolute; left: 8px; right: 8px; bottom: 6px; height: 0;
-      background: linear-gradient(180deg, #8ec9d4, #3d7a88); border-radius: 0 0 8px 8px;
+      content: ""; position: absolute; left: 6px; right: 6px; bottom: 5px; height: 0;
+      background: linear-gradient(180deg, #7ec8e3, #1886b5); border-radius: 0 0 6px 6px;
       transition: height 0.15s ease;
     }
-    .water-glass.on { border-color: #3d7a88; }
-    .water-glass.on::after { height: 32px; }
+    .water-glass.on { border-color: #1886b5; }
+    .water-glass.on::after { height: 26px; }
     .water-glass.goal { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
     .water-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
     .water-meter { height: 10px; background: #e6dcb8; border-radius: 99px; overflow: hidden; margin: 8px 0 4px; }
-    .water-meter > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #5c7e51, #3d7a88); }
-    .water-meter.met > i { background: linear-gradient(90deg, var(--sage), var(--gold)); }
+    .water-meter > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #1886b5, #3d7a88); }
+    .water-meter.met > i { background: linear-gradient(90deg, #1886b5, var(--gold)); }
+
+    .diary-date {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      background: #12322a; color: #fffbee; border-radius: 6px; padding: 10px 12px; margin-bottom: 16px;
+    }
+    .diary-date button {
+      appearance: none; border: 0; background: rgba(255,251,238,0.1); color: #fffbee;
+      width: 40px; height: 40px; border-radius: 4px; cursor: pointer; font-size: 18px;
+    }
+    .diary-date strong { font-family: var(--display); letter-spacing: 0.04em; text-transform: uppercase; }
+    .remain {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px;
+    }
+    .remain .big { text-align: left; }
+    .remain .big b { font-family: var(--display); font-size: 42px; line-height: 1; color: var(--sage); }
+    .remain .big.over b { color: var(--coral); }
+    .remain .n { font-family: var(--display); font-size: 22px; }
+    .macros { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .macro .track { height: 8px; background: #e6dcb8; border-radius: 99px; overflow: hidden; margin-top: 8px; }
+    .macro .track > i { display: block; height: 100%; }
+    .macro.p .track > i { background: #5c7e51; }
+    .macro.c .track > i { background: #bd901b; }
+    .macro.f .track > i { background: #cf604f; }
+    .meal {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; overflow: hidden;
+    }
+    .meal-h {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 12px 14px; background: #12322a; color: #fffbee;
+    }
+    .meal-h b { font-family: var(--display); letter-spacing: 0.04em; text-transform: uppercase; }
+    .meal-h span { color: #d9c89d; font-size: 13px; }
+    .food-row {
+      display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center;
+      padding: 10px 14px; border-bottom: 1px solid var(--line);
+    }
+    .food-row .name { font-weight: 600; }
+    .food-row .mac { color: var(--muted); font-size: 12px; }
+    .food-row .cal { font-variant-numeric: tabular-nums; font-weight: 800; }
+    .food-row .del {
+      appearance: none; border: 0; background: transparent; color: var(--coral);
+      cursor: pointer; font-size: 18px; width: 32px; height: 32px;
+    }
+    .food-empty { padding: 12px 14px; color: var(--muted); font-size: 13px; }
+    .add-food { padding: 12px 14px; background: var(--bg-2); }
+    .add-food .log-row { margin-top: 0; }
+    .add-food input { min-width: 0; flex: 1 1 80px; }
+    .add-food input.name { flex: 2 1 160px; }
+    .goal-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+    .goal-toggle button { flex: 1; }
 
     @media (max-width: 1080px) {
       :root { --mobile-bar-h: calc(52px + env(safe-area-inset-top, 0px)); }
@@ -442,6 +492,8 @@
       .forest-win { flex-direction: column; align-items: flex-start; gap: 10px; }
       .log-row { flex-wrap: wrap; }
       .log-row input { min-width: 0; flex: 1 1 120px; }
+      .remain, .macros { grid-template-columns: 1fr 1fr; }
+      .remain .big { grid-column: 1 / -1; }
 
       .topbar, .topbar > div, .sticky-tools, .ex-body, .note, .warn, .lede {
         min-width: 0; max-width: 100%;
@@ -522,6 +574,7 @@
         <button class="nav-btn day-nav" data-view="day5">Day 5 · Full-body kettlebell</button>
         <button class="nav-btn" data-view="library">Form library</button>
         <button class="nav-btn" data-view="nutrition">Nutrition</button>
+        <button class="nav-btn" data-view="diary">Diary</button>
         <button class="nav-btn" data-view="recovery">Recovery and red flags</button>
         <button class="nav-btn" data-view="progress">Progress</button>
         <button class="nav-btn" data-view="motivation">Motivation</button>
@@ -685,6 +738,48 @@
         </div>
         <p class="lede" style="margin-top:12px">To convert this day to about 1,800 calories, keep the protein foods, drop the oats, use 1/2 cup quinoa, and cut the potato to 150 g. Do not cut the yogurt, chicken, whey, or cottage cheese first. Those are the point of a protein-emphasized diet.</p>
         <div class="note" style="margin-top:16px">Weigh on Friday mornings, after using the bathroom, before food. Use the same scale and the same conditions. A weekly average drop of 0.5–1.0 lb is the green light. If weight drops faster than that, add 100–150 calories. If there is no change after two weeks, subtract 150–200 calories from carbohydrate, not from protein.</div>
+      </section>
+
+      <section class="view" id="diary">
+        <div class="diary-date">
+          <button type="button" id="diaryPrev" aria-label="Previous day">‹</button>
+          <strong id="diaryDateLabel">Today</strong>
+          <button type="button" id="diaryNext" aria-label="Next day">›</button>
+        </div>
+        <div class="goal-toggle">
+          <button class="btn ghost" type="button" data-goal="1800" id="goal1800">Fat-loss · 1,800</button>
+          <button class="btn ghost" type="button" data-goal="2400" id="goal2400">Fueling · 2,400</button>
+        </div>
+        <div class="remain card" id="remainCard">
+          <div class="big"><div class="label">Remaining</div><b id="remainCal">1800</b></div>
+          <div><div class="label">Goal</div><div class="n" id="goalCal">1800</div></div>
+          <div><div class="label">Food</div><div class="n" id="foodCal">0</div></div>
+          <div><div class="label">Net</div><div class="n" id="netCal">0</div></div>
+        </div>
+        <div class="macros">
+          <div class="card macro p"><div class="label">Protein</div><div><b id="macP">0</b> / <span id="goalP">160</span> g</div><div class="track"><i id="barP"></i></div></div>
+          <div class="card macro c"><div class="label">Carbs</div><div><b id="macC">0</b> / <span id="goalC">155</span> g</div><div class="track"><i id="barC"></i></div></div>
+          <div class="card macro f"><div class="label">Fat</div><div><b id="macF">0</b> / <span id="goalF">60</span> g</div><div class="track"><i id="barF"></i></div></div>
+        </div>
+        <div id="diaryMeals"></div>
+        <div class="card" style="margin-top:8px">
+          <div class="water-head">
+            <div>
+              <div class="label">Water</div>
+              <div class="stat" id="diaryWaterStat">0 <span>oz</span></div>
+            </div>
+            <div class="label" id="diaryWaterGoal" style="margin:0">0 / 80 oz</div>
+          </div>
+          <div class="water-meter" id="diaryWaterMeter"><i></i></div>
+          <div class="water-row" id="diaryWaterRow"></div>
+          <div class="water-actions">
+            <button class="btn" id="diaryWaterAdd" type="button">+ 8 oz</button>
+            <button class="btn ghost" id="diaryWaterSub" type="button">− 8 oz</button>
+          </div>
+        </div>
+        <div class="water-actions" style="margin-top:12px">
+          <button class="btn ghost" id="copyPrevDay" type="button">Copy previous day</button>
+        </div>
       </section>
 
       <section class="view" id="recovery">
@@ -1399,6 +1494,7 @@
       day5: ["Day 5", ""],
       library: ["Form library", "Photos of the working position, plus a YouTube form demo for each lift."],
       nutrition: ["Nutrition", "Protein stays high. Calories are honest about the April goal."],
+      diary: ["Diary", "Log meals and water the way a food diary works. Remaining calories and macros update as you add food."],
       recovery: ["Recovery and red flags", "What to skip, when to walk, and when to call a physician."],
       progress: ["Progress", "Log water and weight, collect a mushroom for each finished day, and map today’s symptom score."],
       motivation: ["Motivation", "Electric Forest 2027 is the why. April 2027 is the checkpoint."]
@@ -1414,6 +1510,7 @@
       document.getElementById("stickyTools").classList.toggle("pin", onWorkout);
       document.body.classList.toggle("workout-mode", onWorkout);
       pinWorkoutChrome();
+      if (view === "diary") paintDiary();
       if (view.startsWith("day")) {
         const d = currentDays()[view];
         document.getElementById("pageTitle").textContent = d.title;
@@ -1687,42 +1784,90 @@
     });
 
     const waterKey = "hgf-water";
+    const foodKey = "hgf-food";
     const WATER_GOAL = 80;
     const WATER_STEP = 8;
     const WATER_GLASSES = WATER_GOAL / WATER_STEP;
+    const FOOD_GOALS = {
+      1800: { cal: 1800, p: 160, c: 155, f: 60 },
+      2400: { cal: 2400, p: 160, c: 270, f: 75 }
+    };
+    const MEALS = [
+      { id: "breakfast", label: "Breakfast" },
+      { id: "lunch", label: "Lunch" },
+      { id: "dinner", label: "Dinner" },
+      { id: "snacks", label: "Snacks" }
+    ];
+    let diaryDate = todayISO();
+    let addMealId = "";
+
+    function isoShift(iso, days) {
+      const [y, m, d] = iso.split("-").map(Number);
+      const dt = new Date(y, m - 1, d);
+      dt.setDate(dt.getDate() + days);
+      const mm = String(dt.getMonth() + 1).padStart(2, "0");
+      const dd = String(dt.getDate()).padStart(2, "0");
+      return `${dt.getFullYear()}-${mm}-${dd}`;
+    }
+    function prettyDate(iso) {
+      if (iso === todayISO()) return "Today";
+      if (iso === isoShift(todayISO(), -1)) return "Yesterday";
+      if (iso === isoShift(todayISO(), 1)) return "Tomorrow";
+      const [y, m, d] = iso.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+    }
 
     function waterLog() {
       return JSON.parse(localStorage.getItem(waterKey) || "{}");
     }
-    function waterToday() {
-      return Number(waterLog()[todayISO()] || 0);
+    function waterFor(iso) {
+      return Number(waterLog()[iso] || 0);
     }
-    function saveWater(oz) {
+    function saveWater(oz, iso) {
+      iso = iso || todayISO();
       oz = Math.max(0, Math.min(WATER_GOAL + WATER_STEP * 4, Number(oz) || 0));
       const log = waterLog();
-      log[todayISO()] = oz;
+      log[iso] = oz;
       localStorage.setItem(waterKey, JSON.stringify(log));
       paintWater();
     }
-    function paintWater() {
-      const oz = waterToday();
+    function glassHtml(oz) {
       const filled = Math.min(WATER_GLASSES, Math.round(oz / WATER_STEP));
       const met = oz >= WATER_GOAL;
-      document.getElementById("waterStat").innerHTML = `${oz} <span>oz</span>`;
-      document.getElementById("waterGoalLabel").textContent = met
-        ? "Goal met"
-        : `${WATER_GOAL - oz} oz to go · ${WATER_GOAL} oz goal`;
-      document.getElementById("waterNote").textContent = met
-        ? "Eighty ounces in. Keep sipping if you are still thirsty."
-        : "Tap a glass for 8 ounces. Resets at midnight.";
-      const meter = document.getElementById("waterMeter");
-      meter.classList.toggle("met", met);
-      meter.querySelector("i").style.width = `${Math.min(100, (oz / WATER_GOAL) * 100)}%`;
-      document.getElementById("waterRow").innerHTML = Array.from({ length: WATER_GLASSES }, (_, i) => {
+      return Array.from({ length: WATER_GLASSES }, (_, i) => {
         const n = i + 1;
         const on = n <= filled;
         return `<button class="water-glass ${on ? "on" : ""} ${met ? "goal" : ""}" type="button" data-glass="${n}" aria-pressed="${on}" aria-label="${n * WATER_STEP} ounces"></button>`;
       }).join("");
+    }
+    function paintWaterBox(ids, iso) {
+      const oz = waterFor(iso);
+      const met = oz >= WATER_GOAL;
+      const stat = document.getElementById(ids.stat);
+      const goal = document.getElementById(ids.goal);
+      const note = ids.note ? document.getElementById(ids.note) : null;
+      const meter = document.getElementById(ids.meter);
+      const row = document.getElementById(ids.row);
+      if (stat) stat.innerHTML = `${oz} <span>oz</span>`;
+      if (goal) goal.textContent = met ? "Goal met · 80 oz" : `${oz} / ${WATER_GOAL} oz`;
+      if (note) note.textContent = met
+        ? "Eighty ounces in. Keep sipping if you are still thirsty."
+        : "Tap a cup for 8 ounces. Goal is 80 ounces.";
+      if (meter) {
+        meter.classList.toggle("met", met);
+        meter.querySelector("i").style.width = `${Math.min(100, (oz / WATER_GOAL) * 100)}%`;
+      }
+      if (row) row.innerHTML = glassHtml(oz);
+    }
+    function paintWater() {
+      paintWaterBox({
+        stat: "waterStat", goal: "waterGoalLabel", note: "waterNote",
+        meter: "waterMeter", row: "waterRow"
+      }, todayISO());
+      paintWaterBox({
+        stat: "diaryWaterStat", goal: "diaryWaterGoal", note: null,
+        meter: "diaryWaterMeter", row: "diaryWaterRow"
+      }, diaryDate);
       const log = waterLog();
       const bars = [];
       for (let i = 13; i >= 0; i--) {
@@ -1733,23 +1878,172 @@
         const key = `${d.getFullYear()}-${m}-${day}`;
         const val = log[key];
         const h = val == null ? 4 : Math.max(6, Math.round((Math.min(WATER_GOAL, Number(val)) / WATER_GOAL) * 56));
-        const col = val == null ? "#e6dcb8" : Number(val) >= WATER_GOAL ? "#bd901b" : "#3d7a88";
+        const col = val == null ? "#e6dcb8" : Number(val) >= WATER_GOAL ? "#bd901b" : "#1886b5";
         bars.push(`<div class="col"><div class="barbit" style="height:${h}px;background:${col}"></div><div class="d">${d.getDate()}</div></div>`);
       }
-      document.getElementById("waterBars").innerHTML = bars.join("");
+      const barBox = document.getElementById("waterBars");
+      if (barBox) barBox.innerHTML = bars.join("");
     }
-    document.getElementById("waterRow").addEventListener("click", e => {
-      const btn = e.target.closest("[data-glass]");
-      if (!btn) return;
-      const n = Number(btn.dataset.glass);
-      const current = waterToday();
-      const at = n * WATER_STEP;
-      saveWater(current >= at ? (n - 1) * WATER_STEP : at);
+    function onGlassClick(iso) {
+      return e => {
+        const btn = e.target.closest("[data-glass]");
+        if (!btn) return;
+        const n = Number(btn.dataset.glass);
+        const current = waterFor(iso);
+        const at = n * WATER_STEP;
+        saveWater(current >= at ? (n - 1) * WATER_STEP : at, iso);
+      };
+    }
+    document.getElementById("waterRow").addEventListener("click", e => onGlassClick(todayISO())(e));
+    document.getElementById("diaryWaterRow").addEventListener("click", e => onGlassClick(diaryDate)(e));
+    document.getElementById("waterAdd").onclick = () => saveWater(waterFor(todayISO()) + WATER_STEP, todayISO());
+    document.getElementById("waterSub").onclick = () => saveWater(waterFor(todayISO()) - WATER_STEP, todayISO());
+    document.getElementById("waterReset").onclick = () => saveWater(0, todayISO());
+    document.getElementById("diaryWaterAdd").onclick = () => saveWater(waterFor(diaryDate) + WATER_STEP, diaryDate);
+    document.getElementById("diaryWaterSub").onclick = () => saveWater(waterFor(diaryDate) - WATER_STEP, diaryDate);
+
+    function foodStore() {
+      return JSON.parse(localStorage.getItem(foodKey) || "{}");
+    }
+    function emptyDay(goal) {
+      return { goal: goal || 1800, breakfast: [], lunch: [], dinner: [], snacks: [] };
+    }
+    function dayFood(iso) {
+      const store = foodStore();
+      return store[iso] || emptyDay(store._goal || 1800);
+    }
+    function saveDayFood(iso, data) {
+      const store = foodStore();
+      store[iso] = data;
+      store._goal = data.goal;
+      localStorage.setItem(foodKey, JSON.stringify(store));
+    }
+    function foodId() {
+      return `f${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+    }
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+    function sumFoods(list) {
+      return list.reduce((a, x) => ({
+        cal: a.cal + Number(x.cal || 0),
+        p: a.p + Number(x.p || 0),
+        c: a.c + Number(x.c || 0),
+        f: a.f + Number(x.f || 0)
+      }), { cal: 0, p: 0, c: 0, f: 0 });
+    }
+    function dayTotals(data) {
+      return MEALS.reduce((a, m) => {
+        const s = sumFoods(data[m.id] || []);
+        return { cal: a.cal + s.cal, p: a.p + s.p, c: a.c + s.c, f: a.f + s.f };
+      }, { cal: 0, p: 0, c: 0, f: 0 });
+    }
+    function addFormHtml(meal) {
+      return `<div class="add-food">
+        <div class="log-row">
+          <input class="name" data-f="name" placeholder="Food name" />
+          <input data-f="cal" type="number" min="0" step="1" placeholder="Cal" />
+          <input data-f="p" type="number" min="0" step="0.1" placeholder="P" />
+          <input data-f="c" type="number" min="0" step="0.1" placeholder="C" />
+          <input data-f="f" type="number" min="0" step="0.1" placeholder="F" />
+          <button class="btn" type="button" data-add="${meal}">Add</button>
+        </div>
+      </div>`;
+    }
+    function paintDiary() {
+      document.getElementById("diaryDateLabel").textContent = prettyDate(diaryDate);
+      const data = dayFood(diaryDate);
+      const g = FOOD_GOALS[data.goal] || FOOD_GOALS[1800];
+      const t = dayTotals(data);
+      const remain = g.cal - t.cal;
+      const remainEl = document.getElementById("remainCal");
+      remainEl.textContent = String(remain);
+      remainEl.parentElement.classList.toggle("over", remain < 0);
+      document.getElementById("goalCal").textContent = String(g.cal);
+      document.getElementById("foodCal").textContent = String(Math.round(t.cal));
+      document.getElementById("netCal").textContent = String(Math.round(t.cal));
+      document.getElementById("macP").textContent = String(Math.round(t.p));
+      document.getElementById("macC").textContent = String(Math.round(t.c));
+      document.getElementById("macF").textContent = String(Math.round(t.f));
+      document.getElementById("goalP").textContent = String(g.p);
+      document.getElementById("goalC").textContent = String(g.c);
+      document.getElementById("goalF").textContent = String(g.f);
+      document.getElementById("barP").style.width = `${Math.min(100, (t.p / g.p) * 100)}%`;
+      document.getElementById("barC").style.width = `${Math.min(100, (t.c / g.c) * 100)}%`;
+      document.getElementById("barF").style.width = `${Math.min(100, (t.f / g.f) * 100)}%`;
+      document.getElementById("goal1800").className = data.goal === 1800 ? "btn" : "btn ghost";
+      document.getElementById("goal2400").className = data.goal === 2400 ? "btn" : "btn ghost";
+      document.getElementById("diaryMeals").innerHTML = MEALS.map(meal => {
+        const items = data[meal.id] || [];
+        const sub = sumFoods(items);
+        const rows = items.length
+          ? items.map(x => `<div class="food-row">
+              <div><div class="name">${esc(x.name)}</div><div class="mac">${Number(x.p || 0)}p · ${Number(x.c || 0)}c · ${Number(x.f || 0)}f</div></div>
+              <div class="cal">${Math.round(Number(x.cal || 0))}</div>
+              <button class="del" type="button" data-del="${meal.id}" data-id="${x.id}" aria-label="Remove">×</button>
+            </div>`).join("")
+          : `<div class="food-empty">No foods yet.</div>`;
+        return `<article class="meal">
+          <div class="meal-h"><b>${meal.label}</b><span>${Math.round(sub.cal)} cal</span></div>
+          ${rows}
+          ${addMealId === meal.id ? addFormHtml(meal.id) : `<div class="add-food"><button class="btn ghost" type="button" data-open="${meal.id}">Add food</button></div>`}
+        </article>`;
+      }).join("");
+      paintWater();
+    }
+    document.getElementById("diaryPrev").onclick = () => { diaryDate = isoShift(diaryDate, -1); addMealId = ""; paintDiary(); };
+    document.getElementById("diaryNext").onclick = () => { diaryDate = isoShift(diaryDate, 1); addMealId = ""; paintDiary(); };
+    document.getElementById("goal1800").onclick = () => {
+      const data = dayFood(diaryDate); data.goal = 1800; saveDayFood(diaryDate, data); paintDiary();
+    };
+    document.getElementById("goal2400").onclick = () => {
+      const data = dayFood(diaryDate); data.goal = 2400; saveDayFood(diaryDate, data); paintDiary();
+    };
+    document.getElementById("diaryMeals").addEventListener("click", e => {
+      const open = e.target.closest("[data-open]");
+      const add = e.target.closest("[data-add]");
+      const del = e.target.closest("[data-del]");
+      if (open) { addMealId = open.dataset.open; paintDiary(); return; }
+      if (del) {
+        const data = dayFood(diaryDate);
+        data[del.dataset.del] = (data[del.dataset.del] || []).filter(x => x.id !== del.dataset.id);
+        saveDayFood(diaryDate, data);
+        paintDiary();
+        return;
+      }
+      if (add) {
+        const wrap = add.closest(".add-food");
+        const val = key => wrap.querySelector(`[data-f="${key}"]`).value;
+        const name = (val("name") || "").trim();
+        const cal = Number(val("cal") || 0);
+        if (!name || cal < 0) return;
+        const data = dayFood(diaryDate);
+        data[add.dataset.add].push({
+          id: foodId(),
+          name,
+          cal,
+          p: Number(val("p") || 0),
+          c: Number(val("c") || 0),
+          f: Number(val("f") || 0)
+        });
+        saveDayFood(diaryDate, data);
+        addMealId = "";
+        paintDiary();
+      }
     });
-    document.getElementById("waterAdd").onclick = () => saveWater(waterToday() + WATER_STEP);
-    document.getElementById("waterSub").onclick = () => saveWater(waterToday() - WATER_STEP);
-    document.getElementById("waterReset").onclick = () => saveWater(0);
+    document.getElementById("copyPrevDay").onclick = () => {
+      const prev = dayFood(isoShift(diaryDate, -1));
+      const data = dayFood(diaryDate);
+      MEALS.forEach(m => {
+        data[m.id] = (prev[m.id] || []).map(x => Object.assign({}, x, { id: foodId() }));
+      });
+      saveDayFood(diaryDate, data);
+      paintDiary();
+    };
     paintWater();
+    paintDiary();
 
     renderLibrary();
     applyPlan();
