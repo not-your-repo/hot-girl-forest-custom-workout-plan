@@ -405,11 +405,14 @@
     .macro.c .track > i { background: #bd901b; }
     .macro.f .track > i { background: #cf604f; }
     .meal {
-      background: var(--panel); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; overflow: hidden;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px;
+      position: relative;
     }
+    .meal:has(.name-wrap) { z-index: 8; }
     .meal-h {
       display: flex; justify-content: space-between; align-items: center; gap: 8px;
       padding: 12px 14px; background: #12322a; color: #fffbee;
+      border-radius: 6px 6px 0 0;
     }
     .meal-h b { font-family: var(--display); letter-spacing: 0.04em; text-transform: uppercase; }
     .meal-h span { color: #d9c89d; font-size: 13px; }
@@ -425,25 +428,38 @@
       cursor: pointer; font-size: 18px; width: 32px; height: 32px;
     }
     .food-empty { padding: 12px 14px; color: var(--muted); font-size: 13px; }
-    .add-food { padding: 12px 14px; background: var(--bg-2); }
-    .add-food .log-row { margin-top: 0; }
+    .add-food { padding: 12px 14px; background: var(--bg-2); overflow: visible; }
+    .add-food .log-row { margin-top: 8px; }
     .add-food input { min-width: 0; flex: 1 1 80px; }
-    .add-food input.name { flex: 2 1 160px; }
-    .name-wrap { position: relative; flex: 2 1 180px; min-width: 0; }
-    .name-wrap input { width: 100%; }
+    .name-wrap { position: relative; min-width: 0; }
+    .name-wrap input {
+      width: 100%; background: #fff; border: 1px solid var(--line); color: var(--text);
+      border-radius: 4px; padding: 10px 12px; font-size: 16px;
+    }
+    .name-wrap.open input {
+      border-color: var(--sage);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
     .suggest {
-      position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 30;
-      background: #fff; border: 1px solid var(--line); border-radius: 4px;
-      box-shadow: var(--shadow); max-height: 260px; overflow: auto;
+      position: fixed; z-index: 80;
+      background: #fff; border: 1px solid var(--sage); border-top: 0;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 16px 32px rgba(18, 50, 42, 0.18);
+      max-height: 280px; max-width: calc(100vw - 16px); overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .suggest[hidden] { display: none !important; }
     .suggest button {
       display: block; width: 100%; text-align: left; appearance: none; border: 0;
-      background: #fff; padding: 9px 12px; cursor: pointer; border-bottom: 1px solid var(--line);
+      background: #fff; padding: 10px 12px; cursor: pointer; border-bottom: 1px solid var(--line);
     }
     .suggest button:last-child { border-bottom: 0; }
     .suggest button:hover, .suggest button.on { background: var(--bg-2); }
     .suggest .nm { font-weight: 600; display: block; }
+    .suggest .nm mark {
+      background: #f2e8c9; color: inherit; font-weight: 800; padding: 0;
+    }
     .suggest .mac { color: var(--muted); font-size: 12px; margin-top: 2px; }
     .goal-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
     .goal-toggle button { flex: 1; }
@@ -2064,12 +2080,87 @@
         const score = n.startsWith(q) ? 0 : words.some(w => w.startsWith(q)) ? 1 : 2;
         hits.push({ f, score });
       });
-      return hits.sort((a, b) => a.score - b.score || a.f.name.localeCompare(b.f.name)).slice(0, 8).map(x => x.f);
+      return hits.sort((a, b) => a.score - b.score || a.f.name.localeCompare(b.f.name)).slice(0, 10).map(x => x.f);
+    }
+    let suggestInput = null;
+    let suggestPanel = null;
+    function suggestBox() {
+      if (suggestPanel) return suggestPanel;
+      suggestPanel = document.createElement("div");
+      suggestPanel.className = "suggest";
+      suggestPanel.hidden = true;
+      suggestPanel.setAttribute("role", "listbox");
+      document.body.appendChild(suggestPanel);
+      suggestPanel.addEventListener("mousedown", e => e.preventDefault());
+      suggestPanel.addEventListener("click", e => {
+        const pick = e.target.closest("[data-pick]");
+        if (!pick || !suggestInput) return;
+        const food = suggestPanel._hits && suggestPanel._hits[Number(pick.dataset.pick)];
+        if (food) fillFoodFields(suggestInput.closest(".add-food"), food);
+      });
+      return suggestPanel;
+    }
+    function highlightMatch(name, q) {
+      const raw = String(name || "");
+      const needle = String(q || "").trim();
+      if (!needle) return esc(raw);
+      const i = raw.toLowerCase().indexOf(needle.toLowerCase());
+      if (i < 0) return esc(raw);
+      return `${esc(raw.slice(0, i))}<mark>${esc(raw.slice(i, i + needle.length))}</mark>${esc(raw.slice(i + needle.length))}`;
+    }
+    function placeSuggest() {
+      if (!suggestInput || !suggestPanel || suggestPanel.hidden) return;
+      const vv = window.visualViewport;
+      const viewTop = vv ? vv.offsetTop : 0;
+      const viewLeft = vv ? vv.offsetLeft : 0;
+      const viewW = vv ? vv.width : document.documentElement.clientWidth;
+      const viewH = vv ? vv.height : window.innerHeight;
+      const r = suggestInput.getBoundingClientRect();
+      const spaceBelow = viewTop + viewH - r.bottom;
+      const spaceAbove = r.top - viewTop;
+      const openUp = spaceBelow < 140 && spaceAbove > spaceBelow && spaceAbove > 96;
+      const width = Math.max(0, Math.min(r.width, viewW - 16));
+      let left = r.left;
+      if (left + width > viewLeft + viewW - 8) left = viewLeft + viewW - 8 - width;
+      if (left < viewLeft + 8) left = viewLeft + 8;
+      suggestPanel.style.position = "fixed";
+      suggestPanel.style.left = `${Math.round(left)}px`;
+      suggestPanel.style.width = `${Math.round(width)}px`;
+      suggestPanel.style.right = "auto";
+      if (openUp) {
+        suggestPanel.style.top = "auto";
+        suggestPanel.style.bottom = `${Math.max(0, Math.round(window.innerHeight - r.top))}px`;
+        suggestPanel.style.maxHeight = `${Math.min(280, Math.max(72, spaceAbove - 8))}px`;
+        suggestPanel.style.borderRadius = "6px 6px 0 0";
+        suggestPanel.style.borderTop = "1px solid var(--sage)";
+        suggestPanel.style.borderBottom = "0";
+      } else {
+        suggestPanel.style.bottom = "auto";
+        suggestPanel.style.top = `${Math.round(r.bottom)}px`;
+        suggestPanel.style.maxHeight = `${Math.min(280, Math.max(72, spaceBelow - 8))}px`;
+        suggestPanel.style.borderRadius = "0 0 6px 6px";
+        suggestPanel.style.borderTop = "0";
+        suggestPanel.style.borderBottom = "1px solid var(--sage)";
+      }
     }
     function hideSuggest() {
-      document.querySelectorAll(".suggest").forEach(el => { el.hidden = true; el.innerHTML = ""; });
+      document.querySelectorAll(".name-wrap.open").forEach(el => el.classList.remove("open"));
+      if (suggestPanel) {
+        suggestPanel.hidden = true;
+        suggestPanel.innerHTML = "";
+        suggestPanel._hits = [];
+      }
+      suggestInput = null;
+    }
+    function clearMacroFields(wrap) {
+      if (!wrap) return;
+      ["cal", "p", "c", "f"].forEach(key => {
+        const el = wrap.querySelector(`[data-f="${key}"]`);
+        if (el) el.value = "";
+      });
     }
     function fillFoodFields(wrap, food) {
+      if (!wrap || !food) return;
       wrap.querySelector('[data-f="name"]').value = food.name;
       wrap.querySelector('[data-f="cal"]').value = food.cal;
       wrap.querySelector('[data-f="p"]').value = food.p;
@@ -2077,22 +2168,29 @@
       wrap.querySelector('[data-f="f"]').value = food.f;
       hideSuggest();
     }
-    function renderSuggest(box, foods) {
-      if (!foods.length) { box.hidden = true; box.innerHTML = ""; return; }
+    function renderSuggest(input, foods) {
+      const box = suggestBox();
+      const wrap = input.closest(".name-wrap");
+      if (!foods.length) {
+        hideSuggest();
+        return;
+      }
+      suggestInput = input;
+      if (wrap) wrap.classList.add("open");
       box.hidden = false;
-      box.innerHTML = foods.map((f, i) => `<button type="button" data-pick="${i}" class="${i === 0 ? "on" : ""}">
-        <span class="nm">${esc(f.name)}</span>
+      box.innerHTML = foods.map((f, i) => `<button type="button" data-pick="${i}" class="${i === 0 ? "on" : ""}" role="option">
+        <span class="nm">${highlightMatch(f.name, input.value)}</span>
         <span class="mac">${Math.round(Number(f.cal))} cal · ${Number(f.p)}p · ${Number(f.c)}c · ${Number(f.f)}f</span>
       </button>`).join("");
       box._hits = foods;
+      requestAnimationFrame(placeSuggest);
     }
     function addFormHtml(meal) {
       return `<div class="add-food">
+        <div class="name-wrap">
+          <input class="name" data-f="name" placeholder="Search a food" autocomplete="off" autocorrect="off" spellcheck="false" />
+        </div>
         <div class="log-row">
-          <div class="name-wrap">
-            <input class="name" data-f="name" placeholder="Start typing a food" autocomplete="off" />
-            <div class="suggest" hidden></div>
-          </div>
           <input data-f="cal" type="number" min="0" step="1" placeholder="Cal" />
           <input data-f="p" type="number" min="0" step="0.1" placeholder="P" />
           <input data-f="c" type="number" min="0" step="0.1" placeholder="C" />
@@ -2102,6 +2200,7 @@
       </div>`;
     }
     function paintDiary() {
+      hideSuggest();
       document.getElementById("diaryDateLabel").textContent = prettyDate(diaryDate);
       const data = dayFood(diaryDate);
       const g = FOOD_GOALS[data.goal] || FOOD_GOALS[1800];
@@ -2141,6 +2240,11 @@
         </article>`;
       }).join("");
       paintWater();
+      const focusName = document.querySelector("#diaryMeals [data-f='name']");
+      if (focusName) {
+        focusName.focus({ preventScroll: true });
+        focusName.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
     }
     document.getElementById("diaryPrev").onclick = () => { diaryDate = isoShift(diaryDate, -1); addMealId = ""; paintDiary(); };
     document.getElementById("diaryNext").onclick = () => { diaryDate = isoShift(diaryDate, 1); addMealId = ""; paintDiary(); };
@@ -2153,14 +2257,24 @@
     document.getElementById("diaryMeals").addEventListener("input", e => {
       const name = e.target.closest('[data-f="name"]');
       if (!name) return;
-      const box = name.parentElement.querySelector(".suggest");
-      if (box) renderSuggest(box, suggestFoods(name.value));
+      const wrap = name.closest(".add-food");
+      if (!String(name.value).trim()) {
+        clearMacroFields(wrap);
+        hideSuggest();
+        return;
+      }
+      renderSuggest(name, suggestFoods(name.value));
+    });
+    document.getElementById("diaryMeals").addEventListener("focusin", e => {
+      const name = e.target.closest('[data-f="name"]');
+      if (!name || !String(name.value).trim()) return;
+      renderSuggest(name, suggestFoods(name.value));
     });
     document.getElementById("diaryMeals").addEventListener("keydown", e => {
       const name = e.target.closest('[data-f="name"]');
       if (!name) return;
-      const box = name.parentElement.querySelector(".suggest");
-      if (!box || box.hidden) {
+      const box = suggestPanel;
+      if (!box || box.hidden || !box._hits || !box._hits.length) {
         if (e.key === "Enter") e.preventDefault();
         return;
       }
@@ -2176,20 +2290,13 @@
       } else if (e.key === "Enter") {
         e.preventDefault();
         const pick = buttons[on] || buttons[0];
-        const food = box._hits && box._hits[Number(pick.dataset.pick)];
+        const food = box._hits[Number(pick.dataset.pick)];
         if (food) fillFoodFields(name.closest(".add-food"), food);
       } else if (e.key === "Escape") {
         hideSuggest();
       }
     });
     document.getElementById("diaryMeals").addEventListener("click", e => {
-      const pick = e.target.closest("[data-pick]");
-      if (pick) {
-        const box = pick.closest(".suggest");
-        const food = box._hits && box._hits[Number(pick.dataset.pick)];
-        if (food) fillFoodFields(pick.closest(".add-food"), food);
-        return;
-      }
       const open = e.target.closest("[data-open]");
       const add = e.target.closest("[data-add]");
       const del = e.target.closest("[data-del]");
@@ -2222,8 +2329,15 @@
       }
     });
     document.addEventListener("click", e => {
-      if (!e.target.closest(".name-wrap")) hideSuggest();
+      if (e.target.closest(".name-wrap") || e.target.closest(".suggest")) return;
+      hideSuggest();
     });
+    window.addEventListener("scroll", placeSuggest, true);
+    window.addEventListener("resize", placeSuggest);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", placeSuggest);
+      window.visualViewport.addEventListener("scroll", placeSuggest);
+    }
     document.getElementById("copyPrevDay").onclick = () => {
       const prev = dayFood(isoShift(diaryDate, -1));
       const data = dayFood(diaryDate);
