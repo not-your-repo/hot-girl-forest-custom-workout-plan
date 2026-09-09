@@ -398,12 +398,32 @@
     .remain .big b { font-family: var(--display); font-size: 42px; line-height: 1; color: var(--sage); }
     .remain .big.over b { color: var(--coral); }
     .remain .n { font-family: var(--display); font-size: 22px; }
+    .remain .cal-track { grid-column: 1 / -1; }
+    .remain .track, .macro .track {
+      height: 8px; background: #e6dcb8; border-radius: 99px; overflow: hidden; margin-top: 8px;
+    }
+    .remain .track > i, .macro .track > i { display: block; height: 100%; width: 0; }
+    .remain .track > i { background: #5c7e51; }
     .macros { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-    .macro .track { height: 8px; background: #e6dcb8; border-radius: 99px; overflow: hidden; margin-top: 8px; }
-    .macro .track > i { display: block; height: 100%; }
+    .macro .track > i { height: 100%; }
     .macro.p .track > i { background: #5c7e51; }
     .macro.c .track > i { background: #bd901b; }
     .macro.f .track > i { background: #cf604f; }
+    .macro .track.over > i, .remain .track.over > i { background: var(--coral); }
+    .macro-line { display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+    .goal-in {
+      appearance: textfield; -moz-appearance: textfield;
+      font-family: var(--display); font-size: 22px; font-weight: 400;
+      width: 5.5rem; max-width: 100%; background: #fff; border: 1px solid var(--line);
+      border-radius: 4px; color: var(--text); padding: 4px 8px; line-height: 1.2;
+    }
+    .goal-in::-webkit-outer-spin-button, .goal-in::-webkit-inner-spin-button {
+      appearance: none; margin: 0;
+    }
+    .macro .goal-in {
+      font-family: inherit; font-size: 16px; font-weight: 800; width: 4.25rem;
+    }
+    .goal-in:focus { outline: 2px solid var(--sage); outline-offset: 1px; }
     .meal {
       background: var(--panel); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px;
       position: relative;
@@ -461,8 +481,7 @@
       background: #f2e8c9; color: inherit; font-weight: 800; padding: 0;
     }
     .suggest .mac { color: var(--muted); font-size: 12px; margin-top: 2px; }
-    .goal-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
-    .goal-toggle button { flex: 1; }
+
 
     @media (max-width: 1080px) {
       :root { --mobile-bar-h: calc(52px + env(safe-area-inset-top, 0px)); }
@@ -526,6 +545,7 @@
       .log-row input { min-width: 0; flex: 1 1 120px; }
       .remain, .macros { grid-template-columns: 1fr 1fr; }
       .remain .big { grid-column: 1 / -1; }
+      .goal-in, .remain .goal-in { font-size: 16px; }
 
       .topbar, .topbar > div, .sticky-tools, .ex-body, .note, .warn, .lede {
         min-width: 0; max-width: 100%;
@@ -779,20 +799,32 @@
           <strong id="diaryDateLabel">Today</strong>
           <button type="button" id="diaryNext" aria-label="Next day">›</button>
         </div>
-        <div class="goal-toggle">
-          <button class="btn ghost" type="button" data-goal="1800" id="goal1800">Fat-loss · 1,800</button>
-          <button class="btn ghost" type="button" data-goal="2400" id="goal2400">Fueling · 2,400</button>
-        </div>
         <div class="remain card" id="remainCard">
           <div class="big"><div class="label">Remaining</div><b id="remainCal">1800</b></div>
-          <div><div class="label">Goal</div><div class="n" id="goalCal">1800</div></div>
+          <div>
+            <div class="label">Goal</div>
+            <input id="goalCal" class="goal-in" data-goal="cal" type="number" min="0" step="1" inputmode="numeric" autocomplete="off" aria-label="Calorie goal" value="1800" />
+          </div>
           <div><div class="label">Food</div><div class="n" id="foodCal">0</div></div>
           <div><div class="label">Net</div><div class="n" id="netCal">0</div></div>
+          <div class="cal-track"><div class="track" id="trackCal"><i id="barCal"></i></div></div>
         </div>
         <div class="macros">
-          <div class="card macro p"><div class="label">Protein</div><div><b id="macP">0</b> / <span id="goalP">160</span> g</div><div class="track"><i id="barP"></i></div></div>
-          <div class="card macro c"><div class="label">Carbs</div><div><b id="macC">0</b> / <span id="goalC">155</span> g</div><div class="track"><i id="barC"></i></div></div>
-          <div class="card macro f"><div class="label">Fat</div><div><b id="macF">0</b> / <span id="goalF">60</span> g</div><div class="track"><i id="barF"></i></div></div>
+          <div class="card macro p">
+            <div class="label">Protein</div>
+            <div class="macro-line"><b id="macP">0</b> / <input id="goalP" class="goal-in" data-goal="p" type="number" min="0" step="0.1" inputmode="decimal" autocomplete="off" aria-label="Protein goal" value="160" /> g</div>
+            <div class="track" id="trackP"><i id="barP"></i></div>
+          </div>
+          <div class="card macro c">
+            <div class="label">Carbs</div>
+            <div class="macro-line"><b id="macC">0</b> / <input id="goalC" class="goal-in" data-goal="c" type="number" min="0" step="0.1" inputmode="decimal" autocomplete="off" aria-label="Carb goal" value="155" /> g</div>
+            <div class="track" id="trackC"><i id="barC"></i></div>
+          </div>
+          <div class="card macro f">
+            <div class="label">Fat</div>
+            <div class="macro-line"><b id="macF">0</b> / <input id="goalF" class="goal-in" data-goal="f" type="number" min="0" step="0.1" inputmode="decimal" autocomplete="off" aria-label="Fat goal" value="60" /> g</div>
+            <div class="track" id="trackF"><i id="barF"></i></div>
+          </div>
         </div>
         <div id="diaryMeals"></div>
         <div class="card" style="margin-top:8px">
@@ -1527,7 +1559,7 @@
       day5: ["Day 5", ""],
       library: ["Form library", "Photos of the working position, plus a YouTube form demo for each lift."],
       nutrition: ["Nutrition", "Protein stays high. Calories are honest about the April goal."],
-      diary: ["Diary", "Log meals and water the way a food diary works. Remaining calories and macros update as you add food."],
+      diary: ["Diary", "Set your calorie and macro goals. Remaining and the bars follow what you log."],
       recovery: ["Recovery and red flags", "What to skip, when to walk, and when to call a physician."],
       progress: ["Progress", "Log water and weight, collect a mushroom for each finished day, and map today’s symptom score."],
       motivation: ["Motivation", "Electric Forest 2027 is the why. April 2027 is the checkpoint."]
@@ -1821,9 +1853,16 @@
     const WATER_GOAL = 80;
     const WATER_STEP = 8;
     const WATER_GLASSES = WATER_GOAL / WATER_STEP;
-    const FOOD_GOALS = {
+    const DEFAULT_GOALS = { cal: 1800, p: 160, c: 155, f: 60 };
+    const LEGACY_GOALS = {
       1800: { cal: 1800, p: 160, c: 155, f: 60 },
       2400: { cal: 2400, p: 160, c: 270, f: 75 }
+    };
+    const GOAL_LIMITS = {
+      cal: { min: 0, max: 10000 },
+      p: { min: 0, max: 1000 },
+      c: { min: 0, max: 2000 },
+      f: { min: 0, max: 500 }
     };
     const MEALS = [
       { id: "breakfast", label: "Breakfast" },
@@ -1938,18 +1977,70 @@
     function foodStore() {
       return JSON.parse(localStorage.getItem(foodKey) || "{}");
     }
-    function emptyDay(goal) {
-      return { goal: goal || 1800, breakfast: [], lunch: [], dinner: [], snacks: [] };
+    function clampGoal(n, key, fallback) {
+      const lim = GOAL_LIMITS[key] || { min: 0, max: 10000 };
+      n = Number(n);
+      if (!Number.isFinite(n)) return fallback;
+      n = Math.min(lim.max, Math.max(lim.min, n));
+      return key === "cal" ? Math.round(n) : Math.round(n * 10) / 10;
+    }
+    function normalizeGoals(raw) {
+      if (raw === 2400 || raw === "2400") return Object.assign({}, LEGACY_GOALS[2400]);
+      if (raw === 1800 || raw === "1800") return Object.assign({}, LEGACY_GOALS[1800]);
+      const src = raw && typeof raw === "object" ? raw : DEFAULT_GOALS;
+      return {
+        cal: clampGoal(src.cal, "cal", DEFAULT_GOALS.cal),
+        p: clampGoal(src.p, "p", DEFAULT_GOALS.p),
+        c: clampGoal(src.c, "c", DEFAULT_GOALS.c),
+        f: clampGoal(src.f, "f", DEFAULT_GOALS.f)
+      };
+    }
+    function storedGoals(store) {
+      if (store && store._goals) return normalizeGoals(store._goals);
+      if (store && (store._goal === 1800 || store._goal === 2400)) return normalizeGoals(store._goal);
+      return Object.assign({}, DEFAULT_GOALS);
+    }
+    function emptyDay(goals) {
+      return {
+        goals: normalizeGoals(goals),
+        breakfast: [], lunch: [], dinner: [], snacks: []
+      };
     }
     function dayFood(iso) {
       const store = foodStore();
-      return store[iso] || emptyDay(store._goal || 1800);
+      const data = store[iso] ? Object.assign({}, store[iso]) : emptyDay(storedGoals(store));
+      if (!data.breakfast) data.breakfast = [];
+      if (!data.lunch) data.lunch = [];
+      if (!data.dinner) data.dinner = [];
+      if (!data.snacks) data.snacks = [];
+      data.goals = data.goals
+        ? normalizeGoals(data.goals)
+        : normalizeGoals(data.goal != null ? data.goal : storedGoals(store));
+      return data;
     }
     function saveDayFood(iso, data) {
       const store = foodStore();
+      data.goals = normalizeGoals(data.goals);
       store[iso] = data;
-      store._goal = data.goal;
+      store._goals = data.goals;
       localStorage.setItem(foodKey, JSON.stringify(store));
+    }
+    function fmtAmt(n) {
+      n = Number(n) || 0;
+      const r = Math.round(n * 10) / 10;
+      return Number.isInteger(r) ? String(r) : r.toFixed(1);
+    }
+    function fillGoalInput(id, value) {
+      const el = document.getElementById(id);
+      if (!el || document.activeElement === el) return;
+      el.value = String(value);
+    }
+    function setTrack(barId, trackId, eaten, goal) {
+      const bar = document.getElementById(barId);
+      const track = document.getElementById(trackId);
+      const pct = goal > 0 ? (eaten / goal) * 100 : (eaten > 0 ? 100 : 0);
+      if (bar) bar.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+      if (track) track.classList.toggle("over", goal > 0 ? eaten - goal > 0.05 : eaten > 0);
     }
     function foodId() {
       return `f${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -2199,36 +2290,70 @@
         </div>
       </div>`;
     }
-    function paintDiary() {
-      hideSuggest();
-      document.getElementById("diaryDateLabel").textContent = prettyDate(diaryDate);
+    function paintDiaryProgress() {
       const data = dayFood(diaryDate);
-      const g = FOOD_GOALS[data.goal] || FOOD_GOALS[1800];
+      const g = normalizeGoals(data.goals);
       const t = dayTotals(data);
       const remain = g.cal - t.cal;
       const remainEl = document.getElementById("remainCal");
-      remainEl.textContent = String(remain);
+      remainEl.textContent = String(Math.round(remain));
       remainEl.parentElement.classList.toggle("over", remain < 0);
-      document.getElementById("goalCal").textContent = String(g.cal);
+      fillGoalInput("goalCal", Math.round(g.cal));
+      fillGoalInput("goalP", g.p);
+      fillGoalInput("goalC", g.c);
+      fillGoalInput("goalF", g.f);
       document.getElementById("foodCal").textContent = String(Math.round(t.cal));
       document.getElementById("netCal").textContent = String(Math.round(t.cal));
-      document.getElementById("macP").textContent = String(Math.round(t.p));
-      document.getElementById("macC").textContent = String(Math.round(t.c));
-      document.getElementById("macF").textContent = String(Math.round(t.f));
-      document.getElementById("goalP").textContent = String(g.p);
-      document.getElementById("goalC").textContent = String(g.c);
-      document.getElementById("goalF").textContent = String(g.f);
-      document.getElementById("barP").style.width = `${Math.min(100, (t.p / g.p) * 100)}%`;
-      document.getElementById("barC").style.width = `${Math.min(100, (t.c / g.c) * 100)}%`;
-      document.getElementById("barF").style.width = `${Math.min(100, (t.f / g.f) * 100)}%`;
-      document.getElementById("goal1800").className = data.goal === 1800 ? "btn" : "btn ghost";
-      document.getElementById("goal2400").className = data.goal === 2400 ? "btn" : "btn ghost";
+      document.getElementById("macP").textContent = fmtAmt(t.p);
+      document.getElementById("macC").textContent = fmtAmt(t.c);
+      document.getElementById("macF").textContent = fmtAmt(t.f);
+      setTrack("barCal", "trackCal", t.cal, g.cal);
+      setTrack("barP", "trackP", t.p, g.p);
+      setTrack("barC", "trackC", t.c, g.c);
+      setTrack("barF", "trackF", t.f, g.f);
+    }
+    function readGoalInputs(current) {
+      const next = Object.assign({}, normalizeGoals(current));
+      const fields = [
+        ["goalCal", "cal"],
+        ["goalP", "p"],
+        ["goalC", "c"],
+        ["goalF", "f"]
+      ];
+      fields.forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const raw = String(el.value).trim();
+        if (raw === "" || raw === "." || raw === "-") return;
+        const n = Number(raw);
+        if (!Number.isFinite(n) || n < 0) return;
+        next[key] = clampGoal(n, key, next[key]);
+      });
+      return next;
+    }
+    function commitGoals(syncInputs) {
+      const data = dayFood(diaryDate);
+      data.goals = readGoalInputs(data.goals);
+      saveDayFood(diaryDate, data);
+      if (syncInputs) {
+        document.getElementById("goalCal").value = String(Math.round(data.goals.cal));
+        document.getElementById("goalP").value = String(data.goals.p);
+        document.getElementById("goalC").value = String(data.goals.c);
+        document.getElementById("goalF").value = String(data.goals.f);
+      }
+      paintDiaryProgress();
+    }
+    function paintDiary() {
+      hideSuggest();
+      document.getElementById("diaryDateLabel").textContent = prettyDate(diaryDate);
+      paintDiaryProgress();
+      const data = dayFood(diaryDate);
       document.getElementById("diaryMeals").innerHTML = MEALS.map(meal => {
         const items = data[meal.id] || [];
         const sub = sumFoods(items);
         const rows = items.length
           ? items.map(x => `<div class="food-row">
-              <div><div class="name">${esc(x.name)}</div><div class="mac">${Number(x.p || 0)}p · ${Number(x.c || 0)}c · ${Number(x.f || 0)}f</div></div>
+              <div><div class="name">${esc(x.name)}</div><div class="mac">${fmtAmt(x.p)}p · ${fmtAmt(x.c)}c · ${fmtAmt(x.f)}f</div></div>
               <div class="cal">${Math.round(Number(x.cal || 0))}</div>
               <button class="del" type="button" data-del="${meal.id}" data-id="${x.id}" aria-label="Remove">×</button>
             </div>`).join("")
@@ -2248,12 +2373,14 @@
     }
     document.getElementById("diaryPrev").onclick = () => { diaryDate = isoShift(diaryDate, -1); addMealId = ""; paintDiary(); };
     document.getElementById("diaryNext").onclick = () => { diaryDate = isoShift(diaryDate, 1); addMealId = ""; paintDiary(); };
-    document.getElementById("goal1800").onclick = () => {
-      const data = dayFood(diaryDate); data.goal = 1800; saveDayFood(diaryDate, data); paintDiary();
-    };
-    document.getElementById("goal2400").onclick = () => {
-      const data = dayFood(diaryDate); data.goal = 2400; saveDayFood(diaryDate, data); paintDiary();
-    };
+    ["goalCal", "goalP", "goalC", "goalF"].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener("change", () => commitGoals(true));
+      el.addEventListener("blur", () => commitGoals(true));
+      el.addEventListener("keydown", e => {
+        if (e.key === "Enter") { e.preventDefault(); el.blur(); }
+      });
+    });
     document.getElementById("diaryMeals").addEventListener("input", e => {
       const name = e.target.closest('[data-f="name"]');
       if (!name) return;
