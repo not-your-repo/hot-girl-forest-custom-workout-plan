@@ -128,6 +128,39 @@
     }
     .hero-copy .kicker { color: var(--gold); }
     .hero-copy h3 { font-family: var(--display); font-size: 36px; max-width: 16ch; text-transform: uppercase; letter-spacing: 0.03em; color: #fffbee; }
+    .quote-shroom {
+      display: flex; flex-direction: column; align-items: center;
+      margin: 0 0 22px;
+    }
+    .quote-shroom-cap {
+      position: relative; width: min(100%, 540px);
+      background: radial-gradient(120% 90% at 50% 18%, #e53935, #c62828 58%, #8e1e1e);
+      color: #fffbee;
+      border-radius: 50% 50% 16% 16% / 72% 72% 28% 28%;
+      padding: 36px 40px 44px; text-align: center;
+      box-shadow: 0 12px 28px rgba(18,50,42,0.16);
+    }
+    .quote-shroom-cap .label { color: #f2e8c9; position: relative; z-index: 1; }
+    .quote-shroom-cap p {
+      font-family: var(--serif); font-size: 20px; line-height: 1.35; margin: 0;
+      position: relative; z-index: 1; color: #fffbee;
+    }
+    .quote-shroom-cap .spot {
+      position: absolute; background: #fffbee; border-radius: 50%; opacity: 0.9; z-index: 0;
+    }
+    .quote-shroom-cap .s1 { width: 26px; height: 20px; left: 9%; top: 16%; }
+    .quote-shroom-cap .s2 { width: 16px; height: 14px; right: 12%; top: 20%; }
+    .quote-shroom-cap .s3 { width: 14px; height: 12px; left: 18%; bottom: 20%; }
+    .quote-shroom-cap .s4 { width: 20px; height: 16px; right: 18%; bottom: 16%; }
+    .quote-shroom-stem {
+      width: 54px; height: 38px; background: #faf4e6;
+      border-radius: 0 0 16px 16px;
+      box-shadow: inset 7px 0 0 #d9c89d;
+    }
+    .quote-shroom-base {
+      width: 78px; height: 10px; margin-top: -3px;
+      background: #0d241e; opacity: 0.22; border-radius: 50%;
+    }
     .portrait-float {
       position: absolute; right: 28px; bottom: -8px; height: 300px; width: auto;
       filter: drop-shadow(0 16px 30px rgba(0,0,0,0.45));
@@ -645,6 +678,8 @@
       .stretch img { min-height: 160px; height: 160px; }
       .tips-slide { padding: 24px 52px; min-height: 190px; }
       .tips-slide p { font-size: 18px; }
+      .quote-shroom-cap { padding: 32px 22px 40px; border-radius: 42% 42% 20% 20% / 58% 58% 32% 32%; }
+      .quote-shroom-cap p { font-size: 16px; }
 
       .topbar, .topbar > div, .sticky-tools, .ex-body, .note, .warn, .lede {
         min-width: 0; max-width: 100%;
@@ -770,6 +805,19 @@
             <h3>Train for the Forest. Hit 135 pounds by April 2027.</h3>
           </div>
         </div>
+
+        <aside class="quote-shroom" aria-label="Today's motivational quote">
+          <div class="quote-shroom-cap">
+            <span class="spot s1"></span>
+            <span class="spot s2"></span>
+            <span class="spot s3"></span>
+            <span class="spot s4"></span>
+            <div class="label">Today</div>
+            <p id="dailyQuote">The Forest is the finish line. These five days are how you get there.</p>
+          </div>
+          <div class="quote-shroom-stem" aria-hidden="true"></div>
+          <div class="quote-shroom-base" aria-hidden="true"></div>
+        </aside>
 
         <div class="grid g-4">
           <div class="card"><div class="label">Now</div><div class="stat">165 <span>lb</span></div></div>
@@ -973,7 +1021,7 @@
           </article>
         </div>
 
-        <h3 class="sec">Tips and tricks</h3>
+        <h3 class="sec">Today's tip</h3>
         <div class="tips" id="tips">
           <div class="tips-frame" id="tipsFrame">
             <button class="tips-nav prev" type="button" id="tipPrev" aria-label="Previous tip">‹</button>
@@ -1859,8 +1907,8 @@
       pinWorkoutChrome();
       if (view === "diary") paintDiary();
       if (view === "water") paintWater();
-      if (view === "stretches") startTips();
-      else stopTips();
+      if (view === "stretches") showTodaysTip();
+      if (view === "overview") paintDailyQuote();
       if (view.startsWith("day")) {
         const d = currentDays()[view];
         document.getElementById("pageTitle").textContent = d.title;
@@ -1878,8 +1926,44 @@
       setNav(false);
     }
 
+    function daySeed() {
+      const d = new Date();
+      return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+    }
+    function pickDaily(list) {
+      if (!list.length) return 0;
+      return ((daySeed() % list.length) + list.length) % list.length;
+    }
+    const DAILY_QUOTES = [
+      "The Forest is the finish line. These five days are how you get there.",
+      "Happy Forest starts in the gym, on a quiet hinge, on a walk you can actually finish.",
+      "Show up for Friday’s full-body session so June in Rothbury feels easy.",
+      "You don’t have to sprint. You have to last four days in the trees.",
+      "Strong hips, calm back, lights through the pines.",
+      "135 pounds by April. Then the Forest. Same girl. Brighter lights.",
+      "A calm nerve beats a heavy bell.",
+      "Five quality days will beat seven sloppy ones.",
+      "Depth is not a virtue here. Clean reps are.",
+      "Centralize. Do not chase.",
+      "Walk after training, not on an empty tank.",
+      "The low back stays quiet. Hips do the work.",
+      "Rest Saturday and Sunday. The Forest does not need a wrecked nerve.",
+      "If it spreads farther down, that drill is done.",
+      "Slow reps. Quiet hinge. Then the lanterns.",
+      "You are not late. You are 29 weeks out.",
+      "Muscle work of 0–3 is acceptable. Nerve pain that travels is a stop.",
+      "Stand or lie between sets. Do not sit in a slump.",
+      "The mushroom is for a finished day. Go earn today’s.",
+      "Rothbury in June starts with a goblet squat on Monday.",
+      "Keep the nerve quiet so you can actually dance."
+    ];
+    function paintDailyQuote() {
+      const el = document.getElementById("dailyQuote");
+      if (!el) return;
+      el.textContent = DAILY_QUOTES[pickDaily(DAILY_QUOTES)];
+    }
+
     let tipI = 0;
-    let tipTimer = null;
     let tipTouchX = null;
     function tipSlides() {
       return [...document.querySelectorAll(".tips-slide")];
@@ -1887,7 +1971,15 @@
     function paintTips() {
       const slides = tipSlides();
       const dots = [...document.querySelectorAll("#tipsDots button")];
-      slides.forEach((el, i) => el.classList.toggle("on", i === tipI));
+      const today = pickDaily(slides);
+      slides.forEach((el, i) => {
+        el.classList.toggle("on", i === tipI);
+        const k = el.querySelector(".kicker");
+        if (!k) return;
+        k.textContent = i === today
+          ? `Today’s tip · ${i + 1} of ${slides.length}`
+          : `Tip ${i + 1} of ${slides.length}`;
+      });
       dots.forEach((el, i) => {
         el.classList.toggle("on", i === tipI);
         el.setAttribute("aria-current", i === tipI ? "true" : "false");
@@ -1899,54 +1991,41 @@
       tipI = (i + n) % n;
       paintTips();
     }
-    function stopTips() {
-      if (tipTimer) { clearInterval(tipTimer); tipTimer = null; }
-    }
-    function startTips() {
-      stopTips();
+    function showTodaysTip() {
+      tipI = pickDaily(tipSlides());
       paintTips();
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      tipTimer = setInterval(() => setTip(tipI + 1), 6500);
     }
     function buildTipDots() {
       const box = document.getElementById("tipsDots");
       const slides = tipSlides();
       if (!box || !slides.length) return;
+      const today = pickDaily(slides);
       box.innerHTML = slides.map((_, i) =>
-        `<button type="button" class="${i === 0 ? "on" : ""}" aria-label="Show tip ${i + 1} of ${slides.length}"><i></i></button>`
+        `<button type="button" class="${i === today ? "on" : ""}" aria-label="Show tip ${i + 1} of ${slides.length}"><i></i></button>`
       ).join("");
     }
     buildTipDots();
-    document.getElementById("tipPrev").onclick = () => { setTip(tipI - 1); startTips(); };
-    document.getElementById("tipNext").onclick = () => { setTip(tipI + 1); startTips(); };
+    showTodaysTip();
+    paintDailyQuote();
+    document.getElementById("tipPrev").onclick = () => setTip(tipI - 1);
+    document.getElementById("tipNext").onclick = () => setTip(tipI + 1);
     document.getElementById("tipsDots").addEventListener("click", e => {
       const btn = e.target.closest("button");
       if (!btn) return;
       const i = [...document.getElementById("tipsDots").children].indexOf(btn);
       if (i < 0) return;
       setTip(i);
-      startTips();
     });
     const tipsFrame = document.getElementById("tipsFrame");
-    tipsFrame.addEventListener("pointerenter", stopTips);
-    tipsFrame.addEventListener("pointerleave", () => {
-      if (document.querySelector("#stretches.view.active")) startTips();
-    });
     tipsFrame.addEventListener("touchstart", e => {
       tipTouchX = e.changedTouches[0].clientX;
-      stopTips();
     }, { passive: true });
     tipsFrame.addEventListener("touchend", e => {
       if (tipTouchX == null) return;
       const dx = e.changedTouches[0].clientX - tipTouchX;
       tipTouchX = null;
       if (Math.abs(dx) > 40) setTip(tipI + (dx < 0 ? 1 : -1));
-      if (document.querySelector("#stretches.view.active")) startTips();
     }, { passive: true });
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stopTips();
-      else if (document.querySelector("#stretches.view.active")) startTips();
-    });
 
     function pinWorkoutChrome() {
       const tools = document.getElementById("stickyTools");
